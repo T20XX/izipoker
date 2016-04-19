@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.izipoker.cardGame.*;
+
 public class IZIPoker extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
@@ -14,6 +16,10 @@ public class IZIPoker extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+		Deck d = new Deck();
+		System.out.println(d);
+		d.shuffle(3);
+		System.out.println(d);
 	}
 
 	@Override

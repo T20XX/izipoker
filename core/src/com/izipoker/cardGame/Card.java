@@ -1,4 +1,4 @@
-package cardGame;
+package com.izipoker.cardGame;
 
 import java.util.*;
 
@@ -19,31 +19,94 @@ public class Card {
         return 0;
     }
 
+    /**
+     * Rank of cards
+     */
     public enum rankType{
+        /**
+         * Card 2 (value: 1)
+         */
         TWO,
+        /**
+         * Card 3 (value: 2)
+         */
         THREE,
+        /**
+         * Card 4 (value: 3)
+         */
         FOUR,
+        /**
+         * Card 5 (value: 4)
+         */
         FIVE,
+        /**
+         * Card 6 (value: 5)
+         */
         SIX,
+        /**
+         * Card 7 (value: 6)
+         */
         SEVEN,
+        /**
+         * Card 8 (value: 7)
+         */
         EIGHT,
+        /**
+         * Card 9 (value: 8)
+         */
         NINE,
+        /**
+         * Card 10 (value: 9)
+         */
         TEN,
+        /**
+         * Card J (value: 10)
+         */
         JACK,
+        /**
+         * Card Q (value: 11)
+         */
         QUEEN,
+        /**
+         * Card K (value: 12)
+         */
         KING,
+        /**
+         * Card A (value: 13)
+         */
         ACE
     }
 
+    /**
+     * Suit of cards
+     */
     public enum suitType{
+        /**
+         * Clubs suit
+         */
         CLUBS,
+        /**
+         * Diamonds suit
+         */
         DIAMONDS,
+        /**
+         * Hearts suit
+         */
         HEARTS,
+        /**
+         * Spades suit
+         */
         SPADES
     }
 
+    /**
+     * Rank of the card
+     */
     private rankType rank;
 
+    /**
+     * Suit of the card
+     */
     private suitType suit;
     /*private static final Map<rankType, Integer> valueMap;
     static
@@ -64,39 +127,71 @@ public class Card {
         valueMap.put(rankType.ACE, 13);
     }*/
 
+    /**
+     * Creates a card by giving a rank and a suit
+     * @param r Rank of the card
+     * @param s Suit of the card
+     */
     public Card(rankType r, suitType s){
         rank = r;
         suit = s;
     }
 
+    /**
+     * Creates a card by giving a value and a suit
+     * @param value Value of the card
+     * @param s Suit of the card
+     * @see rankType To check rank and value match
+     */
     public Card(int value, suitType s){
         suit = s;
         rank = rankType.values()[value - 1];
     }
 
+    /**
+     * @return Rank of the card
+     */
     public rankType getRank() {
         return rank;
     }
 
+    /**
+     * Sets the rank of the card
+     * @param rank New rank to set
+     */
     public void setRank(rankType rank) {
         this.rank = rank;
     }
 
+    /**
+     * @return Value of the card from 1 to 13
+     * @see rankType To check rank and value match
+     */
     public int getValue(){
         return rankType.valueOf(rank.toString()).ordinal() + 1;
-        //descricao
-        //jogos parecidos
-        //frameworks
-        //complicometro
-        //descricao do mvp ( minimo produto )
     }
 
+    /**
+     * @return Suit of the card
+     */
     public suitType getSuit() {
         return suit;
     }
 
+    /**
+     * Sets the suit of the card
+     * @param suit New suit to set
+     */
     public void setSuit(suitType suit) {
         this.suit = suit;
     }
 
+    /**
+     * Used for debugging purposes
+     * @return A string composed by the rank followed by its suit
+     */
+    @Override
+    public String toString(){
+        return this.rank.toString() + " of " + this.suit.toString();
+    }
 }
