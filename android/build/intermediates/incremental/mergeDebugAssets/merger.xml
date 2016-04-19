@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="C:\Users\Telmo\StudioProjects\izipoker\android\assets"><file name="badlogic.jpg" path="C:\Users\Telmo\StudioProjects\izipoker\android\assets\badlogic.jpg"/><file name="ace.png" path="C:\Users\Telmo\StudioProjects\izipoker\android\assets\ace.png"/></source></dataSet><dataSet config="debug"><source path="C:\Users\Telmo\StudioProjects\izipoker\android\src\debug\assets"/></dataSet></merger>

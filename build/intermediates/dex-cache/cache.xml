@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Telmo\StudioProjects\izipoker\core\build\libs\core-1.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="43021f4363cadd97c1234997a1421ca651b48c93">
+        <dex dex="C:\Users\Telmo\StudioProjects\izipoker\android\build\intermediates\pre-dexed\debug\core-1.0_89f0a98bf75815d428e28cd72d267fad870b85f5.jar" />
+    </item>
+
+</items>
