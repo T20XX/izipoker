@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.foradhoras.izipoker.test">
+    package="com.izipoker.game.test">
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="23" />
 
@@ -9,8 +9,8 @@
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="com.foradhoras.izipoker"
+                     android:targetPackage="com.izipoker.game"
                      android:handleProfiling="false"
                      android:functionalTest="false"
-                     android:label="Tests for com.foradhoras.izipoker"/>
+                     android:label="Tests for com.izipoker.game"/>
 </manifest>
