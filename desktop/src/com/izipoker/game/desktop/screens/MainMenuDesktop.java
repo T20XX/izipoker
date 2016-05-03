@@ -31,9 +31,9 @@ public class MainMenuDesktop implements Screen{
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         //backgroundText = new Texture
-        backgroundTex = new Texture("C:\\Users\\Telmo\\git\\izipoker\\android\\assets\\badlogic.jpg");
-        createTableTexUp = new Texture("C:\\Users\\Telmo\\git\\izipoker\\android\\assets\\badlogic.jpg");
-        exitTexUp = new Texture("C:\\Users\\Telmo\\git\\izipoker\\android\\assets\\badlogic.jpg");
+        backgroundTex = new Texture("C:\\Users\\Jorge\\git\\izipoker\\android\\assets\\badlogic.jpg");
+        createTableTexUp = new Texture("C:\\Users\\Jorge\\git\\izipoker\\android\\assets\\badlogic.jpg");
+        exitTexUp = new Texture("C:\\Users\\Jorge\\git\\izipoker\\android\\assets\\badlogic.jpg");
         buildStage();
 
         /*Deck d = new Deck();

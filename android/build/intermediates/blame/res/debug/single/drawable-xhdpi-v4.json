@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\Jorge\\git\\izipoker\\android\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_launcher.png",
+        "source": "C:\\Users\\Jorge\\git\\izipoker\\android\\res\\drawable-xhdpi\\ic_launcher.png"
+    },
+    {
         "merged": "C:\\Users\\Telmo\\git\\izipoker\\android\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_launcher.png",
         "source": "C:\\Users\\Telmo\\git\\izipoker\\android\\res\\drawable-xhdpi\\ic_launcher.png"
     }
