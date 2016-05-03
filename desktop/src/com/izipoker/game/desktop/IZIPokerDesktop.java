@@ -17,12 +17,6 @@ public class
     private IZIPokerDesktop() {
     }
 
-   /* public static void main (String[] arg) {
-        Game game =  IZIPokerDesktop.getInstance();
-        new MainMenuDesktop();
-        //game.setScreen(new MainMenuDesktop());
-    }*/
-
     @Override
     public void create() {
         this.screen = new MainMenuDesktop();

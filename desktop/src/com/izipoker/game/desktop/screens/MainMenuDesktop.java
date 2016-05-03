@@ -21,19 +21,21 @@ public class MainMenuDesktop implements Screen{
     private Stage stage;
 
     private Texture backgroundTex;
-    private Texture createTableTexUp;
-    private Texture exitTexUp;
+    private Texture startTexUp, startTexDown;
+    private Texture exitTexUp, exitTexDown;
 
-    ImageButton createTableBtn;
+    ImageButton startBtn;
     ImageButton exitBtn;
 
     public MainMenuDesktop () {
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         //backgroundText = new Texture
-        backgroundTex = new Texture("C:\\Users\\Telmo\\git\\izipoker\\android\\assets\\badlogic.jpg");
-        createTableTexUp = new Texture("C:\\Users\\Telmo\\git\\izipoker\\android\\assets\\badlogic.jpg");
-        exitTexUp = new Texture("C:\\Users\\Telmo\\git\\izipoker\\android\\assets\\badlogic.jpg");
+        backgroundTex = new Texture("badlogic.jpg");
+        startTexUp = new Texture("startBtnUp.png");
+        startTexDown = new Texture("startBtnDown.png");
+        exitTexUp = new Texture("exitBtnUp.png");
+        exitTexDown = new Texture("exitBtnDown.png");
         buildStage();
 
         /*Deck d = new Deck();
@@ -44,22 +46,24 @@ public class MainMenuDesktop implements Screen{
 
     public void buildStage() {
         //Actors
-        Image tmp = new Image(backgroundTex);
-        stage.addActor(tmp);
+        Image tmp1 = new Image(backgroundTex);
+        stage.addActor(tmp1);
 
-        tmp = new Image(createTableTexUp);
-        createTableBtn = new ImageButton(tmp.getDrawable());
-        createTableBtn.setPosition( stage.getWidth() / 2, 300f, Align.center);
-        stage.addActor(createTableBtn);
+        tmp1 = new Image(startTexUp);
+        Image tmp2 = new Image(startTexDown);
+        startBtn = new ImageButton(tmp1.getDrawable(), tmp2.getDrawable());
+        startBtn.setPosition( stage.getWidth() / 2, 300f, Align.center);
+        stage.addActor(startBtn);
 
-        tmp = new Image(exitTexUp);
-        exitBtn = new ImageButton(tmp.getDrawable());
+        tmp1 = new Image(exitTexUp);
+        tmp2 = new Image(exitTexDown);
+        exitBtn = new ImageButton(tmp1.getDrawable(), tmp2.getDrawable());
         exitBtn.setPosition( stage.getWidth() / 2, 150f, Align.center);
         stage.addActor(exitBtn);
 
 
         //Listeners
-        createTableBtn.addListener(new ClickListener() {
+        startBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Game g = IZIPokerDesktop.getInstance();
@@ -112,7 +116,9 @@ public class MainMenuDesktop implements Screen{
     public void dispose() {
     stage.dispose();
         backgroundTex.dispose();
-        createTableTexUp.dispose();
+        startTexUp.dispose();
+        startTexDown.dispose();
         exitTexUp.dispose();
+        exitTexDown.dispose();
     }
 }
