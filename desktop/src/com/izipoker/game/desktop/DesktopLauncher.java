@@ -2,11 +2,12 @@ package com.izipoker.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.izipoker.game.IZIPoker;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new IZIPoker(), config);
+		//config.fullscreen = true;
+		config.resizable = false;
+		new LwjglApplication(IZIPokerDesktop.getInstance(), config);
 	}
 }

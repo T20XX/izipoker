@@ -22,9 +22,9 @@ public abstract class Player {
         playing = false;
     }
 
-    void bet(int n, Round r){
+    /*void bet(int n, Round r){
         //add to
-    }
+    }*/
 
     public int getId() {
         return id;
