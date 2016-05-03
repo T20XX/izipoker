@@ -31,11 +31,13 @@ public class MainMenuDesktop implements Screen{
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         //backgroundText = new Texture
+
         backgroundTex = new Texture("badlogic.jpg");
         startTexUp = new Texture("startBtnUp.png");
         startTexDown = new Texture("startBtnDown.png");
         exitTexUp = new Texture("exitBtnUp.png");
         exitTexDown = new Texture("exitBtnDown.png");
+
         buildStage();
 
         /*Deck d = new Deck();
