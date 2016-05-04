@@ -32,7 +32,7 @@ public class MainMenuDesktop implements Screen{
         create();
         //backgroundText = new Texture
 
-        backgroundTex = new Texture("badlogic.jpg");
+        backgroundTex = new Texture("background.png");
         startTexUp = new Texture("startBtnUp.png");
         startTexDown = new Texture("startBtnDown.png");
         exitTexUp = new Texture("exitBtnUp.png");
@@ -83,7 +83,8 @@ public class MainMenuDesktop implements Screen{
     }
 
     public void create() {
-        stage = new Stage(new ScreenViewport());
+       stage = new Stage(new ScreenViewport());
+        //stage = new Stage( new StretchViewport(400.0f, 300.0f, new OrthographicCamera()));
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -93,7 +94,7 @@ public class MainMenuDesktop implements Screen{
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act(delta);
