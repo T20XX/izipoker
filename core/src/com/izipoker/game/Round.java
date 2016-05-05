@@ -37,7 +37,7 @@ public class Round {
             currentPlayers.add(players[i]);
         }
 
-        Map<Player, Integer>bets = new HashMap<Player, Integer>();
+        bets = new HashMap<Player, Integer>();
         for(int i = 0; i < currentPlayers.size(); i++){
            bets.put(currentPlayers.get(i), 0);
         }
