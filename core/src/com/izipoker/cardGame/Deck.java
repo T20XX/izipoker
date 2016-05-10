@@ -8,6 +8,7 @@ import java.util.Random;
 public class Deck {
 
     private Card cards[] = new Card[52];
+    private int index = 0;
 
     /**
      * Creates a deck with 52 cards, 13 from each suit
@@ -26,6 +27,7 @@ public class Deck {
      * @param n Number of deck shuffling (simulating real life shuffling)
      */
     public void shuffle(int n){
+        resetDeck();
         for (int i = 0; i < n; i++){
             Random rnd = new Random();
             for (int j = cards.length - 1; j > 0; j--)
@@ -44,6 +46,27 @@ public class Deck {
      */
     public Card[] getCards() {
         return cards;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Card getTopCard() {
+        if (index < this.cards.length) {
+            index++;
+            return this.cards[index - 1];
+        } else {
+            return null;
+        }
+    }
+
+    public void resetDeck() {
+        for (int i = 0; i < index; i++)
+        {
+            this.cards[index].setFlipped(false);
+        }
+        index = 0;
     }
 
     /**

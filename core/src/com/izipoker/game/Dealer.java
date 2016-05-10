@@ -28,4 +28,6 @@ public class Dealer {
     public void setNewJoker(){
         table.nextJoker();
     }
+
+
 }
