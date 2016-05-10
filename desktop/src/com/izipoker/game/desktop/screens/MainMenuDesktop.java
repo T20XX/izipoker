@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.izipoker.cardGame.Card;
 import com.izipoker.game.desktop.IZIPokerDesktop;
 
 /**
@@ -61,7 +62,12 @@ public class MainMenuDesktop implements Screen{
         tmp2 = new Image(exitTexDown);
         exitBtn = new ImageButton(tmp1.getDrawable(), tmp2.getDrawable());
         exitBtn.setPosition( stage.getWidth() / 2, 150f, Align.center);
+        //exitBtn.setBounds(exitBtn.getX(), exitBtn.getY(), 100, 10);
         stage.addActor(exitBtn);
+
+            Card c =new Card(13, Card.suitType.DIAMONDS);
+        c.setBounds(100,100,100,150);
+        stage.addActor(c);
 
 
         //Listeners
@@ -70,7 +76,9 @@ public class MainMenuDesktop implements Screen{
             public void clicked(InputEvent event, float x, float y) {
                 Game g = IZIPokerDesktop.getInstance();
                 g.setScreen(new CreateTableDesktop());
-            };
+            }
+
+            ;
         });
 
         exitBtn.addListener(new ClickListener() {

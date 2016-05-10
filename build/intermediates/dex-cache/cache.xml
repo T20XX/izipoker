@@ -3,38 +3,31 @@
 
     <item
         jar="C:\Users\Telmo\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-box2d\1.9.2\b78eaa90aaaf7830e6dffff587ea6e859c2787b2\gdx-box2d-1.9.2.jar"
-        jumboMode="true"
+        jumboMode="false"
         revision="23.0.3"
         sha1="b78eaa90aaaf7830e6dffff587ea6e859c2787b2">
-        <dex dex="C:\Users\Telmo\git\izipoker\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-box2d-1.9.2_c66544a0281452f19ddd7f91a255aaa87d11bba4\classes.dex" />
+        <dex dex="C:\Users\Telmo\git\izipoker\android\build\intermediates\pre-dexed\debug\gdx-box2d-1.9.2_c66544a0281452f19ddd7f91a255aaa87d11bba4.jar" />
     </item>
     <item
         jar="C:\Users\Telmo\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx\1.9.2\e641cb91bec06bc64d9ddf7a7d7062caceec73cd\gdx-1.9.2.jar"
-        jumboMode="true"
+        jumboMode="false"
         revision="23.0.3"
         sha1="e641cb91bec06bc64d9ddf7a7d7062caceec73cd">
-        <dex dex="C:\Users\Telmo\git\izipoker\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-1.9.2_ed770df045e2fe798b393e4c65d1a3056fb8e812\classes.dex" />
-    </item>
-    <item
-        jar="C:\Users\Telmo\git\izipoker\android\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="0b8488b6406b992a2a1c6f4db19e1ed3bca8639a">
-        <dex dex="C:\Users\Telmo\git\izipoker\android\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_af4d6c9b9d8520ed50c113399b1c56eed551dce9\classes.dex" />
-    </item>
-    <item
-        jar="C:\Users\Telmo\git\izipoker\android\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="5a39381c37f236a72acc315337dab9208ceae569">
-        <dex dex="C:\Users\Telmo\git\izipoker\android\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_3b77e02bd960fefce62636cd3de54664613bf3ac\classes.dex" />
+        <dex dex="C:\Users\Telmo\git\izipoker\android\build\intermediates\pre-dexed\debug\gdx-1.9.2_ed770df045e2fe798b393e4c65d1a3056fb8e812.jar" />
     </item>
     <item
         jar="C:\Users\Telmo\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-backend-android\1.9.2\342b830bc718dc1965c8f13fc58dc500e8bd262f\gdx-backend-android-1.9.2.jar"
-        jumboMode="true"
+        jumboMode="false"
         revision="23.0.3"
         sha1="342b830bc718dc1965c8f13fc58dc500e8bd262f">
-        <dex dex="C:\Users\Telmo\git\izipoker\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-backend-android-1.9.2_4b4db17cc6dcc1a1cd98f12225be24c07b60e449\classes.dex" />
+        <dex dex="C:\Users\Telmo\git\izipoker\android\build\intermediates\pre-dexed\debug\gdx-backend-android-1.9.2_4b4db17cc6dcc1a1cd98f12225be24c07b60e449.jar" />
+    </item>
+    <item
+        jar="C:\Users\Telmo\git\izipoker\core\build\libs\core-1.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="430ca6bdef9e3b69e14ab252124143f09296f980">
+        <dex dex="C:\Users\Telmo\git\izipoker\android\build\intermediates\pre-dexed\debug\core-1.0_a9190a7642e033bda3521be138941b68e265285e.jar" />
     </item>
 
 </items>

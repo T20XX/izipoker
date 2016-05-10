@@ -1,11 +1,18 @@
 package com.izipoker.cardGame;
 
-import java.util.*;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
  * Created by up201405840 on 12-04-2016.
  */
-public class Card {
+public class Card extends Actor{
+
+    static private Texture cardsTex = new Texture("cards.png");
+    static private Texture backTex = new Texture("backCard.png");
+    private TextureRegion frontTex;
 
     int main(){
         Card c1 = new Card(1,suitType.DIAMONDS);
@@ -82,17 +89,17 @@ public class Card {
      */
     public enum suitType{
         /**
-         * Clubs suit
+         * Hearts suit
          */
-        CLUBS,
+        HEARTS,
         /**
          * Diamonds suit
          */
         DIAMONDS,
         /**
-         * Hearts suit
+         * Clubs suit
          */
-        HEARTS,
+        CLUBS,
         /**
          * Spades suit
          */
@@ -108,6 +115,9 @@ public class Card {
      * Suit of the card
      */
     private suitType suit;
+
+    private boolean flipped = false;
+
     /*private static final Map<rankType, Integer> valueMap;
     static
     {
@@ -135,6 +145,7 @@ public class Card {
     public Card(rankType r, suitType s){
         rank = r;
         suit = s;
+        getFrontTexFromCards();
     }
 
     /**
@@ -146,6 +157,15 @@ public class Card {
     public Card(int value, suitType s){
         suit = s;
         rank = rankType.values()[value - 1];
+        getFrontTexFromCards();
+    }
+
+    private void getFrontTexFromCards() {
+        frontTex = new TextureRegion(cardsTex,
+                cardsTex.getWidth()/13 * (rankType.valueOf(this.rank.toString()).ordinal()),
+                cardsTex.getHeight()/4 * suitType.valueOf(this.suit.toString()).ordinal(),
+                cardsTex.getWidth()/13,
+                cardsTex.getHeight()/4);
     }
 
     /**
@@ -186,6 +206,19 @@ public class Card {
         this.suit = suit;
     }
 
+
+    public boolean isFlipped() {
+        return flipped;
+    }
+
+    public void setFlipped(boolean flipped) {
+        this.flipped = flipped;
+    }
+
+    public void flip() {
+        this.flipped = !this.flipped;
+    }
+
     /**
      * Used for debugging purposes
      * @return A string composed by the rank followed by its suit
@@ -193,5 +226,14 @@ public class Card {
     @Override
     public String toString(){
         return this.rank.toString() + " of " + this.suit.toString();
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        if (isFlipped()){
+            batch.draw(frontTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+        } else {
+            batch.draw(backTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+        }
     }
 }

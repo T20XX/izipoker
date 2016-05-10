@@ -3,33 +3,37 @@ package com.izipoker.game.desktop.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 /**
  * Created by Telmo on 03/05/2016.
  */
-public class CreateTableDesktop extends Stage implements Screen{
+public class CreateTableDesktop implements Screen{
     private Stage stage;
 
-    private Texture backgroundText;
-    private Texture createTableTextUp;
+    private Texture sliderBackground;
+    private Texture sliderKnob;
+    private Texture createTableTexUp, createTableTexDown;
     private Texture exitText;
 
     ImageButton createTableBtn;
 
 
     public CreateTableDesktop() {
-        super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
+        //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         //backgroundText = new Texture
-        backgroundText = new Texture("C:\\Users\\Telmo\\git\\izipoker\\android\\assets\\badlogic.jpg");
-        createTableTextUp = new Texture("C:\\Users\\Telmo\\git\\izipoker\\android\\assets\\badlogic.jpg");
+        sliderBackground = new Texture("sliderBackground.png");
+        sliderKnob = new Texture("sliderKnob.png");
+        createTableTexUp = new Texture("startBtnUp.png");
+        createTableTexDown = new Texture("startBtnDown.png");
+
         buildStage();
 
         /*Deck d = new Deck();
@@ -40,8 +44,21 @@ public class CreateTableDesktop extends Stage implements Screen{
 
     public void buildStage() {
         //Actors
-        Image tmp = new Image(backgroundText);
-       // addActor(tmp);
+        //Image tmp1 = new Image(backgroundTex);
+        //stage.addActor(tmp1);
+
+        Image tmp1 = new Image(createTableTexUp);
+        Image tmp2 = new Image(createTableTexDown);
+        createTableBtn = new ImageButton(tmp1.getDrawable(), tmp2.getDrawable());
+        createTableBtn.setPosition( stage.getWidth() / 2, 300f, Align.center);
+        stage.addActor(createTableBtn);
+
+        tmp1 = new Image(sliderBackground);
+        tmp2 = new Image(sliderKnob);
+        Slider.SliderStyle ss = new Slider.SliderStyle(tmp1.getDrawable(), tmp2.getDrawable());
+        Slider s = new Slider(2f,8f,1,false,ss);
+        s.setBounds(100,100,200,20);
+        stage.addActor(s);
 
         //Listeners
 
@@ -53,8 +70,7 @@ public class CreateTableDesktop extends Stage implements Screen{
     }
 
     @Override
-    public void show() {
-        Gdx.input.setInputProcessor(this);
+    public void show(){
     }
 
     @Override
@@ -62,13 +78,13 @@ public class CreateTableDesktop extends Stage implements Screen{
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        super.act(delta);
-        super.draw();
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-        getViewport().update(width, height);
+        stage.getViewport().update(width, height);
     }
 
     @Override
@@ -82,9 +98,9 @@ public class CreateTableDesktop extends Stage implements Screen{
 
     @Override
     public void dispose() {
-    super.dispose();
-        backgroundText.dispose();
-        createTableTextUp.dispose();
+    stage.dispose();
+        sliderBackground.dispose();
+        sliderKnob.dispose();
         exitText.dispose();
     }
 }
