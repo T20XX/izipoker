@@ -22,21 +22,25 @@ public class Dealer {
         this.deck = new Deck();
     }
 
-    public void createRound(){
-
-        Round round =  new Round(table.getActivePlayers(), table.getJoker());
-        table.addRounds(round);
-        round.getFirstPlayer().bet(table.getSmallBlind(), round);
-        round.getFirstPlayer().bet(table.getBigBlind(), round);
-
+    public boolean createRound(){
+        if(table.getActivePlayers().length >= 2) {
+            Round round = new Round(table.getActivePlayers(), table.getJoker());
+            table.addRounds(round);
+            round.getFirstPlayer().bet(table.getSmallBlind(), round);
+            round.getFirstPlayer().bet(table.getBigBlind(), round);
+            return true;
+        }
+        else return false;
     }
     public void setNewJoker(){
         table.nextJoker();
     }
 
     public void giveHands(){
-        for(int i = 0; i < table.getActivePlayers().length; i++){
-            table.getActivePlayers()[i].setHand(new Hand(deck.getTopCard(), deck.getTopCard()));
+        Player[] players_in_round =
+                table.getTopRound().getCurrentPlayers().toArray(new Player[table.getTopRound().getCurrentPlayers().size()]);
+        for(int i = 0; i < players_in_round.length; i++){
+            players_in_round[i].setHand(new Hand(deck.getTopCard(), deck.getTopCard()));
         }
     }
     public void showFlop(){

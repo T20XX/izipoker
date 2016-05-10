@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public class Card extends Actor{
 
-    static private Texture cardsTex = new Texture("cards.png");
-    static private Texture backTex = new Texture("backCard.png");
+    static private Texture cardsTex = null;//new Texture("cards.png");
+    static private Texture backTex = null;//new Texture("backCard.png");
     private TextureRegion frontTex;
 
     int main(){
@@ -161,11 +161,11 @@ public class Card extends Actor{
     }
 
     private void getFrontTexFromCards() {
-        frontTex = new TextureRegion(cardsTex,
+        /*frontTex = new TextureRegion(cardsTex,
                 cardsTex.getWidth()/13 * (rankType.valueOf(this.rank.toString()).ordinal()),
                 cardsTex.getHeight()/4 * suitType.valueOf(this.suit.toString()).ordinal(),
                 cardsTex.getWidth()/13,
-                cardsTex.getHeight()/4);
+                cardsTex.getHeight()/4);*/
     }
 
     /**

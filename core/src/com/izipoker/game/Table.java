@@ -13,7 +13,7 @@ public class Table {
     private ArrayList<Round> rounds;
     private Dealer dealer;
     private Player joker;
-    private int SMALL_BLIND;
+    private int SMALL_BLIND = 30;
 
     /**
      * Creates a table given number of players
@@ -23,6 +23,7 @@ public class Table {
         MAX_PLAYER = maxPlayers;
         seats = new Player[maxPlayers];
         dealer = new Dealer(this);
+        rounds = new ArrayList<Round>();
     }
 
     /**
@@ -105,7 +106,7 @@ public class Table {
     }
 
     public Round getTopRound(){
-        return rounds.get(rounds.size());
+        return rounds.get(rounds.size()-1);
     }
     public Dealer getDealer() {
         return dealer;
