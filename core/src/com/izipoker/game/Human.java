@@ -10,7 +10,7 @@ public class Human extends Player{
      * @param id    Human ID
      * @param name  Human Name
      */
-    Human(int id, String name, int money){
+    public Human(int id, String name, int money){
         super(id,name, money);
     }
 }

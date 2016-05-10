@@ -32,7 +32,7 @@ public class Table {
      */
     public boolean addPlayer(Player p){
         for(int i = 0; i < seats .length; i++){
-            if (seats[i] != null){
+            if (seats[i] == null){
                 seats[i] = p;
                 if(joker == null)
                     joker = p;
@@ -92,11 +92,14 @@ public class Table {
     public int getBigBlind() {
         return 2 * SMALL_BLIND;
     }
+
     public Player[] getActivePlayers(){
         ArrayList<Player> activePlayers = new ArrayList<Player>();
         for(int i = 0; i< seats.length; i++){
-            if(seats[i].isActive())
-            activePlayers.add(seats[i]);
+            if(seats[i] != null) {
+                if (seats[i].isActive())
+                    activePlayers.add(seats[i]);
+            }
         }
         return activePlayers.toArray(new Player[activePlayers.size()]);
     }
