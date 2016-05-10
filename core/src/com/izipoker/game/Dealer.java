@@ -34,18 +34,21 @@ public class Dealer {
 
     public void giveHands(){
         for(int i = 0; i < table.getActivePlayers().length; i++){
-            table.getActivePlayers()[i].setHand(Deck.getTopCard(), Deck.getTopCard());
+            table.getActivePlayers()[i].setHand(deck.getTopCard(), deck.getTopCard());
         }
     }
     public void showFlop(){
         deck.getTopCard();
         ArrayList<Card> tempFlop = new ArrayList<Card>();
-        deck.getTopCard().flip();
-        tempFlop.add(deck.getTopCard());
-        deck.getTopCard().flip();
-        tempFlop.add(deck.getTopCard());
-        deck.getTopCard().flip();
-        tempFlop.add(deck.getTopCard());
+        Card temp =  deck.getTopCard();
+        temp.flip();
+        tempFlop.add(temp);
+        temp =  deck.getTopCard();
+        temp.flip();
+        tempFlop.add(temp);
+        temp =  deck.getTopCard();
+        temp.flip();
+        tempFlop.add(temp);
         table.getTopRound().setFlop(tempFlop.toArray(new Card[tempFlop.size()]));
     }
     public void showTurn(){
