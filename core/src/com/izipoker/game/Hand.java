@@ -1,10 +1,27 @@
 package com.izipoker.game;
+
 import com.izipoker.cardGame.Card;
+
+import javafx.util.Pair;
 
 /**
  * Created by Telmo on 26/04/2016.
  */
-public class Hand {
+public class Hand{
+
+public enum handRank{
+    ROYAL_FLUSH,
+    STRAIGHT_FLUSH,
+    FOUR_OF_A_KIND,
+    FULL_HOUSE,
+    FLUSH,
+    STRAIGHT,
+    THREE_OF_A_KIND,
+    TWO_PAIR,
+    PAIR,
+    HIGH_CARD
+}
+
     public final static int HAND_SIZE = 2;
     private Card cards[];
 
@@ -31,4 +48,8 @@ public class Hand {
         }
     }
 
+    public Pair<handRank, Card.rankType> checkHandRank(Card[] cardsOnTable){
+        //TO FINISH
+        return new Pair(handRank.PAIR, Card.rankType.ACE);
+    }
 }

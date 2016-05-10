@@ -1,5 +1,6 @@
 package com.izipoker.game;
 
+import com.izipoker.cardGame.Card;
 import com.izipoker.cardGame.Deck;
 
 import java.util.ArrayList;
