@@ -92,4 +92,16 @@ public class Table {
     public int getBigBlind() {
         return 2 * SMALL_BLIND;
     }
+    public Player[] getActivePlayers(){
+        ArrayList<Player> activePlayers = new ArrayList<Player>();
+        for(int i = 0; i< seats.length; i++){
+            if(seats[i].isActive())
+            activePlayers.add(seats[i]);
+        }
+        return activePlayers.toArray(new Player[activePlayers.size()]);
+    }
+
+    public Round getTopRound(){
+        return rounds.get(0);
+    }
 }

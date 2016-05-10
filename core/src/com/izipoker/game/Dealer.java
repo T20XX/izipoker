@@ -1,10 +1,15 @@
 package com.izipoker.game;
 
+import com.izipoker.cardGame.Deck;
+
+import java.util.ArrayList;
+
 /**
  * Created by Telmo on 26/04/2016.
  */
 public class Dealer {
     private Table table;
+    private Deck deck;
 
     /**
      * Creates a poker dealer
@@ -15,17 +20,40 @@ public class Dealer {
     }
 
     public void createRound(){
-        Round round =  new Round(table.getSeats(), table.getJoker());
-        table.addRounds(round);
-        Player player = round.getCurrentPlayers().removeFirst();
-        player.bet(table.getSmallBlind(), round);
-        round.getCurrentPlayers().addLast(player);
-        player = round.getCurrentPlayers().removeFirst();
-        player.bet(table.getBigBlind(), round);
-        round.getCurrentPlayers().addLast(player);
-    }
 
+        Round round =  new Round(table.getActivePlayers(), table.getJoker());
+        table.addRounds(round);
+        round.getFirstPlayer().bet(table.getSmallBlind(), round);
+        round.getFirstPlayer().bet(table.getBigBlind(), round);
+
+    }
     public void setNewJoker(){
         table.nextJoker();
+    }
+    public void giveHands(){
+        for(int i = 0; i < table.getActivePlayers().length; i++){
+            table.getActivePlayers()[i].setHand(Deck.getTopCard(), Deck.getTopCard());
+        }
+    }
+    public void showFlop(){
+        Deck.getTopCard();
+        ArrayList<Card> tempFlop = new ArrayList<Card>();
+        Deck.getTopCard().flip();
+        tempFlop.add(Deck.getTopCard());
+        Deck.getTopCard().flip();
+        tempFlop.add(Deck.getTopCard());
+        Deck.getTopCard().flip();
+        tempFlop.add(Deck.getTopCard());
+        table.getTopRound().setFlop(tempFlop.toArray(new Card[tempFlop.size()]));
+    }
+    public void showTurn(){
+        Deck.getTopCard();
+        Deck.getTopCard().flip();
+        table.getTopRound().setTurn(Deck.getTopCard());
+    }
+    public void showRiver(){
+        Deck.getTopCard();
+        Deck.getTopCard().flip();
+        table.getTopRound().setRiver(Deck.getTopCard());
     }
 }

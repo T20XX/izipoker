@@ -27,6 +27,7 @@ public class Round {
     private int pot;
     private LinkedList<Player> currentPlayers;
 
+
     public Round(Player[] players, Player p){
         this.pot = 0;
         this.flop = null;
@@ -34,7 +35,6 @@ public class Round {
         this.river = null;
         currentPlayers = new LinkedList<Player>();
         for(int i = 0; i< players.length; i++){
-            if(players[i].isActive())
                 currentPlayers.add(players[i]);
         }
 
@@ -74,4 +74,19 @@ public class Round {
     public LinkedList<Player> getCurrentPlayers() {
         return currentPlayers;
     }
+    public Player getFirstPlayer(){
+        return currentPlayers.peek();
+    }
+    public void setRiver(Card river) {
+        this.river = river;
+    }
+
+    public void setTurn(Card turn) {
+        this.turn = turn;
+    }
+
+    public void setFlop(Card[] flop) {
+        this.flop = flop;
+    }
+
 }
