@@ -12,6 +12,8 @@ public class Table {
     //private Card[] cardsOnTable;
     private ArrayList<Round> rounds;
     private Dealer dealer;
+    private Player joker;
+    private int SMALL_BLIND;
 
     /**
      * Creates a table given number of players
@@ -32,19 +34,62 @@ public class Table {
         for(int i = 0; i < seats .length; i++){
             if (seats[i] != null){
                 seats[i] = p;
+                if(joker == null)
+                    joker = p;
                 return true;
             }
         }
         return false;
     }
 
-    public boolean removePlayer(Player p){
-        for(int i = 0; i < seats .length; i++){
-            if (seats[i] == p){
+    public boolean removePlayer(Player p) {
+        for (int i = 0; i < seats.length; i++) {
+            if (seats[i] == p) {
                 seats[i] = null;
                 return true;
             }
         }
         return false;
+    }
+
+    public Player nextJoker(){
+        int j, k = 0;
+        for(int i = 0; i < seats.length; i++){
+            if(seats[i] == joker){
+                if(i == seats.length-1)
+                    j = 0;
+                else j = i+1;
+                while(k != seats.length){
+                    if(i == seats.length-1)
+                        j = 0;
+                    if(seats[j].isActive()) {
+                        joker = seats[j];
+                        return joker;
+                    }
+                    k++;
+                    j++;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Player[] getSeats(){
+        return seats;
+    }
+    public void addRounds(Round r){
+        rounds.add(r);
+    }
+
+    public Player getJoker() {
+        return joker;
+    }
+
+    public int getSmallBlind() {
+        return SMALL_BLIND;
+    }
+
+    public int getBigBlind() {
+        return 2 * SMALL_BLIND;
     }
 }
