@@ -2,12 +2,9 @@ package com.izipoker.game;
 
 import com.izipoker.cardGame.Card;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
 
 /**
  * Created by Jorge on 03/05/2016.
@@ -26,6 +23,7 @@ public class Round {
     private Card river;
     private int pot;
     private LinkedList<Player> currentPlayers;
+    private roundState state = roundState.PREFLOP;
 
 
     public Round(Player[] players, Player p){
@@ -88,5 +86,16 @@ public class Round {
     public void setFlop(Card[] flop) {
         this.flop = flop;
     }
-
+    public roundState getState() {
+        return state;
+    }
+    public void setState(roundState state) {
+        this.state = state;
+    }
+    /**
+     * Updates round state to the next state
+     */
+    public void updateState(){
+        this.state = roundState.values()[roundState.valueOf(this.state.toString()).ordinal() + 1];
+    }
 }

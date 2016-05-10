@@ -30,30 +30,31 @@ public class Dealer {
     public void setNewJoker(){
         table.nextJoker();
     }
+
     public void giveHands(){
         for(int i = 0; i < table.getActivePlayers().length; i++){
             table.getActivePlayers()[i].setHand(Deck.getTopCard(), Deck.getTopCard());
         }
     }
     public void showFlop(){
-        Deck.getTopCard();
+        deck.getTopCard();
         ArrayList<Card> tempFlop = new ArrayList<Card>();
-        Deck.getTopCard().flip();
-        tempFlop.add(Deck.getTopCard());
-        Deck.getTopCard().flip();
-        tempFlop.add(Deck.getTopCard());
-        Deck.getTopCard().flip();
-        tempFlop.add(Deck.getTopCard());
+        deck.getTopCard().flip();
+        tempFlop.add(deck.getTopCard());
+        deck.getTopCard().flip();
+        tempFlop.add(deck.getTopCard());
+        deck.getTopCard().flip();
+        tempFlop.add(deck.getTopCard());
         table.getTopRound().setFlop(tempFlop.toArray(new Card[tempFlop.size()]));
     }
     public void showTurn(){
-        Deck.getTopCard();
-        Deck.getTopCard().flip();
-        table.getTopRound().setTurn(Deck.getTopCard());
+        deck.getTopCard();
+        deck.getTopCard().flip();
+        table.getTopRound().setTurn(deck.getTopCard());
     }
     public void showRiver(){
-        Deck.getTopCard();
-        Deck.getTopCard().flip();
-        table.getTopRound().setRiver(Deck.getTopCard());
+        deck.getTopCard();
+        deck.getTopCard().flip();
+        table.getTopRound().setRiver(deck.getTopCard());
     }
 }
