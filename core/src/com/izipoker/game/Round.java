@@ -98,4 +98,17 @@ public class Round {
     public void updateState(){
         this.state = roundState.values()[roundState.valueOf(this.state.toString()).ordinal() + 1];
     }
+
+    public Card[] getFlop() {
+        return flop;
+    }
+
+    public Card getTurn() {
+        return turn;
+    }
+
+    public Card getRiver() {
+        return river;
+    }
+
 }

@@ -107,4 +107,12 @@ public class Table {
     public Round getTopRound(){
         return rounds.get(rounds.size());
     }
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public ArrayList<Round> getRounds() {
+        return rounds;
+    }
+
 }

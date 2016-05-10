@@ -17,7 +17,9 @@ public class Dealer {
      * @param table Table where dealer is dealing
      */
     public Dealer(Table table){
+
         this.table = table;
+        this.deck = new Deck();
     }
 
     public void createRound(){
