@@ -34,7 +34,7 @@ public class Dealer {
 
     public void giveHands(){
         for(int i = 0; i < table.getActivePlayers().length; i++){
-            table.getActivePlayers()[i].setHand(deck.getTopCard(), deck.getTopCard());
+            table.getActivePlayers()[i].setHand(new Hand(deck.getTopCard(), deck.getTopCard()));
         }
     }
     public void showFlop(){

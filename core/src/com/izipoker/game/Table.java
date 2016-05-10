@@ -102,6 +102,6 @@ public class Table {
     }
 
     public Round getTopRound(){
-        return rounds.get(0);
+        return rounds.get(rounds.size());
     }
 }
