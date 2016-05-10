@@ -10,11 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public class Card extends Actor{
 
-    static private Texture cardsTex = new Texture("cards.png");
-    static private Texture backTex = new Texture("backCard.png");
-    private TextureRegion frontTex;
+    private static Texture cardsTex =  null;//new Texture("cards.png");
 
-    int main(){
+   /* private static Texture backTex;
+
+    static {
+        backTex = new Texture("backCard.png");
+    }*/
+
+    //private TextureRegion frontTex;
+
+    /*int main(){
         Card c1 = new Card(1,suitType.DIAMONDS);
         System.out.println(c1.getValue());
         System.out.println(c1.getRank().toString());
@@ -24,7 +30,7 @@ public class Card extends Actor{
         System.out.println(c2.getRank().toString());
 
         return 0;
-    }
+    }*/
 
     /**
      * Rank of cards
@@ -161,11 +167,11 @@ public class Card extends Actor{
     }
 
     private void getFrontTexFromCards() {
-        frontTex = new TextureRegion(cardsTex,
+        /*frontTex = new TextureRegion(cardsTex,
                 cardsTex.getWidth()/13 * (rankType.valueOf(this.rank.toString()).ordinal()),
                 cardsTex.getHeight()/4 * suitType.valueOf(this.suit.toString()).ordinal(),
                 cardsTex.getWidth()/13,
-                cardsTex.getHeight()/4);
+                cardsTex.getHeight()/4);*/
     }
 
     /**
@@ -231,9 +237,17 @@ public class Card extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if (isFlipped()){
-            batch.draw(frontTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+            //batch.draw(frontTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
         } else {
-            batch.draw(backTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+            //batch.draw(backTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
         }
+    }
+
+    public static Texture getCardsTex() {
+        return cardsTex;
+    }
+
+    public static void setCardsTex(Texture cardsTex) {
+        Card.cardsTex = cardsTex;
     }
 }
