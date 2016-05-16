@@ -13,18 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.izipoker.game.ChatServer;
-import com.izipoker.game.ChatServerInterface;
 import com.izipoker.game.Table;
 import com.izipoker.game.desktop.IZIPokerDesktop;
-
-import lipermi.handler.CallHandler;
-import lipermi.net.Server;
 
 /**
  * Created by Telmo on 03/05/2016.
  */
-public class CreateTableDesktop implements Screen{
+public class LobbyDesktop implements Screen{
+    //GUI Variables
     private Stage stage;
 
     private Texture sliderBackground;
@@ -32,11 +28,15 @@ public class CreateTableDesktop implements Screen{
     private Texture createTableTexUp, createTableTexDown;
     private Texture exitText;
 
-    private ImageButton createTableBtn;
-    private Slider slider;
+    ImageButton createTableBtn;
+
+    //Game variables
+    private Table table;
 
 
-    public CreateTableDesktop() {
+    public LobbyDesktop(Table table) {
+        //Game variables initialization
+        this.table = table;
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         //backgroundText = new Texture
@@ -67,30 +67,17 @@ public class CreateTableDesktop implements Screen{
         tmp1 = new Image(sliderBackground);
         tmp2 = new Image(sliderKnob);
         Slider.SliderStyle ss = new Slider.SliderStyle(tmp1.getDrawable(), tmp2.getDrawable());
-        slider = new Slider(2f,8f,1,false,ss);
-        slider.setBounds(100,100,200,20);
-        stage.addActor(slider);
+        Slider s = new Slider(2f,8f,1,false,ss);
+        s.setBounds(100,100,200,20);
+        stage.addActor(s);
+
+
 
         //Listeners
         createTableBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Table table = new Table((int)slider.getValue());
-
-                try {
-                    ChatServer chatServer = new ChatServer();
-                    CallHandler callHandler = new CallHandler();
-                    callHandler.registerGlobal(ChatServerInterface.class, chatServer);
-                    Server server = new Server();
-                    int thePortIWantToBind = 4455;
-                    server.bind(thePortIWantToBind, callHandler);
-                    System.err.println("Server ready");
-                    Game g = IZIPokerDesktop.getInstance();
-                    g.setScreen(new LobbyDesktop(table));
-                } catch (Exception e) {
-                    System.err.println("Server exception: " + e.toString());
-                    e.printStackTrace();
-                }
+                Game g = IZIPokerDesktop.getInstance();
             }
 
             ;
@@ -132,7 +119,7 @@ public class CreateTableDesktop implements Screen{
 
     @Override
     public void dispose() {
-    stage.dispose();
+        stage.dispose();
         sliderBackground.dispose();
         sliderKnob.dispose();
         exitText.dispose();

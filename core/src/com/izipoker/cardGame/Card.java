@@ -10,11 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public class Card extends Actor{
 
-    static private Texture cardsTex = null;//new Texture("cards.png");
-    static private Texture backTex = null;//new Texture("backCard.png");
+    private static Texture cardsTex =  new Texture("cards.png");
+
+    private static Texture backTex = new Texture("backCard.png");
+
     private TextureRegion frontTex;
 
-    int main(){
+    /*int main(){
         Card c1 = new Card(1,suitType.DIAMONDS);
         System.out.println(c1.getValue());
         System.out.println(c1.getRank().toString());
@@ -24,7 +26,7 @@ public class Card extends Actor{
         System.out.println(c2.getRank().toString());
 
         return 0;
-    }
+    }*/
 
     /**
      * Rank of cards
@@ -235,5 +237,13 @@ public class Card extends Actor{
         } else {
             batch.draw(backTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
         }
+    }
+
+    public static Texture getCardsTex() {
+        return cardsTex;
+    }
+
+    public static void setCardsTex(Texture cardsTex) {
+        Card.cardsTex = cardsTex;
     }
 }

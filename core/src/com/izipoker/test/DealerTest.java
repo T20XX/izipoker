@@ -27,6 +27,10 @@ public class DealerTest {
     public void createRound(){
         Table t = new Table(8);
         Dealer d = t.getDealer();
+        Player p = new Human(0,"Teste",1000);
+        Player p1 = new Human(0,"Teste1",1000);
+        t.addPlayer(p);
+        t.addPlayer(p1);
         assertEquals(0, t.getRounds().size());
         assertFalse(d.createRound());
         Player p = new Human(0,"Teste",1000);

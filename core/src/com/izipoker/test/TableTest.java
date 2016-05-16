@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  */
 public class TableTest {
     @Test
-    public void addPlayertoTable(){
+    public void testAddPlayertoTable(){
         Table t = new Table(8);
         Player p = new Human(0,"Teste",1000);
 
