@@ -1,6 +1,5 @@
 package com.izipoker.game.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,14 +9,20 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.cardGame.Card;
-import com.izipoker.game.IZIPokerAndroid;
+import com.izipoker.game.ChatClient;
+import com.izipoker.game.ChatClientCallbackInterface;
+import com.izipoker.game.ChatServerInterface;
+
+import java.util.Scanner;
+
+import lipermi.handler.CallHandler;
+import lipermi.net.Client;
 
 /**
  * Created by Telmo on 03/05/2016.
@@ -76,8 +81,43 @@ public class CreatePlayerAndroid implements Screen{
         createBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Game g = IZIPokerAndroid.getInstance();
-                g.setScreen(new SearchTablesAndroid());
+                /*Game g = IZIPokerAndroid.getInstance();
+                g.setScreen(new SearchTablesAndroid());*/
+                try {
+                        System.out.println("teste");
+                    // get proxy for remote chat server
+                    CallHandler callHandler = new CallHandler();
+                    String remoteHost = "localhost";
+                    int portWasBinded = 4455;
+                    Client client = new Client(remoteHost, portWasBinded, callHandler);
+                    ChatServerInterface proxy = (ChatServerInterface)client.getGlobal(ChatServerInterface.class);
+
+                    // create and expose remote listener
+                    ChatClient listener = new ChatClient();
+                    callHandler.exportObject(ChatClientCallbackInterface.class, listener);
+
+                    cancelBtn.setText("Worked");
+
+                    // now do conversation
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.print("What's your nickname? ");
+                    String name = scanner.nextLine();
+                    if ( ! proxy.join(name, listener) ) {
+                        System.out.println("Sorry, nickname is already in use.");
+                        return;
+                    }
+                    String message = scanner.nextLine();
+                    while(! message.equals("exit")) {
+                        if (!message.equals(""))
+                            proxy.tell(name, message);
+                        message = scanner.nextLine();
+                    }
+                    proxy.leave(name);
+                    System.exit(0);
+                } catch (Exception e) {
+                    System.err.println("Client exception: " + e.toString());
+                    e.printStackTrace();
+                }
             }
 
             ;

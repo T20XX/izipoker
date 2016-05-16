@@ -1,7 +1,5 @@
 package com.izipoker.test;
 
-import com.izipoker.cardGame.Card;
-import com.izipoker.cardGame.Card.rankType;
 import com.izipoker.game.Dealer;
 import com.izipoker.game.Human;
 import com.izipoker.game.Player;
@@ -9,7 +7,12 @@ import com.izipoker.game.Round;
 import com.izipoker.game.Table;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Jorge on 5/10/2016.
@@ -33,8 +36,8 @@ public class DealerTest {
         t.addPlayer(p1);
         assertEquals(0, t.getRounds().size());
         assertFalse(d.createRound());
-        Player p = new Human(0,"Teste",1000);
-        Player p1 = new Human(0,"Teste1",1000);
+        p = new Human(0,"Teste",1000);
+        p1 = new Human(0,"Teste1",1000);
         t.addPlayer(p);
         t.addPlayer(p1);
         assertTrue(d.createRound());

@@ -163,11 +163,11 @@ public class Card extends Actor{
     }
 
     private void getFrontTexFromCards() {
-        /*frontTex = new TextureRegion(cardsTex,
+        frontTex = new TextureRegion(cardsTex,
                 cardsTex.getWidth()/13 * (rankType.valueOf(this.rank.toString()).ordinal()),
                 cardsTex.getHeight()/4 * suitType.valueOf(this.suit.toString()).ordinal(),
                 cardsTex.getWidth()/13,
-                cardsTex.getHeight()/4);*/
+                cardsTex.getHeight()/4);
     }
 
     /**
