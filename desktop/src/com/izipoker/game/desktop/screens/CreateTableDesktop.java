@@ -86,7 +86,7 @@ public class CreateTableDesktop implements Screen{
                     server.bind(thePortIWantToBind, callHandler);
                     System.err.println("Server ready");
                     Game g = IZIPokerDesktop.getInstance();
-                    g.setScreen(new LobbyDesktop());
+                    g.setScreen(new LobbyDesktop(table));
                 } catch (Exception e) {
                     System.err.println("Server exception: " + e.toString());
                     e.printStackTrace();

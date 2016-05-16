@@ -15,6 +15,14 @@ import static org.junit.Assert.*;
  * Created by Jorge on 5/10/2016.
  */
 public class DealerTest {
+    /*Table t = new Table(8);
+    Dealer d = t.getDealer();
+    Player p = new Human(0,"Teste",1000);
+    Player p1 = new Human(0,"Teste1",1000);
+    {
+        t.addPlayer(p);
+        t.addPlayer(p1);
+    }*/
     @Test
     public void createRound(){
         Table t = new Table(8);
@@ -24,7 +32,12 @@ public class DealerTest {
         t.addPlayer(p);
         t.addPlayer(p1);
         assertEquals(0, t.getRounds().size());
-        d.createRound();
+        assertFalse(d.createRound());
+        Player p = new Human(0,"Teste",1000);
+        Player p1 = new Human(0,"Teste1",1000);
+        t.addPlayer(p);
+        t.addPlayer(p1);
+        assertTrue(d.createRound());
         assertEquals(1, t.getRounds().size());
     }
     @Test
@@ -46,6 +59,9 @@ public class DealerTest {
         Dealer d = t.getDealer();
         Player p = new Human(0,"Teste",1000);
         Player p1 = new Human(0,"Teste1",1000);
+        t.addPlayer(p);
+        t.addPlayer(p1);
+        d.createRound();
         assertNull(p.getHand());
         assertNull(p1.getHand());
         d.giveHands();
@@ -56,6 +72,10 @@ public class DealerTest {
     public void showFlop(){
         Table t = new Table(8);
         Dealer d = t.getDealer();
+        Player p = new Human(0,"Teste",1000);
+        Player p1 = new Human(0,"Teste1",1000);
+        t.addPlayer(p);
+        t.addPlayer(p1);
         d.createRound();
         Round r = t.getTopRound();
         assertNull(r.getFlop());
@@ -67,6 +87,10 @@ public class DealerTest {
     public void showTurn(){
         Table t = new Table(8);
         Dealer d = t.getDealer();
+        Player p = new Human(0,"Teste",1000);
+        Player p1 = new Human(0,"Teste1",1000);
+        t.addPlayer(p);
+        t.addPlayer(p1);
         d.createRound();
         Round r = t.getTopRound();
         assertNull(r.getTurn());
@@ -77,6 +101,10 @@ public class DealerTest {
     public void showRiver(){
         Table t = new Table(8);
         Dealer d = t.getDealer();
+        Player p = new Human(0,"Teste",1000);
+        Player p1 = new Human(0,"Teste1",1000);
+        t.addPlayer(p);
+        t.addPlayer(p1);
         d.createRound();
         Round r = t.getTopRound();
         assertNull(r.getRiver());

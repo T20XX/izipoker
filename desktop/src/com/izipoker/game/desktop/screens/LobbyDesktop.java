@@ -71,7 +71,7 @@ public class LobbyDesktop implements Screen{
         s.setBounds(100,100,200,20);
         stage.addActor(s);
 
-        
+
 
         //Listeners
         createTableBtn.addListener(new ClickListener() {
