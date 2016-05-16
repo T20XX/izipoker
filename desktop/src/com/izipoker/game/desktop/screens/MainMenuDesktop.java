@@ -66,6 +66,7 @@ public class MainMenuDesktop implements Screen{
         stage.addActor(exitBtn);
 
             Card c =new Card(13, Card.suitType.DIAMONDS);
+        c.flip();
         c.setBounds(100,100,100,150);
         stage.addActor(c);
 

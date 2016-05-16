@@ -2,7 +2,6 @@ package com.izipoker.test;
 
 import com.izipoker.cardGame.Card;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
