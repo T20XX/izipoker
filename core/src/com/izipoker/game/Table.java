@@ -31,6 +31,7 @@ public class Table implements ServerInterface {
         seats = new Player[maxPlayers];
         dealer = new Dealer(this);
         rounds = new ArrayList<Round>();
+        this.name = name;
     }
 
     /**
@@ -124,9 +125,9 @@ public class Table implements ServerInterface {
     }
 
 
-    public String getName() {
+    /*public String getName() {
         return name;
-    }
+    }*/
 
     public void setName(String name) {
         this.name = name;
@@ -134,9 +135,11 @@ public class Table implements ServerInterface {
 
     @Override
     public boolean join(ClientCallbackInterface client)  {
-client.notify("You have entered");
-        return addPlayer((Player)client);
-
+       // ((Player)client).notify("You have entered");
+        //System.out.println("Entrou o " + client.getName());
+        client.notify("parabens, juntou-se");
+       // return addPlayer((Player)client);
+    return true;
         // tell other users that there is a new user
         //notifyOthers(user, user + " joined");
 
@@ -159,6 +162,11 @@ client.notify("You have entered");
     @Override
     public void leave(ClientCallbackInterface client)  {
         removePlayer((Player)client);
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     private void notifyOthers(ClientCallbackInterface client, String message){

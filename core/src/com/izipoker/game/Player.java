@@ -1,5 +1,6 @@
 package com.izipoker.game;
 
+import java.io.Serializable;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 import com.izipoker.interfaces.ClientCallbackInterface;
@@ -17,7 +18,7 @@ import java.awt.Image;
 /**
  * Created by Telmo on 26/04/2016.
  */
-public abstract class Player extends Actor implements ClientCallbackInterface {
+public abstract class Player extends Actor implements ClientCallbackInterface,Serializable{
     private int id;
     private String name;
     private int money;
@@ -67,8 +68,10 @@ public abstract class Player extends Actor implements ClientCallbackInterface {
         this.id = id;
     }
 
+    @Override
     public String getName() {
-        return name;
+        return this.name;
+        //l
     }
 
     public void setName(String name) {

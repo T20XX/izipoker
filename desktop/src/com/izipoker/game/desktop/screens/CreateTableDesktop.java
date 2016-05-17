@@ -20,8 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.izipoker.game.ChatServer;
-import com.izipoker.game.ChatServerInterface;
 import com.izipoker.game.Table;
 import com.izipoker.game.desktop.IZIPokerDesktop;
 import com.izipoker.interfaces.ServerInterface;
@@ -113,8 +111,8 @@ public class CreateTableDesktop implements Screen{
                     int thePortIWantToBind = 4455;
                     server.bind(thePortIWantToBind, callHandler);
                     System.err.println("Server ready");
-                    Game g = IZIPokerDesktop.getInstance();
-                    g.setScreen(new LobbyDesktop(table));
+                    //Game g = IZIPokerDesktop.getInstance();
+                   // g.setScreen(new LobbyDesktop(table));
                 } catch (Exception e) {
                     System.err.println("Server exception: " + e.toString());
                     e.printStackTrace();

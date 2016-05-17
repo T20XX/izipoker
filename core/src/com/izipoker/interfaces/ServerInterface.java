@@ -6,4 +6,5 @@ public interface ServerInterface {
     public void tell(ClientCallbackInterface c, String message);
     public void tellAll(ClientCallbackInterface client, String message);
     public void leave(ClientCallbackInterface c);
+    public String getName();
 }

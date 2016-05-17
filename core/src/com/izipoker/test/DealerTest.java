@@ -28,7 +28,7 @@ public class DealerTest {
     }*/
     @Test
     public void createRound(){
-        Table t = new Table(8);
+        Table t = new Table("teste",8);
         Dealer d = t.getDealer();
         Player p = new Human(0,"Teste",1000);
         Player p1 = new Human(0,"Teste1",1000);
@@ -45,7 +45,7 @@ public class DealerTest {
     }
     @Test
     public void setNewJoker(){
-        Table t = new Table(8);
+        Table t = new Table("teste",8);
         Dealer d = t.getDealer();
         assertEquals(null, t.getJoker());
         Player p = new Human(0,"Teste",1000);
@@ -58,7 +58,7 @@ public class DealerTest {
     }
     @Test
     public void giveHands(){
-        Table t = new Table(8);
+        Table t = new Table("teste",8);
         Dealer d = t.getDealer();
         Player p = new Human(0,"Teste",1000);
         Player p1 = new Human(0,"Teste1",1000);
@@ -73,7 +73,7 @@ public class DealerTest {
     }
     @Test
     public void showFlop(){
-        Table t = new Table(8);
+        Table t = new Table("teste",8);
         Dealer d = t.getDealer();
         Player p = new Human(0,"Teste",1000);
         Player p1 = new Human(0,"Teste1",1000);
@@ -88,7 +88,7 @@ public class DealerTest {
     }
     @Test
     public void showTurn(){
-        Table t = new Table(8);
+        Table t = new Table("teste",8);
         Dealer d = t.getDealer();
         Player p = new Human(0,"Teste",1000);
         Player p1 = new Human(0,"Teste1",1000);
@@ -102,7 +102,7 @@ public class DealerTest {
     }
     @Test
     public void showRiver(){
-        Table t = new Table(8);
+        Table t = new Table("teste",8);
         Dealer d = t.getDealer();
         Player p = new Human(0,"Teste",1000);
         Player p1 = new Human(0,"Teste1",1000);

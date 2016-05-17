@@ -12,19 +12,19 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.cardGame.Card;
-import com.izipoker.game.ChatClient;
-import com.izipoker.game.ChatClientCallbackInterface;
-import com.izipoker.game.ChatServerInterface;
 import com.izipoker.game.Human;
 import com.izipoker.game.IZIPoker;
 import com.izipoker.game.IZIPokerAndroid;
 import com.izipoker.game.Player;
+import com.izipoker.interfaces.ClientCallbackInterface;
+import com.izipoker.interfaces.ServerInterface;
 
 import java.util.Scanner;
 
@@ -109,18 +109,19 @@ public class CreatePlayerAndroid implements Screen{
                         System.out.println("teste");
                     // get proxy for remote chat server
                     CallHandler callHandler = new CallHandler();
-                    String remoteHost = "localhost";
+                    String remoteHost = "172.30.17.202";
                     int portWasBinded = 4455;
                     Client client = new Client(remoteHost, portWasBinded, callHandler);
                     ServerInterface proxy = (ServerInterface)client.getGlobal(ServerInterface.class);
 
-                    // create and expose remote listener
-                    Human listener = new Human(0, nameTF.getText(), 0, avatarTR);
+                    System.out.println("Mesa " + proxy.getName() + "\n");
 
-                    callHandler.exportObject(clientCallbackInterface.class, listener);
+                    // create and expose remote listener
+                    Player listener = new Human(0, nameTF.getText(), 0, avatarTR);
+                    callHandler.exportObject(ClientCallbackInterface.class, listener);
 
                     // now do conversation
-                    if ( ! proxy.join(listener) ) {
+                    if (proxy.join(listener) ) {
                         System.out.println("Sorry, nickname is already in use.");
                         return;
                     }

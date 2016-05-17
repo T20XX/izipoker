@@ -28,6 +28,7 @@ public class ChatClient implements ChatClientCallbackInterface {
             // create and expose remote listener
             ChatClient listener = new ChatClient();
             callHandler.exportObject(ChatClientCallbackInterface.class, listener);
+
             
             // now do conversation
             Scanner scanner = new Scanner(System.in);
