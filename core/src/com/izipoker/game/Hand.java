@@ -23,6 +23,7 @@ public enum handRank{
 }
 
     public final static int HAND_SIZE = 2;
+
     private Card cards[];
 
     /**
@@ -30,7 +31,7 @@ public enum handRank{
      * @param c1    First card of hand
      * @param c2    Second card of hand
      */
-    Hand(Card c1, Card c2){
+    public Hand(Card c1, Card c2){
         cards = new Card[2];
         cards[0] = c1;
         cards[1] = c2;
@@ -40,7 +41,7 @@ public enum handRank{
      * Hand constructor, creates new Hand given an array of size 2
      * @param cards Array of size 2 containing the two cards of hand
      */
-    Hand(Card cards[]){
+    public Hand(Card cards[]){
         if (cards.length != HAND_SIZE) {
             this.cards = cards;
         } else {
@@ -51,5 +52,8 @@ public enum handRank{
     public Pair<handRank, Card.rankType> checkHandRank(Card[] cardsOnTable){
         //TO FINISH
         return new Pair(handRank.PAIR, Card.rankType.ACE);
+    }
+    public Card[] getCards() {
+        return cards;
     }
 }

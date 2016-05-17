@@ -1,5 +1,6 @@
 package com.izipoker.game.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -100,12 +101,10 @@ public class CreatePlayerAndroid implements Screen{
         createBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                /*Game g = IZIPokerAndroid.getInstance();
-                g.setScreen(new SearchTablesAndroid());*/
-               /* Human p = new Human(0, nameTF.getText(), 0, avatarTR);
-                p.setBounds(100,100,100,100);
-                stage.addActor(p);*/
-                try {
+                Human p = new Human(0, nameTF.getText(), 0, avatarTR);
+                Game g = IZIPokerAndroid.getInstance();
+                g.setScreen(new GameAndroid(p));
+               /* try {
                         System.out.println("teste");
                     // get proxy for remote chat server
                     CallHandler callHandler = new CallHandler();
@@ -128,7 +127,7 @@ public class CreatePlayerAndroid implements Screen{
                 } catch (Exception e) {
                     System.err.println("Client exception: " + e.toString());
                     e.printStackTrace();
-                }
+                }*/
             }
 
             ;
