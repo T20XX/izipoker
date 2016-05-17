@@ -16,27 +16,27 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.izipoker.game.Dealer;
 import com.izipoker.game.Table;
 import com.izipoker.game.desktop.IZIPokerDesktop;
 
 /**
  * Created by Telmo on 03/05/2016.
  */
-public class LobbyDesktop implements Screen{
+public class GameDesktop implements Screen{
     //GUI Variables
     private Stage stage;
     private Skin skin;
 
-
-    private TextButton startBtn;
-
     //Game variables
     private Table table;
+    private Dealer dealer;
 
 
-    public LobbyDesktop(Table table) {
+    public GameDesktop(Table table) {
         //Game variables initialization
         this.table = table;
+        this.dealer = table.getDealer();
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
@@ -56,22 +56,8 @@ public class LobbyDesktop implements Screen{
         table.setBounds(0,0,stage.getWidth(), stage.getHeight());
         stage.addActor(table);
 
-        startBtn = new TextButton("START GAME",skin);
-        startBtn.setPosition( stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
-        stage.addActor(startBtn);
-
-
 
         //Listeners
-        startBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Game g = IZIPokerDesktop.getInstance();
-                g.setScreen(new GameDesktop(table));
-            }
-
-            ;
-        });
 
     }
 

@@ -1,5 +1,8 @@
 package com.izipoker.game;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.izipoker.interfaces.ClientCallbackInterface;
 import com.izipoker.interfaces.ServerInterface;
 
@@ -11,7 +14,9 @@ import lipermi.net.Server;
 /**
  * Created by Jorge on 03/05/2016.
  */
-public class Table implements ServerInterface {
+public class Table extends Actor implements ServerInterface {
+
+    private static Texture tableTex =  new Texture("table.png");
 
     private String name;
     private final int MAX_PLAYER;
@@ -179,5 +184,10 @@ public class Table implements ServerInterface {
         for (Player p:seats){
             p.notify(message);
         }
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        batch.draw(tableTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
     }
 }
