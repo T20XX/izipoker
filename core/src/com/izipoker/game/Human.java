@@ -1,5 +1,8 @@
 package com.izipoker.game;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 /**
  * Created by Telmo on 26/04/2016.
  */
@@ -12,5 +15,8 @@ public class Human extends Player{
      */
     public Human(int id, String name, int money){
         super(id,name, money);
+    }
+    public Human(int id, String name, int money, TextureRegion avatar){
+        super(id,name, money, avatar);
     }
 }

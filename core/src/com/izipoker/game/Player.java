@@ -1,13 +1,23 @@
 package com.izipoker.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import java.awt.Image;
+
 /**
  * Created by Telmo on 26/04/2016.
  */
-public abstract class Player {
+public abstract class Player extends Actor {
     private int id;
     private String name;
     private int money;
-
+    private TextureRegion avatar;
     private boolean active;
     private boolean playing;
 
@@ -20,6 +30,17 @@ public abstract class Player {
         hand = null;
         active = true;
         playing = false;
+        this.avatar = null;
+    }
+
+    Player(int id, String name, int money, TextureRegion avatar) {
+        this.id = id;
+        this.name = name;
+        this.money = money;
+        hand = null;
+        active = true;
+        playing = false;
+        this.avatar = avatar;
     }
 
     void check(Round r){
@@ -79,8 +100,13 @@ public abstract class Player {
         return hand;
     }
 
-    public void setHand(Hand hand) {
-        this.hand = hand;
+    public void setHand(Hand hand){this.hand = hand;}
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+       // BitmapFont font = new BitmapFont(Gdx.files.internal("default.fnt"),false);
+        batch.draw(avatar, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+        //font.draw(batch, name, super.getX()-avatar.getWidth(), super.getY()-avatar.getHeight());
     }
 
 }

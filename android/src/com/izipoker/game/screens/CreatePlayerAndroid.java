@@ -6,11 +6,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -18,6 +21,10 @@ import com.izipoker.cardGame.Card;
 import com.izipoker.game.ChatClient;
 import com.izipoker.game.ChatClientCallbackInterface;
 import com.izipoker.game.ChatServerInterface;
+import com.izipoker.game.Human;
+import com.izipoker.game.IZIPoker;
+import com.izipoker.game.IZIPokerAndroid;
+import com.izipoker.game.Player;
 
 import java.util.Scanner;
 
@@ -34,6 +41,10 @@ public class CreatePlayerAndroid implements Screen{
     private Texture createtTexUp, createTexDown;
     private Texture cancelTexUp, cancelTexDown;
     private Skin skin;
+    private TextField nameTF;
+    private TextureRegion avatarTR;
+    private Image avatarImg;
+    private Texture avatarTxt;
 
     TextButton createBtn;
     TextButton cancelBtn;
@@ -45,6 +56,9 @@ public class CreatePlayerAndroid implements Screen{
 
         skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
         backgroundTex = new Texture("background.png");
+        avatarTxt = new Texture("avatar.jpg");
+        avatarTR = new TextureRegion(avatarTxt, 0, 0, avatarTxt.getWidth()/7, avatarTxt.getHeight());
+
       //  startTexUp = new Texture("startBtnUp.png");
        // startTexDown = new Texture("startBtnDown.png");
         //exitTexUp = new Texture("exitBtnUp.png");
@@ -63,19 +77,24 @@ public class CreatePlayerAndroid implements Screen{
         Image tmp1 = new Image(backgroundTex);
         stage.addActor(tmp1);
 
+
+        avatarImg = new Image(avatarTR);
+        avatarImg.setPosition(stage.getWidth()/2, 3*stage.getHeight()/4, Align.center);
+        stage.addActor(avatarImg);
+
         createBtn = new TextButton("CREATE", skin);
-        createBtn.setPosition( stage.getWidth() / 2, 300f, Align.center);
+        createBtn.setPosition( stage.getWidth() / 2, stage.getHeight()/4 + createBtn.getHeight() , Align.center);
         stage.addActor(createBtn);
 
         cancelBtn = new TextButton("CANCEL", skin);
-        cancelBtn.setPosition( stage.getWidth() / 2, 150f, Align.center);
+        cancelBtn.setPosition( stage.getWidth() / 2, stage.getHeight()/4 - cancelBtn.getHeight(), Align.center);
         //exitBtn.setBounds(exitBtn.getX(), exitBtn.getY(), 100, 10);
         stage.addActor(cancelBtn);
 
-        Card c =new Card(13, Card.suitType.DIAMONDS);
-        c.setBounds(100,100,100,150);
-        stage.addActor(c);
-
+        nameTF = new TextField("", skin);
+        nameTF.setMessageText("Username");
+        nameTF.setPosition(stage.getWidth()/2, 2*stage.getHeight()/4, Align.center);
+        stage.addActor(nameTF);
 
         //Listeners
         createBtn.addListener(new ClickListener() {
@@ -83,6 +102,9 @@ public class CreatePlayerAndroid implements Screen{
             public void clicked(InputEvent event, float x, float y) {
                 /*Game g = IZIPokerAndroid.getInstance();
                 g.setScreen(new SearchTablesAndroid());*/
+               /* Human p = new Human(0, nameTF.getText(), 0, avatarTR);
+                p.setBounds(100,100,100,100);
+                stage.addActor(p);*/
                 try {
                         System.out.println("teste");
                     // get proxy for remote chat server
@@ -90,30 +112,18 @@ public class CreatePlayerAndroid implements Screen{
                     String remoteHost = "localhost";
                     int portWasBinded = 4455;
                     Client client = new Client(remoteHost, portWasBinded, callHandler);
-                    ChatServerInterface proxy = (ChatServerInterface)client.getGlobal(ChatServerInterface.class);
+                    ServerInterface proxy = (ServerInterface)client.getGlobal(ServerInterface.class);
 
                     // create and expose remote listener
-                    ChatClient listener = new ChatClient();
-                    callHandler.exportObject(ChatClientCallbackInterface.class, listener);
+                    Human listener = new Human(0, nameTF.getText(), 0, avatarTR);
 
-                    cancelBtn.setText("Worked");
+                    callHandler.exportObject(clientCallbackInterface.class, listener);
 
                     // now do conversation
-                    Scanner scanner = new Scanner(System.in);
-                    System.out.print("What's your nickname? ");
-                    String name = scanner.nextLine();
-                    if ( ! proxy.join(name, listener) ) {
+                    if ( ! proxy.join(listener) ) {
                         System.out.println("Sorry, nickname is already in use.");
                         return;
                     }
-                    String message = scanner.nextLine();
-                    while(! message.equals("exit")) {
-                        if (!message.equals(""))
-                            proxy.tell(name, message);
-                        message = scanner.nextLine();
-                    }
-                    proxy.leave(name);
-                    System.exit(0);
                 } catch (Exception e) {
                     System.err.println("Client exception: " + e.toString());
                     e.printStackTrace();
@@ -126,7 +136,19 @@ public class CreatePlayerAndroid implements Screen{
         cancelBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
+                IZIPokerAndroid.getInstance().setScreen(new SearchTablesAndroid());
+            };
+        });
+
+        avatarImg.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                int xregion = avatarTR.getRegionX() + avatarTR.getRegionWidth();
+
+                if(xregion >= avatarTxt.getWidth()-avatarTxt.getWidth()/7){
+                    xregion = 0;
+                }
+                avatarTR.setRegion(xregion, 0,avatarTxt.getWidth()/7,avatarTxt.getHeight());
             };
         });
 
