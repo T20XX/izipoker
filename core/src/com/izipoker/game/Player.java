@@ -1,9 +1,11 @@
 package com.izipoker.game;
 
+import com.izipoker.interfaces.ClientCallbackInterface;
+
 /**
  * Created by Telmo on 26/04/2016.
  */
-public abstract class Player {
+public abstract class Player implements ClientCallbackInterface {
     private int id;
     private String name;
     private int money;
@@ -41,7 +43,6 @@ public abstract class Player {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public String getName() {
         return name;
@@ -81,6 +82,13 @@ public abstract class Player {
 
     public void setHand(Hand hand) {
         this.hand = hand;
+    }
+
+
+
+    @Override
+    public void notify(String message) {
+        System.out.println(message);
     }
 
 }

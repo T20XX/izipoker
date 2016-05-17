@@ -1,5 +1,7 @@
 package com.izipoker.game;
 
+import com.izipoker.interfaces.ClientCallbackInterface;
+
 /**
  * Created by Telmo on 26/04/2016.
  */

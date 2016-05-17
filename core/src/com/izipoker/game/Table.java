@@ -1,12 +1,19 @@
 package com.izipoker.game;
 
+import com.izipoker.interfaces.ClientCallbackInterface;
+import com.izipoker.interfaces.ServerInterface;
+
 import java.util.ArrayList;
+
+import lipermi.handler.CallHandler;
+import lipermi.net.Server;
 
 /**
  * Created by Jorge on 03/05/2016.
  */
-public class Table {
+public class Table implements ServerInterface {
 
+    private String name;
     private final int MAX_PLAYER;
     private Player[] seats;
     //private Card[] cardsOnTable;
@@ -19,7 +26,7 @@ public class Table {
      * Creates a table given number of players
      * @param maxPlayers Maximum number of players
      */
-    public Table(int maxPlayers){
+    public Table(String name, int maxPlayers){
         MAX_PLAYER = maxPlayers;
         seats = new Player[maxPlayers];
         dealer = new Dealer(this);
@@ -116,4 +123,53 @@ public class Table {
         return rounds;
     }
 
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean join(ClientCallbackInterface client)  {
+client.notify("You have entered");
+        return addPlayer((Player)client);
+
+        // tell other users that there is a new user
+        //notifyOthers(user, user + " joined");
+
+        // tells this user who is logged in
+        /*for (String name : clients.keySet())
+            if (!name.equals(user))
+                client.notify(name + " is logged in");*/
+    }
+
+    @Override
+    public void tell(ClientCallbackInterface client, String message)  {
+        notifyOthers((Player)client, ((Player) client).getName() + ": " + message);
+    }
+
+    @Override
+    public void tellAll(ClientCallbackInterface client, String message)  {
+        notifyOthers((Player)client, ((Player) client).getName() + " : " + message);
+    }
+
+    @Override
+    public void leave(ClientCallbackInterface client)  {
+        removePlayer((Player)client);
+    }
+
+    private void notifyOthers(ClientCallbackInterface client, String message){
+        for (Player p:seats){
+            p.notify(message);
+        }
+    }
+
+    private void notifyAll(ClientCallbackInterface client, String message){
+        for (Player p:seats){
+            p.notify(message);
+        }
+    }
 }
