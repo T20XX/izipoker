@@ -74,7 +74,7 @@ public class GameAndroid implements Screen{
 
         betSlider = new Slider(50, 500, 10, true, skin);
         betSlider.setWidth(stage.getWidth()/6);
-        betSlider.setPosition(stage.getWidth()- betSlider.getWidth(), 0);
+        betSlider.setPosition(stage.getWidth()- betSlider.getWidth(), 0, Align.center);
         stage.addActor(betSlider);
 
         foldBtn = new TextButton("FOLD", skin);
