@@ -6,14 +6,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.izipoker.cardGame.Card;
 import com.izipoker.game.IZIPokerAndroid;
 
 /**
@@ -21,24 +23,23 @@ import com.izipoker.game.IZIPokerAndroid;
  */
 public class MainMenuAndroid implements Screen{
     private Stage stage;
+    private Skin skin;
+
 
     private Texture backgroundTex;
-    private Texture startTexUp, startTexDown;
-    private Texture exitTexUp, exitTexDown;
 
-    ImageButton startBtn;
-    ImageButton exitBtn;
+    private Label title;
+    private TextButton startBtn;
+    private TextButton exitBtn;
 
     public MainMenuAndroid () {
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
+        skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
+
         //backgroundText = new Texture
 
         backgroundTex = new Texture("background.png");
-        startTexUp = new Texture("startBtnUp.png");
-        startTexDown = new Texture("startBtnDown.png");
-        exitTexUp = new Texture("exitBtnUp.png");
-        exitTexDown = new Texture("exitBtnDown.png");
 
         buildStage();
 
@@ -51,24 +52,27 @@ public class MainMenuAndroid implements Screen{
     public void buildStage() {
         //Actors
         Image tmp1 = new Image(backgroundTex);
+        tmp1.setSize(stage.getWidth() * 2, stage.getHeight());
+        tmp1.setPosition(0, 0);
         stage.addActor(tmp1);
 
-        tmp1 = new Image(startTexUp);
-        Image tmp2 = new Image(startTexDown);
-        startBtn = new ImageButton(tmp1.getDrawable(), tmp2.getDrawable());
-        startBtn.setPosition( stage.getWidth() / 2, 300f, Align.center);
+        title = new Label("IZI POKER", skin);
+        title.setPosition(stage.getWidth() / 2, 5 * stage.getHeight() / 6, Align.center);
+        stage.addActor(title);
+
+        startBtn = new TextButton("START", skin);
+        startBtn.setSize(
+                7 * stage.getWidth() / 8,
+                stage.getHeight() / 8);
+        startBtn.setPosition( stage.getWidth() / 2, 3 * stage.getHeight() /6, Align.center);
         stage.addActor(startBtn);
 
-        tmp1 = new Image(exitTexUp);
-        tmp2 = new Image(exitTexDown);
-        exitBtn = new ImageButton(tmp1.getDrawable(), tmp2.getDrawable());
-        exitBtn.setPosition( stage.getWidth() / 2, 150f, Align.center);
-        //exitBtn.setBounds(exitBtn.getX(), exitBtn.getY(), 100, 10);
+        exitBtn = new TextButton("EXIT", skin);
+        exitBtn.setSize(
+                7 * stage.getWidth() / 8,
+                stage.getHeight() / 8);
+        exitBtn.setPosition(stage.getWidth() / 2, 1 * stage.getHeight() / 6, Align.center);
         stage.addActor(exitBtn);
-
-            Card c =new Card(13, Card.suitType.DIAMONDS);
-        c.setBounds(100,100,100,150);
-        stage.addActor(c);
 
 
         //Listeners
@@ -128,9 +132,5 @@ public class MainMenuAndroid implements Screen{
     public void dispose() {
     stage.dispose();
         backgroundTex.dispose();
-        startTexUp.dispose();
-        startTexDown.dispose();
-        exitTexUp.dispose();
-        exitTexDown.dispose();
     }
 }

@@ -11,26 +11,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.izipoker.cardGame.Card;
 import com.izipoker.game.Human;
-import com.izipoker.game.IZIPoker;
 import com.izipoker.game.IZIPokerAndroid;
-import com.izipoker.game.Player;
-import com.izipoker.interfaces.ClientCallbackInterface;
-import com.izipoker.interfaces.ServerInterface;
-
-import java.util.Scanner;
-
-import lipermi.handler.CallHandler;
-import lipermi.net.Client;
 
 /**
  * Created by Telmo on 03/05/2016.
@@ -39,8 +27,6 @@ public class CreatePlayerAndroid implements Screen{
     private Stage stage;
 
     private Texture backgroundTex;
-    private Texture createtTexUp, createTexDown;
-    private Texture cancelTexUp, cancelTexDown;
     private Skin skin;
     private TextField nameTF;
     private TextureRegion avatarTR;
@@ -76,6 +62,8 @@ public class CreatePlayerAndroid implements Screen{
     public void buildStage() {
         //Actors
         Image tmp1 = new Image(backgroundTex);
+        tmp1.setSize(stage.getWidth() * 2, stage.getHeight());
+        tmp1.setPosition(0, 0);
         stage.addActor(tmp1);
 
 
@@ -84,17 +72,17 @@ public class CreatePlayerAndroid implements Screen{
         stage.addActor(avatarImg);
 
         createBtn = new TextButton("CREATE", skin);
-        createBtn.setPosition( stage.getWidth() / 2, stage.getHeight()/4 + createBtn.getHeight() , Align.center);
+        createBtn.setPosition(stage.getWidth() / 2, stage.getHeight() / 4 + createBtn.getHeight(), Align.center);
         stage.addActor(createBtn);
 
         cancelBtn = new TextButton("CANCEL", skin);
-        cancelBtn.setPosition( stage.getWidth() / 2, stage.getHeight()/4 - cancelBtn.getHeight(), Align.center);
+        cancelBtn.setPosition(stage.getWidth() / 2, stage.getHeight() / 4 - cancelBtn.getHeight(), Align.center);
         //exitBtn.setBounds(exitBtn.getX(), exitBtn.getY(), 100, 10);
         stage.addActor(cancelBtn);
 
         nameTF = new TextField("", skin);
         nameTF.setMessageText("Username");
-        nameTF.setPosition(stage.getWidth()/2, 2*stage.getHeight()/4, Align.center);
+        nameTF.setPosition(stage.getWidth() / 2, 2 * stage.getHeight() / 4, Align.center);
         stage.addActor(nameTF);
 
         //Listeners
@@ -148,7 +136,7 @@ public class CreatePlayerAndroid implements Screen{
                 if(xregion >= avatarTxt.getWidth()-avatarTxt.getWidth()/7){
                     xregion = 0;
                 }
-                avatarTR.setRegion(xregion, 0,avatarTxt.getWidth()/7,avatarTxt.getHeight());
+                avatarTR.setRegion(xregion, 0, avatarTxt.getWidth() / 7, avatarTxt.getHeight());
             };
         });
 

@@ -1,83 +1,142 @@
 package com.izipoker.game.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.game.IZIPokerAndroid;
+import com.izipoker.interfaces.ServerInterface;
+
+import lipermi.handler.CallHandler;
+import lipermi.net.Client;
 
 /**
  * Created by Telmo on 03/05/2016.
  */
 public class SearchTablesAndroid implements Screen{
     private Stage stage;
+    private Skin skin;
 
-    private Texture sliderBackground;
-    private Texture sliderKnob;
-    private Texture createTableTexUp, createTableTexDown;
-    private Texture exitText;
 
-    ImageButton createTableBtn;
+    private Texture backgroundTex;
+
+    private TextField ipTF;
+    private TextButton searchTableBtn;
+    private TextButton cancelBtn;
+
+    private Dialog resultDialog;
+    private TextButton continueDialogBtn;
+    private TextButton cancelDialogBtn;
+
 
 
     public SearchTablesAndroid() {
-        //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
-        //backgroundText = new Texture
-        sliderBackground = new Texture("sliderBackground.png");
-        sliderKnob = new Texture("sliderKnob.png");
-        createTableTexUp = new Texture("startBtnUp.png");
-        createTableTexDown = new Texture("startBtnDown.png");
+        skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
+
+        backgroundTex = new Texture("background.png");
 
         buildStage();
-
-        /*Deck d = new Deck();
-        System.out.println(d);
-        d.shuffle(3);
-        System.out.println(d);*/
     }
 
     public void buildStage() {
         //Actors
-        //Image tmp1 = new Image(backgroundTex);
-        //stage.addActor(tmp1);
+        Image tmp1 = new Image(backgroundTex);
+        tmp1.setSize(stage.getWidth() * 2, stage.getHeight());
+        tmp1.setPosition(0, 0);
+        stage.addActor(tmp1);
 
-        Image tmp1 = new Image(createTableTexUp);
-        Image tmp2 = new Image(createTableTexDown);
-        createTableBtn = new ImageButton(tmp1.getDrawable(), tmp2.getDrawable());
-        createTableBtn.setPosition( stage.getWidth() / 2, 300f, Align.center);
-        stage.addActor(createTableBtn);
+        ipTF = new TextField("", skin);
+        ipTF.setMessageText("Ex: 127.xxx.xxx.xxx");
+        ipTF.setText("192.168.1.130"); //DEBUGING
+        ipTF.setAlignment(Align.center);
+        ipTF.setSize(
+                7 * stage.getWidth() / 8,
+                stage.getHeight() / 8);
+        ipTF.setPosition(stage.getWidth() / 2, 5 * stage.getHeight() / 6, Align.center);
+        stage.addActor(ipTF);
 
-        tmp1 = new Image(sliderBackground);
-        tmp2 = new Image(sliderKnob);
-        Slider.SliderStyle ss = new Slider.SliderStyle(tmp1.getDrawable(), tmp2.getDrawable());
-        Slider s = new Slider(2f,8f,1,false,ss);
-        s.setBounds(100,100,200,20);
-        stage.addActor(s);
+        searchTableBtn = new TextButton("SEARCH TABLE", skin);
+        searchTableBtn.setSize(ipTF.getWidth(), ipTF.getHeight());
+        searchTableBtn.setPosition(stage.getWidth() / 2, 3 * stage.getHeight() / 6, Align.center);
+        stage.addActor(searchTableBtn);
+
+        cancelBtn = new TextButton("CANCEL", skin);
+        cancelBtn.setSize(ipTF.getWidth(), ipTF.getHeight());
+        cancelBtn.setPosition(
+                stage.getWidth() / 2,
+                stage.getHeight() / 6,
+                Align.center);
+        stage.addActor(cancelBtn);
+
+        //Dialog
+        continueDialogBtn = new TextButton("CONTINUE", skin);
+        //cancelDialogBtn = new TextButton("CANCEL", skin);
+
 
         //Listeners
-        createTableBtn.addListener(new ClickListener() {
+        searchTableBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Game g = IZIPokerAndroid.getInstance();
-                g.setScreen(new CreatePlayerAndroid());
+                Gdx.input.setOnscreenKeyboardVisible(false);
+                try {
+                    // get proxy for remote chat server
+                    CallHandler callHandler = new CallHandler();
+                    String remoteHost = ipTF.getText();
+                    int portWasBinded = 4455;
+                    Client client = new Client(remoteHost, portWasBinded, callHandler);
+                    ServerInterface proxyTable = (ServerInterface)client.getGlobal(ServerInterface.class);
+
+                    //System.out.println("Mesa " + proxyTable.getName() + "\n");
+
+                    resultDialog = new Dialog("Table Found", skin);
+                    resultDialog.setWidth(7*stage.getWidth()/8);
+                    resultDialog.text(proxyTable.getName());
+                    resultDialog.button(continueDialogBtn);
+                    resultDialog.button("CANCEL");
+                    resultDialog.show(stage);
+
+                } catch (Exception e) {
+                    resultDialog = new Dialog("Error", skin);
+                    resultDialog.text("Connection failed");
+                    resultDialog.button("BACK");
+                    resultDialog.show(stage);
+                    System.out.println("Client exception: " + e.toString());
+                    e.printStackTrace();
+                }
             }
 
             ;
         });
+
+        cancelBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                IZIPokerAndroid.getInstance().setScreen(new MainMenuAndroid());
+            };
+        });
+
+        continueDialogBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                IZIPokerAndroid.getInstance().setScreen(new CreatePlayerAndroid());            };
+        });
     }
 
     public void create() {
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage( new StretchViewport(200.0f, 400.0f, new OrthographicCamera()));
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -111,8 +170,6 @@ public class SearchTablesAndroid implements Screen{
     @Override
     public void dispose() {
     stage.dispose();
-        sliderBackground.dispose();
-        sliderKnob.dispose();
-        exitText.dispose();
+        backgroundTex.dispose();
     }
 }
