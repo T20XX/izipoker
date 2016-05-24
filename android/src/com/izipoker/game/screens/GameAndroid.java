@@ -7,16 +7,19 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -45,7 +48,9 @@ public class GameAndroid implements Screen{
     private Slider betSlider;
     private Player player;
     private Card c_1,c_2;
-    private TextButton halfPot, maxPot, allIn;
+    private TextButton halfPot, maxPot, allIn, sendBtn;
+    private Label ammountLbl, nameLbl;
+    private TextField chatTF, betTF;
 
     public GameAndroid (Player p) {
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
@@ -72,9 +77,27 @@ public class GameAndroid implements Screen{
     public void buildStage() {
         //Actors
 
+
+        nameLbl = new Label("PIROCO", skin);
+        nameLbl.setWidth(stage.getWidth()/2);
+        nameLbl.setPosition(stage.getWidth()/2+nameLbl.getHeight(), stage.getHeight() - nameLbl.getHeight(), Align.center);
+        stage.addActor(nameLbl);
+
+        chatTF = new TextField("",skin);
+        chatTF.setWidth(3*stage.getWidth()/4);
+        chatTF.setPosition(0, stage.getHeight()/2, Align.left);
+        stage.addActor(chatTF);
+
+        sendBtn = new TextButton("SEND",skin);
+        sendBtn.setWidth(stage.getWidth()/4);
+        sendBtn.setHeight(chatTF.getHeight());
+        sendBtn.setPosition(stage.getWidth(), stage.getHeight()/2, Align.right);
+        stage.addActor(sendBtn);
+
         betSlider = new Slider(50, 500, 10, true, skin);
         betSlider.setWidth(stage.getWidth()/6);
-        betSlider.setPosition(stage.getWidth()- betSlider.getWidth(), 0, Align.center);
+        betSlider.setHeight(stage.getHeight()/3);
+        betSlider.setPosition(stage.getWidth()- betSlider.getWidth()/2, stage.getHeight()/6, Align.center);
         stage.addActor(betSlider);
 
         foldBtn = new TextButton("FOLD", skin);
@@ -97,6 +120,11 @@ public class GameAndroid implements Screen{
         raiseBtn.setWidth(stage.getWidth()/3);
         raiseBtn.setPosition(3* stage.getWidth() / 5, stage.getHeight()/4 + 2*raiseBtn.getHeight() , Align.center);
         stage.addActor(raiseBtn);
+
+        betTF = new TextField("69", skin);
+        betTF.setWidth(stage.getWidth()/6);
+        betTF.setPosition(7* stage.getWidth() / 8, stage.getHeight()/4 + 2*raiseBtn.getHeight() , Align.center);
+        stage.addActor(betTF);
 
 
         halfPot = new TextButton("1/2", skin);
@@ -159,6 +187,12 @@ public class GameAndroid implements Screen{
             public void clicked(InputEvent event, float x, float y) {
 
             };
+        });
+        betSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                betTF.setText(String.valueOf((int)betSlider.getValue()));
+            }
         });
     }
 
