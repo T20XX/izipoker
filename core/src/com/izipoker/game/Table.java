@@ -2,11 +2,13 @@ package com.izipoker.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.izipoker.interfaces.ClientCallbackInterface;
 import com.izipoker.interfaces.ServerInterface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import lipermi.handler.CallHandler;
 import lipermi.net.Server;
@@ -26,6 +28,10 @@ public class Table extends Actor implements ServerInterface {
     private Dealer dealer;
     private Player joker;
     private int SMALL_BLIND = 30;
+    private int initMoney = 1000; //MUDAR PARA CONSTRUCTOR
+
+    //clients map to players
+    private HashMap<String, ClientCallbackInterface> clients = new HashMap<String, ClientCallbackInterface>();
 
     /**
      * Creates a table given number of players
@@ -139,24 +145,23 @@ public class Table extends Actor implements ServerInterface {
     }
 
     @Override
-    public boolean join(ClientCallbackInterface client)  {
-       // ((Player)client).notify("You have entered");
-        //System.out.println("Entrou o " + client.getName());
-        client.notify("parabens, juntou-se");
-       // return addPlayer((Player)client);
-    return true;
-        // tell other users that there is a new user
-        //notifyOthers(user, user + " joined");
+    public boolean join(String name, ClientCallbackInterface client) {
+        if (clients.containsKey(name))
+            return false;
+        clients.put(name, client);
 
-        // tells this user who is logged in
-        /*for (String name : clients.keySet())
-            if (!name.equals(user))
-                client.notify(name + " is logged in");*/
+        Player p = new Human(0, name, initMoney);
+        if (addPlayer(p)) {
+            // tells this user is logged in
+            client.notify("Congratulations " + name + ", you have joined the table " + this.name);
+        }
+        return true;
     }
 
     @Override
-    public void tell(ClientCallbackInterface client, String message)  {
-        notifyOthers((Player)client, ((Player) client).getName() + ": " + message);
+    public void tell(String name, String message)  {
+        //notifyOthers((Player)client, ((Player) client).getName() + ": " + message);
+        System.out.println(name + ": " + message);
     }
 
     @Override

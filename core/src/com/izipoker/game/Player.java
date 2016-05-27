@@ -18,7 +18,7 @@ import java.awt.Image;
 /**
  * Created by Telmo on 26/04/2016.
  */
-public abstract class Player extends Actor implements ClientCallbackInterface,Serializable{
+public abstract class Player extends Actor implements ClientCallbackInterface{
     private int id;
     private String name;
     private int money;
@@ -68,10 +68,8 @@ public abstract class Player extends Actor implements ClientCallbackInterface,Se
         this.id = id;
     }
 
-    @Override
     public String getName() {
         return this.name;
-        //l
     }
 
     public void setName(String name) {

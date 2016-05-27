@@ -29,6 +29,7 @@ import com.izipoker.game.Human;
 import com.izipoker.game.IZIPoker;
 import com.izipoker.game.IZIPokerAndroid;
 import com.izipoker.game.Player;
+import com.izipoker.game.PokerClient;
 import com.izipoker.interfaces.ClientCallbackInterface;
 import com.izipoker.interfaces.ServerInterface;
 
@@ -52,14 +53,21 @@ public class GameAndroid implements Screen{
     private Label ammountLbl, nameLbl;
     private TextField chatTF, betTF;
 
-    public GameAndroid (Player p) {
+    private ServerInterface proxyTable;
+    private PokerClient listener;
+    private String name;
+
+    public GameAndroid (String name, ServerInterface proxyTable, PokerClient listener) {
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         //backgroundText = new Texture
 
         skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
-        player = p;
-        p.setHand(new Hand(new Card(Card.rankType.ACE, Card.suitType.CLUBS), new Card(Card.rankType.TWO, Card.suitType.SPADES)));
+        this.name = name;
+        this.proxyTable = proxyTable;
+        this.listener = listener;
+       // player = p;
+        //p.setHand(new Hand(new Card(Card.rankType.ACE, Card.suitType.CLUBS), new Card(Card.rankType.TWO, Card.suitType.SPADES)));
 
         //  startTexUp = new Texture("startBtnUp.png");
         // startTexDown = new Texture("startBtnDown.png");
@@ -78,12 +86,13 @@ public class GameAndroid implements Screen{
         //Actors
 
 
-        nameLbl = new Label("PIROCO", skin);
+        nameLbl = new Label("TESTA", skin);
         nameLbl.setWidth(stage.getWidth()/2);
         nameLbl.setPosition(stage.getWidth()/2+nameLbl.getHeight(), stage.getHeight() - nameLbl.getHeight(), Align.center);
         stage.addActor(nameLbl);
 
         chatTF = new TextField("",skin);
+        chatTF.setMessageText("Chat ...");
         chatTF.setWidth(3*stage.getWidth()/4);
         chatTF.setPosition(0, stage.getHeight()/2, Align.left);
         stage.addActor(chatTF);
@@ -142,7 +151,7 @@ public class GameAndroid implements Screen{
         allIn.setPosition(7* stage.getWidth() / 10,maxPot.getY() - maxPot.getHeight() , Align.center);
         stage.addActor(allIn);
 
-        c_1 = player.getHand().getCards()[0];
+       /* c_1 = player.getHand().getCards()[0];
         c_2 = player.getHand().getCards()[1];
         c_1.setBounds(stage.getWidth()/4,stage.getHeight()-stage.getHeight()/3,stage.getWidth()/4,stage.getHeight()/5);
         stage.addActor(c_1);
@@ -161,7 +170,7 @@ public class GameAndroid implements Screen{
             public void clicked(InputEvent event, float x, float y) {
                 c_2.flip();
             };
-        });
+        });*/
         foldBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -188,6 +197,15 @@ public class GameAndroid implements Screen{
 
             };
         });
+
+        sendBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                proxyTable.tell(name, chatTF.getText());
+                chatTF.setText("");
+            };
+        });
+
         betSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

@@ -19,6 +19,11 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.game.Human;
 import com.izipoker.game.IZIPokerAndroid;
+import com.izipoker.game.PokerClient;
+import com.izipoker.interfaces.ClientCallbackInterface;
+import com.izipoker.interfaces.ServerInterface;
+
+import lipermi.handler.CallHandler;
 
 /**
  * Created by Telmo on 03/05/2016.
@@ -33,10 +38,13 @@ public class CreatePlayerAndroid implements Screen{
     private Image avatarImg;
     private Texture avatarTxt;
 
-    TextButton createBtn;
-    TextButton cancelBtn;
+    private TextButton createBtn;
+    private TextButton cancelBtn;
 
-    public CreatePlayerAndroid () {
+    private ServerInterface proxyTable;
+    private CallHandler callHandler;
+
+    public CreatePlayerAndroid (ServerInterface proxyTable, CallHandler callHandler) {
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         //backgroundText = new Texture
@@ -45,6 +53,8 @@ public class CreatePlayerAndroid implements Screen{
         backgroundTex = new Texture("background.png");
         avatarTxt = new Texture("avatar.jpg");
         avatarTR = new TextureRegion(avatarTxt, 0, 0, avatarTxt.getWidth()/7, avatarTxt.getHeight());
+        this.proxyTable = proxyTable;
+        this.callHandler = callHandler;
 
       //  startTexUp = new Texture("startBtnUp.png");
        // startTexDown = new Texture("startBtnDown.png");
@@ -89,33 +99,28 @@ public class CreatePlayerAndroid implements Screen{
         createBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Human p = new Human(0, nameTF.getText(), 0, avatarTR);
+               /* Human p = new Human(0, nameTF.getText(), 0, avatarTR);
                 Game g = IZIPokerAndroid.getInstance();
-                g.setScreen(new GameAndroid(p));
-               /* try {
-                        System.out.println("teste");
-                    // get proxy for remote chat server
-                    CallHandler callHandler = new CallHandler();
-                    String remoteHost = "172.30.17.202";
-                    int portWasBinded = 4455;
-                    Client client = new Client(remoteHost, portWasBinded, callHandler);
-                    ServerInterface proxy = (ServerInterface)client.getGlobal(ServerInterface.class);
+                g.setScreen(new GameAndroid(p));*/
+               try {
 
-                    System.out.println("Mesa " + proxy.getName() + "\n");
+                    System.out.println("Mesa " + proxyTable.getName() + "\n");
 
                     // create and expose remote listener
-                    Player listener = new Human(0, nameTF.getText(), 0, avatarTR);
+                    PokerClient listener = new PokerClient();
                     callHandler.exportObject(ClientCallbackInterface.class, listener);
 
                     // now do conversation
-                    if (proxy.join(listener) ) {
+                    if (!proxyTable.join(nameTF.getText(), listener) ) {
                         System.out.println("Sorry, nickname is already in use.");
                         return;
+                    } else {
+                        IZIPokerAndroid.getInstance().setScreen(new GameAndroid(nameTF.getText(), proxyTable, listener));
                     }
                 } catch (Exception e) {
                     System.err.println("Client exception: " + e.toString());
                     e.printStackTrace();
-                }*/
+                }
             }
 
             ;
