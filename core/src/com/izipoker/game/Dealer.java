@@ -24,10 +24,11 @@ public class Dealer {
 
     public boolean createRound(){
         if(table.getActivePlayers().length >= 2) {
-            Round round = new Round(table.getActivePlayers(), table.getJoker());
+            //Round round = new Round(table.getActivePlayers(), table.getJoker());
+            Round round = new Round(table.getActivePlayers(), table.getActivePlayers()[0]);
             table.addRounds(round);
-            round.getFirstPlayer().bet(table.getSmallBlind(), round);
-            round.getFirstPlayer().bet(table.getBigBlind(), round);
+            //round.getFirstPlayer().bet(table.getSmallBlind(), round);
+            //round.getFirstPlayer().bet(table.getBigBlind(), round);
             return true;
         }
         else return false;

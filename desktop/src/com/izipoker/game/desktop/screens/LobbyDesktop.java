@@ -1,23 +1,17 @@
 package com.izipoker.game.desktop.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.izipoker.game.Table;
-import com.izipoker.game.desktop.IZIPokerDesktop;
 
 /**
  * Created by Telmo on 03/05/2016.
@@ -66,8 +60,10 @@ public class LobbyDesktop implements Screen{
         startBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Game g = IZIPokerDesktop.getInstance();
-                g.setScreen(new GameDesktop(table));
+                table.getDealer().createRound();
+                table.getDealer().giveHands();
+                /*Game g = IZIPokerDesktop.getInstance();
+                g.setScreen(new GameDesktop(table));*/
             }
 
             ;

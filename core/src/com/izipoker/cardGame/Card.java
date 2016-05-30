@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import java.io.Serializable;
+
 /**
  * Created by up201405840 on 12-04-2016.
  */
-public class Card extends Actor{
+public class Card extends Actor implements Serializable{
 
     private static Texture cardsTex =  new Texture("cards.png");
 

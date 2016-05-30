@@ -4,19 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -25,18 +19,9 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.cardGame.Card;
 import com.izipoker.game.Hand;
-import com.izipoker.game.Human;
-import com.izipoker.game.IZIPoker;
-import com.izipoker.game.IZIPokerAndroid;
 import com.izipoker.game.Player;
 import com.izipoker.game.PokerClient;
-import com.izipoker.interfaces.ClientCallbackInterface;
 import com.izipoker.interfaces.ServerInterface;
-
-import java.util.Scanner;
-
-import lipermi.handler.CallHandler;
-import lipermi.net.Client;
 
 /**
  * Created by Telmo on 03/05/2016.
@@ -56,6 +41,7 @@ public class GameAndroid implements Screen{
     private ServerInterface proxyTable;
     private PokerClient listener;
     private String name;
+    private Hand hand;
 
     public GameAndroid (String name, ServerInterface proxyTable, PokerClient listener) {
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
@@ -188,7 +174,19 @@ public class GameAndroid implements Screen{
         raiseBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                if(hand == null){
+                    hand = proxyTable.getHand(name);
+                    hand.getCards()[0].flip();
+                    hand.getCards()[1].flip();
+                    hand.getCards()[0].setBounds(stage.getWidth() / 4, stage.getHeight() - stage.getHeight() / 3, stage.getWidth() / 4, stage.getHeight() / 5);
+                    hand.getCards()[1].setBounds(stage.getWidth()/2,stage.getHeight()-stage.getHeight()/3,stage.getWidth()/4,stage.getHeight()/5);
+                    stage.addActor(hand.getCards()[0]);
+                    stage.addActor(hand.getCards()[1]);
+                } else {
+                    hand = proxyTable.getHand(name);
+                    hand.getCards()[0].flip();
+                    hand.getCards()[1].flip();
+                }
             };
         });
         checkBtn.addListener(new ClickListener() {
