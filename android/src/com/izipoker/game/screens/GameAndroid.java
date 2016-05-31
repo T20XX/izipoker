@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.izipoker.cardGame.Card;
 import com.izipoker.game.Hand;
 import com.izipoker.game.Player;
 import com.izipoker.game.PokerClient;
@@ -33,7 +32,7 @@ public class GameAndroid implements Screen{
     private Skin skin;
     private Slider betSlider;
     private Player player;
-    private Card c_1,c_2;
+    private Hand hand;
     private TextButton halfPot, maxPot, allIn, sendBtn;
     private Label ammountLbl, nameLbl;
     private TextField chatTF, betTF;
@@ -41,7 +40,6 @@ public class GameAndroid implements Screen{
     private ServerInterface proxyTable;
     private PokerClient listener;
     private String name;
-    private Hand hand;
 
     public GameAndroid (String name, ServerInterface proxyTable, PokerClient listener) {
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
@@ -174,18 +172,16 @@ public class GameAndroid implements Screen{
         raiseBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(hand == null){
-                    hand = proxyTable.getHand(name);
-                    hand.getCards()[0].flip();
-                    hand.getCards()[1].flip();
+                try {
+                    //proxyTable.sendCard(name);
+                    //proxyTable.getHand(name);
+                    hand = listener.getHand();
                     hand.getCards()[0].setBounds(stage.getWidth() / 4, stage.getHeight() - stage.getHeight() / 3, stage.getWidth() / 4, stage.getHeight() / 5);
-                    hand.getCards()[1].setBounds(stage.getWidth()/2,stage.getHeight()-stage.getHeight()/3,stage.getWidth()/4,stage.getHeight()/5);
                     stage.addActor(hand.getCards()[0]);
+                    hand.getCards()[1].setBounds(stage.getWidth() / 2, stage.getHeight() - stage.getHeight() / 3, stage.getWidth() / 4, stage.getHeight() / 5);
                     stage.addActor(hand.getCards()[1]);
-                } else {
-                    hand = proxyTable.getHand(name);
-                    hand.getCards()[0].flip();
-                    hand.getCards()[1].flip();
+                } catch(Exception e){
+
                 }
             };
         });
@@ -208,6 +204,17 @@ public class GameAndroid implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 betTF.setText(String.valueOf((int)betSlider.getValue()));
+            }
+        });
+        betTF.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                try {
+                    betSlider.setValue(Integer.valueOf(betTF.getMessageText()));
+                } catch (Exception e){
+
+                }
+
             }
         });
     }
@@ -248,10 +255,5 @@ public class GameAndroid implements Screen{
     @Override
     public void dispose() {
         stage.dispose();
-
-        // startTexUp.dispose();
-        //startTexDown.dispose();
-        //exitTexUp.dispose();
-        //exitTexDown.dispose();
     }
 }

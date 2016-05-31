@@ -3,12 +3,16 @@ package com.izipoker.game;
 import com.izipoker.cardGame.Card;
 import com.izipoker.cardGame.Deck;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.Timer;
 
 /**
  * Created by Telmo on 26/04/2016.
  */
-public class Dealer {
+public class Dealer implements Runnable{
     private Table table;
     private Deck deck;
 
@@ -63,9 +67,60 @@ public class Dealer {
         deck.getTopCard().flip();
         table.getTopRound().setTurn(deck.getTopCard());
     }
-    public void showRiver(){
+    public void showRiver() {
         deck.getTopCard();
         deck.getTopCard().flip();
         table.getTopRound().setRiver(deck.getTopCard());
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Vou enviar as cartas!");
+        while (table.getActivePlayers().length > 1){
+            createRound();
+            Round r = table.getTopRound();
+            giveHands();
+            for(Player p:table.getActivePlayers()) {
+                System.out.println(p.getHand().getCards()[0]);
+                System.out.println(p.getHand().getCards()[1]);
+                table.sendHand(p.getName());
+            }
+            if(r.getCurrentPlayers().size() == 1)
+                return;
+            for(Player p:r.getCurrentPlayers()){
+
+            }
+
+            showFlop();
+
+            if(r.getCurrentPlayers().size() == 1)
+                return;
+
+
+            for(Player p:r.getCurrentPlayers()){
+
+            }
+
+            showTurn();
+
+            if(r.getCurrentPlayers().size() == 1) {
+                return;
+            }
+
+            for(Player p:r.getCurrentPlayers()){
+
+            }
+
+            showRiver();
+
+            if(r.getCurrentPlayers().size() == 1)
+                return;
+            for(Player p:r.getCurrentPlayers()){
+
+            }
+
+            return;
+        }
+        System.out.println("Algo deu merda!");
     }
 }

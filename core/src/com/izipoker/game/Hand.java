@@ -4,12 +4,11 @@ import com.izipoker.cardGame.Card;
 
 import java.io.Serializable;
 
-import javafx.util.Pair;
 
-/**
- * Created by Telmo on 26/04/2016.
- */
-public class Hand implements Serializable{
+public class Hand implements Serializable {
+
+    // need to indicate the this on both sides (server and client) to make sure objects are compatible.
+    private static final long serialVersionUID = 1L;
 
 public enum handRank{
     ROYAL_FLUSH,
@@ -51,10 +50,10 @@ public enum handRank{
         }
     }
 
-    public Pair<handRank, Card.rankType> checkHandRank(Card[] cardsOnTable){
+    /*public Pair<handRank, Card.rankType> checkHandRank(Card[] cardsOnTable){
         //TO FINISH
         return new Pair(handRank.PAIR, Card.rankType.ACE);
-    }
+    }*/
     public Card[] getCards() {
         return cards;
     }

@@ -3,9 +3,11 @@ package com.izipoker.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.izipoker.cardGame.Card;
 import com.izipoker.interfaces.ClientCallbackInterface;
 import com.izipoker.interfaces.ServerInterface;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,9 +27,11 @@ public class Table extends Actor implements ServerInterface {
     private Player joker;
     private int SMALL_BLIND = 30;
     private int initMoney = 1000; //MUDAR PARA CONSTRUCTOR
+    private ArrayList<String> chatHistory = new ArrayList<String>();
 
     //clients map to players
     private HashMap<String, ClientCallbackInterface> clients = new HashMap<String, ClientCallbackInterface>();
+
     private HashMap<String, Player> players = new HashMap<String, Player>();
 
     /**
@@ -149,7 +153,6 @@ public class Table extends Actor implements ServerInterface {
 
         Player p = new Human(0, name, initMoney);
         players.put(name,p);
-
         if (addPlayer(p)) {
             // tells this user is logged in
             client.notify("Congratulations " + name + ", you have joined the table " + this.name);
@@ -161,11 +164,14 @@ public class Table extends Actor implements ServerInterface {
     public void tell(String name, String message)  {
         //notifyOthers((Player)client, ((Player) client).getName() + ": " + message);
         System.out.println(name + ": " + message);
+        chatHistory.add("(" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ") " +
+                name + ": " +
+                message);
     }
 
     @Override
     public void tellAll(ClientCallbackInterface client, String message)  {
-        notifyOthers((Player)client, ((Player) client).getName() + " : " + message);
+        //notifyOthers((Player)client, ((Player) client).getName() + " : " + message);
     }
 
     @Override
@@ -179,24 +185,38 @@ public class Table extends Actor implements ServerInterface {
     }
 
     @Override
-    public Hand getHand(String name) {
-        return players.get(name).getHand();
+    public void sendHand(String name) {
+        System.out.println(name);
+        System.out.println(players.get(name).getHand().getCards()[0]);
+        System.out.println(players.get(name).getHand().getCards()[1]);
+        //(clients.get(name)).notify(players.get(name).getHand().getCards()[1].toString());
+        (clients.get(name)).receiveHand(players.get(name).getHand());
+    }
+
+    @Override
+    public void sendCard(String name) {
+        (clients.get(name)).receiveCard(new Card(10, Card.suitType.CLUBS));
     }
 
     private void notifyOthers(ClientCallbackInterface client, String message){
-        for (Player p:seats){
+        /*for (Player p:seats){
             p.notify(message);
-        }
+        }*/
     }
 
     private void notifyAll(ClientCallbackInterface client, String message){
-        for (Player p:seats){
+        /*for (Player p:seats){
             p.notify(message);
-        }
+        }*/
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        batch.setColor(1,1,1,1);
         batch.draw(tableTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+    }
+
+    public ArrayList<String> getChatHistory() {
+        return chatHistory;
     }
 }

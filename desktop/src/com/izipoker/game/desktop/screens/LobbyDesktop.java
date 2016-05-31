@@ -1,17 +1,24 @@
 package com.izipoker.game.desktop.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.izipoker.game.Player;
 import com.izipoker.game.Table;
+import com.izipoker.game.desktop.IZIPokerDesktop;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * Created by Telmo on 03/05/2016.
@@ -21,16 +28,19 @@ public class LobbyDesktop implements Screen{
     private Stage stage;
     private Skin skin;
 
-
     private TextButton startBtn;
+    private Label ipLbl;
+    private Player seats[];
 
     //Game variables
     private Table table;
+    private int lastPlayersSize = 0;
 
 
     public LobbyDesktop(Table table) {
         //Game variables initialization
         this.table = table;
+        this.seats = table.getSeats();
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
@@ -44,26 +54,33 @@ public class LobbyDesktop implements Screen{
         System.out.println(d);*/
     }
 
-    public void buildStage() {
+    public void buildStage(){
         //Actors
 
         table.setBounds(0,0,stage.getWidth(), stage.getHeight());
         stage.addActor(table);
 
         startBtn = new TextButton("START GAME",skin);
-        startBtn.setPosition( stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
+        startBtn.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
         stage.addActor(startBtn);
 
-
+        try {
+            ipLbl = new Label(InetAddress.getLocalHost().getHostAddress().toString(),skin);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            ipLbl = new Label("IP not found!", skin);
+        }
+        ipLbl.setPosition(stage.getWidth()/2,stage.getHeight()/2+startBtn.getHeight(), Align.center);
+        stage.addActor(ipLbl);
 
         //Listeners
         startBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                table.getDealer().createRound();
-                table.getDealer().giveHands();
-                /*Game g = IZIPokerDesktop.getInstance();
-                g.setScreen(new GameDesktop(table));*/
+                //Thread t = new Thread(table.getDealer());
+                //t.start();
+                Game g = IZIPokerDesktop.getInstance();
+                g.setScreen(new GameDesktop(table));
             }
 
             ;
@@ -84,6 +101,18 @@ public class LobbyDesktop implements Screen{
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0.5f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        if(table.getActivePlayers().length != lastPlayersSize){
+            System.out.println(lastPlayersSize);
+            lastPlayersSize = table.getActivePlayers().length;
+            for(Player p : table.getActivePlayers()){
+                if(!stage.getActors().contains(p,true)){
+                    System.out.println(lastPlayersSize);
+                    p.setBounds(100,100,100,100);
+                    stage.addActor(p);
+                }
+            }
+        }
 
         stage.act(delta);
         stage.draw();

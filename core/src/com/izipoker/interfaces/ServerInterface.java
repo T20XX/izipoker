@@ -1,13 +1,11 @@
 package com.izipoker.interfaces;
 
-
-import com.izipoker.game.Hand;
-
 public interface ServerInterface {
     public boolean join(String name, ClientCallbackInterface client);
     public void tell(String name, String message);
     public void tellAll(ClientCallbackInterface client, String message);
     public void leave(ClientCallbackInterface c);
     public String getName();
-    public Hand getHand(String name);
+    public void sendHand(String name);
+    public void sendCard(String name);
 }

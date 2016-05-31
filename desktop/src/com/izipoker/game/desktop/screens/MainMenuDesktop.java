@@ -72,6 +72,10 @@ public class MainMenuDesktop implements Screen{
         exitBtn.setPosition( stage.getWidth() / 2, 2 * stage.getHeight() / 5, Align.center);
         stage.addActor(exitBtn);
 
+        Card c = new Card(13, Card.suitType.SPADES);
+        c.setBounds(0,0,100,100);
+        stage.addActor(c);
+
 
         //Listeners
         startBtn.addListener(new ClickListener() {
