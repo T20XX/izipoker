@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.izipoker.game.Player;
 import com.izipoker.game.Table;
 import com.izipoker.game.desktop.IZIPokerDesktop;
 
@@ -29,14 +30,17 @@ public class LobbyDesktop implements Screen{
 
 
     private TextButton startBtn;
+    private Player seats[];
 
     //Game variables
     private Table table;
+    private int lastPlayersSize = 0;
 
 
     public LobbyDesktop(Table table) {
         //Game variables initialization
         this.table = table;
+        this.seats = table.getSeats();
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
@@ -59,8 +63,6 @@ public class LobbyDesktop implements Screen{
         startBtn = new TextButton("START GAME",skin);
         startBtn.setPosition( stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
         stage.addActor(startBtn);
-
-
 
         //Listeners
         startBtn.addListener(new ClickListener() {
@@ -88,6 +90,18 @@ public class LobbyDesktop implements Screen{
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0.5f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        if(table.getActivePlayers().length != lastPlayersSize){
+            System.out.println(lastPlayersSize);
+            lastPlayersSize = table.getActivePlayers().length;
+            for(Player p : table.getActivePlayers()){
+                if(!stage.getActors().contains(p,true)){
+                    System.out.println(lastPlayersSize);
+                    p.setBounds(100,100,100,100);
+                    stage.addActor(p);
+                }
+            }
+        }
 
         stage.act(delta);
         stage.draw();

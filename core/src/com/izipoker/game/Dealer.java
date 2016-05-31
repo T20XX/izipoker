@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by Telmo on 26/04/2016.
  */
-public class Dealer {
+public class Dealer implements Runnable{
     private Table table;
     private Deck deck;
 
@@ -66,5 +66,21 @@ public class Dealer {
         deck.getTopCard();
         deck.getTopCard().flip();
         table.getTopRound().setRiver(deck.getTopCard());
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Vou enviar as cartas!");
+        while (table.getActivePlayers().length > 1){
+            createRound();
+            giveHands();
+            for(Player p:table.getActivePlayers()) {
+                System.out.println(p.getHand().getCards()[0]);
+                System.out.println(p.getHand().getCards()[1]);
+                table.getHand(p.getName());
+            }
+            return;
+        }
+        System.out.println("Algo deu merda!");
     }
 }

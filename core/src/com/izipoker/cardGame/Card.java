@@ -1,20 +1,25 @@
 package com.izipoker.cardGame;
 
+import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Json;
+import com.izipoker.graphics.TexturesLoad;
+
+import java.io.Serializable;
 
 /**
  * Created by up201405840 on 12-04-2016.
  */
-public class Card extends Actor{
+public class Card extends Actor implements Serializable {
 
-    private static Texture cardsTex =  new Texture("cards.png");
+    //private static Texture cardsTex =  new Texture("cards.png");
 
-    private static Texture backTex = new Texture("backCard.png");
+    //private static Texture backTex = new Texture("backCard.png");
 
-    private TextureRegion frontTex;
+    //private TextureRegion frontTex;
 
     /*int main(){
         Card c1 = new Card(1,suitType.DIAMONDS);
@@ -147,7 +152,7 @@ public class Card extends Actor{
     public Card(rankType r, suitType s){
         rank = r;
         suit = s;
-        getFrontTexFromCards();
+        //getFrontTexFromCards();
     }
 
     /**
@@ -159,16 +164,16 @@ public class Card extends Actor{
     public Card(int value, suitType s){
         suit = s;
         rank = rankType.values()[value - 1];
-        getFrontTexFromCards();
+        //getFrontTexFromCards();
     }
 
-    private void getFrontTexFromCards() {
+    /*private void getFrontTexFromCards() {
         frontTex = new TextureRegion(cardsTex,
                 cardsTex.getWidth()/13 * (rankType.valueOf(this.rank.toString()).ordinal()),
                 cardsTex.getHeight()/4 * suitType.valueOf(this.suit.toString()).ordinal(),
                 cardsTex.getWidth()/13,
                 cardsTex.getHeight()/4);
-    }
+    }*/
 
     /**
      * @return Rank of the card
@@ -233,17 +238,17 @@ public class Card extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if (isFlipped()){
-            batch.draw(frontTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+            batch.draw(TexturesLoad.frontTex[getValue() - 1][suitType.valueOf(this.suit.toString()).ordinal()], super.getX(), super.getY(), super.getWidth(), super.getHeight());
         } else {
-            batch.draw(backTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+            batch.draw(TexturesLoad.backTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
         }
     }
 
-    public static Texture getCardsTex() {
+    /*public static Texture getCardsTex() {
         return cardsTex;
-    }
+    }*/
 
-    public static void setCardsTex(Texture cardsTex) {
+    /*public static void setCardsTex(Texture cardsTex) {
         Card.cardsTex = cardsTex;
-    }
+    }*/
 }

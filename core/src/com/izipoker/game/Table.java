@@ -33,6 +33,8 @@ public class Table extends Actor implements ServerInterface {
     //clients map to players
     private HashMap<String, ClientCallbackInterface> clients = new HashMap<String, ClientCallbackInterface>();
 
+    private HashMap<String, Player> players = new HashMap<String, Player>();
+
     /**
      * Creates a table given number of players
      * @param maxPlayers Maximum number of players
@@ -151,6 +153,7 @@ public class Table extends Actor implements ServerInterface {
         clients.put(name, client);
 
         Player p = new Human(0, name, initMoney);
+        players.put(name, p);
         if (addPlayer(p)) {
             // tells this user is logged in
             client.notify("Congratulations " + name + ", you have joined the table " + this.name);
@@ -166,7 +169,7 @@ public class Table extends Actor implements ServerInterface {
 
     @Override
     public void tellAll(ClientCallbackInterface client, String message)  {
-        notifyOthers((Player)client, ((Player) client).getName() + " : " + message);
+        //notifyOthers((Player)client, ((Player) client).getName() + " : " + message);
     }
 
     @Override
@@ -179,16 +182,24 @@ public class Table extends Actor implements ServerInterface {
         return name;
     }
 
+    @Override
+    public void getHand(String name) {
+        System.out.println(name);
+        System.out.println(players.get(name).getHand().getCards()[0]);
+        System.out.println(players.get(name).getHand().getCards()[1]);
+        clients.get(name).receiveHand(players.get(name).getHand());
+    }
+
     private void notifyOthers(ClientCallbackInterface client, String message){
-        for (Player p:seats){
+        /*for (Player p:seats){
             p.notify(message);
-        }
+        }*/
     }
 
     private void notifyAll(ClientCallbackInterface client, String message){
-        for (Player p:seats){
+        /*for (Player p:seats){
             p.notify(message);
-        }
+        }*/
     }
 
     @Override

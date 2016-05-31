@@ -18,7 +18,7 @@ import java.awt.Image;
 /**
  * Created by Telmo on 26/04/2016.
  */
-public abstract class Player extends Actor implements ClientCallbackInterface{
+public abstract class Player extends Actor{
     private int id;
     private String name;
     private int money;
@@ -108,16 +108,11 @@ public abstract class Player extends Actor implements ClientCallbackInterface{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-       // BitmapFont font = new BitmapFont(Gdx.files.internal("default.fnt"),false);
-        batch.draw(avatar, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+        BitmapFont font = new BitmapFont();
+        font.draw(batch, name, 0,0);
+        //batch.draw(avatar, super.getX(), super.getY(), super.getWidth(), super.getHeight());
         //font.draw(batch, name, super.getX()-avatar.getWidth(), super.getY()-avatar.getHeight());
     }
 
-
-
-    @Override
-    public void notify(String message) {
-        System.out.println(message);
-    }
 
 }

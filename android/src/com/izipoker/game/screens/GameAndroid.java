@@ -48,7 +48,7 @@ public class GameAndroid implements Screen{
     private Skin skin;
     private Slider betSlider;
     private Player player;
-    private Card c_1,c_2;
+    private Hand hand;
     private TextButton halfPot, maxPot, allIn, sendBtn;
     private Label ammountLbl, nameLbl;
     private TextField chatTF, betTF;
@@ -188,6 +188,12 @@ public class GameAndroid implements Screen{
         raiseBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                proxyTable.getHand(name);
+                hand = listener.getHand();
+                hand.getCards()[0].setBounds(stage.getWidth()/4,stage.getHeight()-stage.getHeight()/3,stage.getWidth()/4,stage.getHeight()/5);
+                stage.addActor(hand.getCards()[0]);
+                hand.getCards()[1].setBounds(stage.getWidth()/2,stage.getHeight()-stage.getHeight()/3,stage.getWidth()/4,stage.getHeight()/5);
+                stage.addActor(hand.getCards()[1]);
 
             };
         });

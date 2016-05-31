@@ -37,12 +37,15 @@ public class GameDesktop implements Screen{
         //Game variables initialization
         this.table = table;
         this.dealer = table.getDealer();
+        Thread game = new Thread(dealer);
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
 
 
         buildStage();
+
+        game.start();
 
         /*Deck d = new Deck();
         System.out.println(d);

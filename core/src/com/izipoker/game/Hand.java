@@ -2,12 +2,13 @@ package com.izipoker.game;
 
 import com.izipoker.cardGame.Card;
 
-import javafx.util.Pair;
+import java.io.Serializable;
+
 
 /**
  * Created by Telmo on 26/04/2016.
  */
-public class Hand{
+public class Hand implements Serializable {
 
 public enum handRank{
     ROYAL_FLUSH,
@@ -49,10 +50,10 @@ public enum handRank{
         }
     }
 
-    public Pair<handRank, Card.rankType> checkHandRank(Card[] cardsOnTable){
+    /*public Pair<handRank, Card.rankType> checkHandRank(Card[] cardsOnTable){
         //TO FINISH
         return new Pair(handRank.PAIR, Card.rankType.ACE);
-    }
+    }*/
     public Card[] getCards() {
         return cards;
     }
