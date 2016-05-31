@@ -4,9 +4,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.izipoker.cardGame.Card;
 import com.izipoker.interfaces.ClientCallbackInterface;
 import com.izipoker.interfaces.ServerInterface;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,6 +31,7 @@ public class Table extends Actor implements ServerInterface {
     private Player joker;
     private int SMALL_BLIND = 30;
     private int initMoney = 1000; //MUDAR PARA CONSTRUCTOR
+    private ArrayList<String> chatHistory = new ArrayList<String>();
 
     //clients map to players
     private HashMap<String, ClientCallbackInterface> clients = new HashMap<String, ClientCallbackInterface>();
@@ -165,6 +168,9 @@ public class Table extends Actor implements ServerInterface {
     public void tell(String name, String message)  {
         //notifyOthers((Player)client, ((Player) client).getName() + ": " + message);
         System.out.println(name + ": " + message);
+        chatHistory.add("(" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ") " +
+                name + ": " +
+                message);
     }
 
     @Override
@@ -183,11 +189,17 @@ public class Table extends Actor implements ServerInterface {
     }
 
     @Override
-    public void getHand(String name) {
+    public void sendHand(String name) {
         System.out.println(name);
         System.out.println(players.get(name).getHand().getCards()[0]);
         System.out.println(players.get(name).getHand().getCards()[1]);
-        clients.get(name).receiveHand(players.get(name).getHand());
+        //(clients.get(name)).notify(players.get(name).getHand().getCards()[1].toString());
+        (clients.get(name)).receiveHand(players.get(name).getHand());
+    }
+
+    @Override
+    public void sendCard(String name) {
+        (clients.get(name)).receiveCard(new Card(10, Card.suitType.CLUBS));
     }
 
     private void notifyOthers(ClientCallbackInterface client, String message){
@@ -205,5 +217,9 @@ public class Table extends Actor implements ServerInterface {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(tableTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+    }
+
+    public ArrayList<String> getChatHistory() {
+        return chatHistory;
     }
 }

@@ -64,7 +64,7 @@ public class SearchTablesAndroid implements Screen{
 
         ipTF = new TextField("", skin);
         ipTF.setMessageText("Ex: 127.xxx.xxx.xxx");
-        ipTF.setText("172.30.4.199"); //DEBUGING
+        ipTF.setText("192.168.1.72"); //DEBUGING
         ipTF.setAlignment(Align.center);
         ipTF.setSize(
                 7 * stage.getWidth() / 8,

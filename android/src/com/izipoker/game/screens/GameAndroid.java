@@ -188,12 +188,17 @@ public class GameAndroid implements Screen{
         raiseBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                proxyTable.getHand(name);
-                hand = listener.getHand();
-                hand.getCards()[0].setBounds(stage.getWidth()/4,stage.getHeight()-stage.getHeight()/3,stage.getWidth()/4,stage.getHeight()/5);
-                stage.addActor(hand.getCards()[0]);
-                hand.getCards()[1].setBounds(stage.getWidth()/2,stage.getHeight()-stage.getHeight()/3,stage.getWidth()/4,stage.getHeight()/5);
-                stage.addActor(hand.getCards()[1]);
+                try {
+                    //proxyTable.sendCard(name);
+                    //proxyTable.getHand(name);
+                    hand = listener.getHand();
+                    hand.getCards()[0].setBounds(stage.getWidth() / 4, stage.getHeight() - stage.getHeight() / 3, stage.getWidth() / 4, stage.getHeight() / 5);
+                    stage.addActor(hand.getCards()[0]);
+                    hand.getCards()[1].setBounds(stage.getWidth() / 2, stage.getHeight() - stage.getHeight() / 3, stage.getWidth() / 4, stage.getHeight() / 5);
+                    stage.addActor(hand.getCards()[1]);
+                } catch(Exception e){
+
+                }
 
             };
         });

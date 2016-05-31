@@ -77,7 +77,7 @@ public class Dealer implements Runnable{
             for(Player p:table.getActivePlayers()) {
                 System.out.println(p.getHand().getCards()[0]);
                 System.out.println(p.getHand().getCards()[1]);
-                table.getHand(p.getName());
+                table.sendHand(p.getName());
             }
             return;
         }

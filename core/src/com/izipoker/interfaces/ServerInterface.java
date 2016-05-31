@@ -10,5 +10,6 @@ public interface ServerInterface {
     public void tellAll(ClientCallbackInterface client, String message);
     public void leave(ClientCallbackInterface c);
     public String getName();
-    public void getHand(String name);
+    public void sendHand(String name);
+    public void sendCard(String name);
 }

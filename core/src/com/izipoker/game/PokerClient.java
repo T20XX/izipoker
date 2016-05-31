@@ -1,5 +1,6 @@
 package com.izipoker.game;
 
+import com.izipoker.cardGame.Card;
 import com.izipoker.interfaces.ClientCallbackInterface;
 
 /**
@@ -7,7 +8,11 @@ import com.izipoker.interfaces.ClientCallbackInterface;
  */
 public class PokerClient implements ClientCallbackInterface {
 
-    Hand hand;
+    String name = "";
+    int avatarID = 0;
+    Hand hand = null;
+    int money = 0;
+    boolean changed = true;
 
     @Override
     public void notify(String message) {
@@ -19,6 +24,11 @@ public class PokerClient implements ClientCallbackInterface {
         System.out.println(hand.getCards()[0]);
         System.out.println(hand.getCards()[1]);
         this.hand = hand;
+    }
+
+    @Override
+    public void receiveCard(Card card) {
+        System.out.println(card);
     }
 
     public Hand getHand() {

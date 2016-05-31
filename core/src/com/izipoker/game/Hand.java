@@ -10,6 +10,9 @@ import java.io.Serializable;
  */
 public class Hand implements Serializable {
 
+    // need to indicate the this on both sides (server and client) to make sure objects are compatible.
+    private static final long serialVersionUID = 1L;
+
 public enum handRank{
     ROYAL_FLUSH,
     STRAIGHT_FLUSH,

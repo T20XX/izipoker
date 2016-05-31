@@ -10,10 +10,10 @@ import com.izipoker.graphics.TexturesLoad;
 
 import java.io.Serializable;
 
-/**
- * Created by up201405840 on 12-04-2016.
- */
 public class Card extends Actor implements Serializable {
+
+    // need to indicate the this on both sides (server and client) to make sure objects are compatible.
+    private static final long serialVersionUID = 1L;
 
     //private static Texture cardsTex =  new Texture("cards.png");
 

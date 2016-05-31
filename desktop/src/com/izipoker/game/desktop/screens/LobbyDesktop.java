@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -20,6 +21,9 @@ import com.izipoker.game.Player;
 import com.izipoker.game.Table;
 import com.izipoker.game.desktop.IZIPokerDesktop;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 /**
  * Created by Telmo on 03/05/2016.
  */
@@ -28,8 +32,8 @@ public class LobbyDesktop implements Screen{
     private Stage stage;
     private Skin skin;
 
-
     private TextButton startBtn;
+    private Label ipLbl;
     private Player seats[];
 
     //Game variables
@@ -54,7 +58,7 @@ public class LobbyDesktop implements Screen{
         System.out.println(d);*/
     }
 
-    public void buildStage() {
+    public void buildStage(){
         //Actors
 
         table.setBounds(0,0,stage.getWidth(), stage.getHeight());
@@ -64,10 +68,21 @@ public class LobbyDesktop implements Screen{
         startBtn.setPosition( stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
         stage.addActor(startBtn);
 
+        try {
+            ipLbl = new Label(InetAddress.getLocalHost().getHostAddress().toString(),skin);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            ipLbl = new Label("IP not found!", skin);
+        }
+        ipLbl.setPosition(stage.getWidth()/2,stage.getHeight()/2+startBtn.getHeight(), Align.center);
+        stage.addActor(ipLbl);
+
         //Listeners
         startBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                //Thread t = new Thread(table.getDealer());
+                //t.start();
                 Game g = IZIPokerDesktop.getInstance();
                 g.setScreen(new GameDesktop(table));
             }
