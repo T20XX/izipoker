@@ -2,20 +2,25 @@ package com.izipoker.game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class checkPlayer {
+import javax.swing.Timer;
+
+public class CheckPlayer implements Runnable {
     private Player player;
 
-    public checkPlayer(Player p) {
+    public CheckPlayer(Player p) {
         player = p;
-        javax.swing.Timer timer = new javax.swing.Timer(10000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                //if(!player.WAITING)
-                //timer.cancel;
+
+    }
+
+    @Override
+    public void run() {
+        while(!player.hasActed()){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
+        }
     }
 }

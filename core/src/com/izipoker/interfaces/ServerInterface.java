@@ -8,4 +8,6 @@ public interface ServerInterface {
     public String getName();
     public void sendHand(String name);
     public void sendCard(String name);
+    public boolean isLobbyState();
+    public void sendPossibleActions(String name, boolean possibleActions[]);
 }

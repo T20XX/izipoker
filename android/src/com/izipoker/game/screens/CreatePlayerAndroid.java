@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -111,12 +112,19 @@ public class CreatePlayerAndroid implements Screen{
                     callHandler.exportObject(ClientCallbackInterface.class, listener);
 
                     // now do conversation
-                    if (!proxyTable.join(nameTF.getText(), listener) ) {
-                        System.out.println("Sorry, nickname is already in use.");
-                        return;
-                    } else {
-                        IZIPokerAndroid.getInstance().setScreen(new GameAndroid(nameTF.getText(), proxyTable, listener));
-                    }
+                   if(proxyTable.isLobbyState()) {
+                       if (!proxyTable.join(nameTF.getText(), listener)) {
+                           System.out.println("Sorry, nickname is already in use.");
+                           return;
+                       } else {
+                           IZIPokerAndroid.getInstance().setScreen(new GameAndroid(nameTF.getText(), proxyTable, listener));
+                       }
+                   }else {
+                           Dialog resultDialog = new Dialog("Error", skin);
+                           resultDialog.text("Game has already started");
+                           resultDialog.button("BACK");
+                           resultDialog.show(stage);
+                       }
                 } catch (Exception e) {
                     System.err.println("Client exception: " + e.toString());
                     e.printStackTrace();

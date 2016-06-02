@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -34,7 +35,7 @@ public class GameAndroid implements Screen{
     private Player player;
     private Hand hand;
     private TextButton halfPot, maxPot, allIn, sendBtn;
-    private Label ammountLbl, nameLbl;
+    private Label amountLbl, nameLbl;
     private TextField chatTF, betTF;
 
     private ServerInterface proxyTable;
@@ -233,6 +234,17 @@ public class GameAndroid implements Screen{
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0.5f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        if(listener.isChanged()){
+            /*amountLbl.setText(Integer.toString(listener.getMoney()));
+            if(listener.getHand() != null){
+                hand = listener.getHand();
+            }*/
+            foldBtn.setVisible(!listener.getPossibleActions()[0]);
+            checkBtn.setVisible(!listener.getPossibleActions()[1]);
+            callBtn.setVisible(!listener.getPossibleActions()[2]);
+            raiseBtn.setVisible(!listener.getPossibleActions()[3]);
+        }
 
         stage.act(delta);
         stage.draw();

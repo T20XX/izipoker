@@ -75,6 +75,7 @@ public class Dealer implements Runnable{
 
     @Override
     public void run() {
+        table.setState(Table.tableState.PLAYING);
         System.out.println("Vou enviar as cartas!");
         while (table.getActivePlayers().length > 1){
             createRound();
@@ -88,7 +89,24 @@ public class Dealer implements Runnable{
             if(r.getCurrentPlayers().size() == 1)
                 return;
             for(Player p:r.getCurrentPlayers()){
-
+                table.sendPossibleActions(p.getName(), new boolean[]{true, false, true, false});
+                Thread t = new Thread(new CheckPlayer(p));
+                /*Timer timer = new Timer(table.getPlayingTime(), new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                        t.stop();
+                    }
+                });*/
+                t.start();
+                try {
+                    t.join(table.getPlayingTime()*1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(t.isAlive()){
+                    t.interrupt();
+                }
+                System.out.println("Passaram "+ table.getPlayingTime() + " segundos.");
             }
 
             showFlop();
@@ -121,6 +139,7 @@ public class Dealer implements Runnable{
 
             return;
         }
-        System.out.println("Algo deu merda!");
+
+        table.setState(Table.tableState.CLOSED);
     }
 }

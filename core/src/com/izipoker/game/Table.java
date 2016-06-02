@@ -16,6 +16,12 @@ import java.util.HashMap;
  */
 public class Table extends Actor implements ServerInterface {
 
+    public enum tableState {
+        LOBBY,
+        PLAYING,
+        CLOSED
+    }
+
     private static Texture tableTex =  new Texture("table.png");
 
     private String name;
@@ -26,12 +32,13 @@ public class Table extends Actor implements ServerInterface {
     private Dealer dealer;
     private Player joker;
     private int SMALL_BLIND = 30;
-    private int initMoney = 1000; //MUDAR PARA CONSTRUCTOR
+    private final int initMoney = 1000; //MUDAR PARA CONSTRUCTOR
+    private final int playingTime = 10; //MUDAR PARA CONSTRUCTOR
+    private tableState state = tableState.LOBBY;
     private ArrayList<String> chatHistory = new ArrayList<String>();
 
     //clients map to players
     private HashMap<String, ClientCallbackInterface> clients = new HashMap<String, ClientCallbackInterface>();
-
     private HashMap<String, Player> players = new HashMap<String, Player>();
 
     /**
@@ -198,6 +205,16 @@ public class Table extends Actor implements ServerInterface {
         (clients.get(name)).receiveCard(new Card(10, Card.suitType.CLUBS));
     }
 
+    @Override
+    public boolean isLobbyState() {
+        return (state == tableState.LOBBY);
+    }
+
+    @Override
+    public void sendPossibleActions(String name, boolean[] possibleActions) {
+        (clients.get(name)).receivePossibleActions(possibleActions);
+    }
+
     private void notifyOthers(ClientCallbackInterface client, String message){
         /*for (Player p:seats){
             p.notify(message);
@@ -218,5 +235,13 @@ public class Table extends Actor implements ServerInterface {
 
     public ArrayList<String> getChatHistory() {
         return chatHistory;
+    }
+
+
+    public void setState(tableState state) {this.state = state;}
+
+
+    public int getPlayingTime() {
+        return playingTime;
     }
 }

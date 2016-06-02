@@ -15,9 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.awt.Image;
 
-/**
- * Created by Telmo on 26/04/2016.
- */
 public abstract class Player extends Actor{
     private int id;
     private String name;
@@ -27,6 +24,9 @@ public abstract class Player extends Actor{
     private boolean playing;
 
     private Hand hand;
+    private PokerAction lastAction;
+
+    private boolean acted = false;
 
     Player(int id, String name, int money) {
         this.id = id;
@@ -114,5 +114,9 @@ public abstract class Player extends Actor{
         //font.draw(batch, name, super.getX()-avatar.getWidth(), super.getY()-avatar.getHeight());
     }
 
+
+    public boolean hasActed() {
+        return acted;
+    }
 
 }

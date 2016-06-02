@@ -64,7 +64,7 @@ public class SearchTablesAndroid implements Screen{
 
         ipTF = new TextField("", skin);
         ipTF.setMessageText("Ex: 127.xxx.xxx.xxx");
-        ipTF.setText("192.168.1.130"); //DEBUGING
+        ipTF.setText("192.168.1.72"); //DEBUGING
         ipTF.setAlignment(Align.center);
         ipTF.setSize(
                 7 * stage.getWidth() / 8,
@@ -104,13 +104,12 @@ public class SearchTablesAndroid implements Screen{
                     proxyTable = (ServerInterface)client.getGlobal(ServerInterface.class);
 
                     //System.out.println("Mesa " + proxyTable.getName() + "\n");
-
-                    resultDialog = new Dialog("Table Found", skin);
-                    resultDialog.setWidth(7*stage.getWidth()/8);
-                    resultDialog.text(proxyTable.getName());
-                    resultDialog.button(continueDialogBtn);
-                    resultDialog.button("CANCEL");
-                    resultDialog.show(stage);
+                        resultDialog = new Dialog("Table Found", skin);
+                        resultDialog.setWidth(7 * stage.getWidth() / 8);
+                        resultDialog.text(proxyTable.getName());
+                        resultDialog.button(continueDialogBtn);
+                        resultDialog.button("CANCEL");
+                        resultDialog.show(stage);
 
                 } catch (Exception e) {
                     resultDialog = new Dialog("Error", skin);

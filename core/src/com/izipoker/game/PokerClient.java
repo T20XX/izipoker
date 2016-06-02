@@ -9,6 +9,7 @@ public class PokerClient implements ClientCallbackInterface {
     private Hand hand = null;
     private int money = 0;
     private boolean changed = true;
+    private boolean possibleActions[] = {false, false, false, false};
 
     @Override
     public void notify(String message) {
@@ -20,6 +21,7 @@ public class PokerClient implements ClientCallbackInterface {
         System.out.println(hand.getCards()[0]);
         System.out.println(hand.getCards()[1]);
         this.hand = hand;
+        this.changed = true;
     }
 
     @Override
@@ -27,7 +29,58 @@ public class PokerClient implements ClientCallbackInterface {
         System.out.println(card);
     }
 
+    @Override
+    public void receivePossibleActions(boolean[] possibleActions) {
+        this.possibleActions = possibleActions;
+        this.changed = true;
+    }
+
     public Hand getHand() {
         return hand;
     }
+
+    public boolean[] getPossibleActions() {
+        return possibleActions;
+    }
+
+    public void setPossibleActions(boolean[] possibleActions) {
+        this.possibleActions = possibleActions;
+    }
+
+    public boolean isChanged() {
+        return changed;
+    }
+
+    public void setChanged(boolean changed) {
+        this.changed = changed;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public void setHand(Hand hand) {
+        this.hand = hand;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAvatarID() {
+        return avatarID;
+    }
+
+    public void setAvatarID(int avatarID) {
+        this.avatarID = avatarID;
+    }
+
 }
