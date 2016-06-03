@@ -1,7 +1,7 @@
 package com.izipoker.game;
 
 import com.izipoker.cardGame.Card;
-import com.izipoker.interfaces.ClientCallbackInterface;
+import com.izipoker.network.ClientCallbackInterface;
 
 public class PokerClient implements ClientCallbackInterface {
     private String name = "";

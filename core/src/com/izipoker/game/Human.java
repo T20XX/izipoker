@@ -1,7 +1,5 @@
 package com.izipoker.game;
 
-import com.izipoker.interfaces.ClientCallbackInterface;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**

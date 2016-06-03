@@ -1,19 +1,10 @@
 package com.izipoker.game;
 
-import java.io.Serializable;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
-import com.izipoker.interfaces.ClientCallbackInterface;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
-import java.awt.Image;
 
 public abstract class Player extends Actor{
     private int id;

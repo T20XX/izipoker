@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.izipoker.cardGame.Card;
-import com.izipoker.interfaces.ClientCallbackInterface;
-import com.izipoker.interfaces.ServerInterface;
+import com.izipoker.network.ClientCallbackInterface;
+import com.izipoker.network.ServerInterface;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

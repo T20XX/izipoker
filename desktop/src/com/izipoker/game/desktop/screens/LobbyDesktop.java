@@ -16,7 +16,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.izipoker.game.Player;
 import com.izipoker.game.Table;
 import com.izipoker.game.desktop.IZIPokerDesktop;
+import com.izipoker.network.NetworkUtils;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -65,8 +67,8 @@ public class LobbyDesktop implements Screen{
         stage.addActor(startBtn);
 
         try {
-            ipLbl = new Label(InetAddress.getLocalHost().getHostAddress().toString(),skin);
-        } catch (UnknownHostException e) {
+            ipLbl = new Label(NetworkUtils.getNetworkAddress().toString(),skin);
+        } catch (IOException e) {
             e.printStackTrace();
             ipLbl = new Label("IP not found!", skin);
         }
