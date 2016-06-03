@@ -1,8 +1,8 @@
 package com.izipoker.game;
 
-import java.io.Serializable;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
+<<<<<<< HEAD
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.interfaces.ClientCallbackInterface;
@@ -10,12 +10,11 @@ import com.izipoker.interfaces.ClientCallbackInterface;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+=======
+>>>>>>> 5a8871a004d54f4cbaa29088c3118985e922f771
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
-import java.awt.Image;
 
 public abstract class Player extends Actor{
     private int id;

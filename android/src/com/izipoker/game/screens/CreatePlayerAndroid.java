@@ -1,6 +1,5 @@
 package com.izipoker.game.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,12 +17,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.izipoker.game.Human;
 import com.izipoker.game.IZIPokerAndroid;
 import com.izipoker.game.PokerClient;
+<<<<<<< HEAD
 import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.interfaces.ClientCallbackInterface;
 import com.izipoker.interfaces.ServerInterface;
+=======
+import com.izipoker.network.ClientCallbackInterface;
+import com.izipoker.network.ServerInterface;
+>>>>>>> 5a8871a004d54f4cbaa29088c3118985e922f771
 
 import lipermi.handler.CallHandler;
 

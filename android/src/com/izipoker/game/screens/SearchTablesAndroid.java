@@ -17,7 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.game.IZIPokerAndroid;
-import com.izipoker.interfaces.ServerInterface;
+import com.izipoker.network.ClientConnection;
+import com.izipoker.network.ServerInterface;
 
 import lipermi.handler.CallHandler;
 import lipermi.net.Client;
@@ -42,6 +43,7 @@ public class SearchTablesAndroid implements Screen{
 
     private ServerInterface proxyTable;
     private CallHandler callHandler;
+    private ClientConnection connection;
 
     public SearchTablesAndroid() {
         create();
@@ -95,7 +97,7 @@ public class SearchTablesAndroid implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.input.setOnscreenKeyboardVisible(false);
-                try {
+                /*try {
                     // get proxy for remote chat server
                     callHandler = new CallHandler();
                     String remoteHost = ipTF.getText();
@@ -118,7 +120,19 @@ public class SearchTablesAndroid implements Screen{
                     resultDialog.show(stage);
                     System.out.println("Client exception: " + e.toString());
                     e.printStackTrace();
-                }
+                }*/
+
+
+                System.out.println("encontramos");
+                ClientConnection connection = new ClientConnection();
+                System.out.println("encontramos");
+                connection.findService();
+                System.out.println("encontramos");
+                connection.connectToServer();
+                System.out.println("encontramos");
+                proxyTable = connection.getProxyTable();
+                callHandler = connection.getCallHandler();
+                IZIPokerAndroid.getInstance().setScreen(new CreatePlayerAndroid(proxyTable, callHandler));
             }
 
             ;

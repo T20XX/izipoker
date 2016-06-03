@@ -4,9 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.izipoker.cardGame.Card;
+<<<<<<< HEAD
 import com.izipoker.interfaces.ClientCallbackInterface;
 import com.izipoker.interfaces.ServerInterface;
 //import com.sun.xml.internal.ws.dump.LoggingDumpTube;
+=======
+import com.izipoker.network.ClientCallbackInterface;
+import com.izipoker.network.ServerInterface;
+>>>>>>> 5a8871a004d54f4cbaa29088c3118985e922f771
 
 import java.awt.Point;
 import java.time.LocalDateTime;

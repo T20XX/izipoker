@@ -1,4 +1,4 @@
-package com.izipoker.interfaces;
+package com.izipoker.network;
 
 public interface ServerInterface {
     public boolean join(String name, int avatarID, ClientCallbackInterface client);

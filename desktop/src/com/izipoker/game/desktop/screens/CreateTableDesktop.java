@@ -19,10 +19,15 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.izipoker.game.Table;
 import com.izipoker.game.desktop.IZIPokerDesktop;
-import com.izipoker.interfaces.ServerInterface;
+import com.izipoker.network.NetworkUtils;
+import com.izipoker.network.ServerInterface;
+
+import java.io.IOException;
+import java.net.InetAddress;
 
 import lipermi.handler.CallHandler;
 import lipermi.net.Server;
+import javax.jmdns.*;
 
 /**
  * Created by Telmo on 03/05/2016.
@@ -110,6 +115,32 @@ public class CreateTableDesktop implements Screen{
                     System.err.println("Server ready");
                     Game g = IZIPokerDesktop.getInstance();
                     g.setScreen(new LobbyDesktop(table));
+
+                    InetAddress localAddress = null;
+                    JmDNS mdnsServer = null;
+                    try {
+                        localAddress = NetworkUtils.getNetworkAddress();
+                    } catch (IOException e2) {
+                        e2.printStackTrace();
+                    }
+
+                    if (localAddress != null) {
+                        // Creates mDNS server.
+                        try {
+                            mdnsServer = JmDNS.create(localAddress);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+
+                        ServiceInfo testService = ServiceInfo.create("_poker._tcp.local.", "Poker table", thePortIWantToBind, "Poker table");
+                        try {
+                            mdnsServer.registerService(testService);
+                            System.out.println("mDNS Server Ready!");
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+
                 } catch (Exception e) {
                     System.err.println("Server exception: " + e.toString());
                     e.printStackTrace();

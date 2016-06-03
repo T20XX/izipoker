@@ -1,4 +1,4 @@
-package com.izipoker.interfaces;
+package com.izipoker.network;
 
 import com.izipoker.cardGame.Card;
 import com.izipoker.game.Hand;
