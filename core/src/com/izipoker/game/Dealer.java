@@ -85,6 +85,7 @@ public class Dealer implements Runnable{
                 System.out.println(p.getHand().getCards()[0]);
                 System.out.println(p.getHand().getCards()[1]);
                 table.sendHand(p.getName());
+                table.sendMoney(p.getName());
             }
             if(r.getCurrentPlayers().size() == 1)
                 return;

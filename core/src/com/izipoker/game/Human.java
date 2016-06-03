@@ -17,7 +17,7 @@ public class Human extends Player{
     public Human(int id, String name, int money){
         super(id,name, money);
     }
-    public Human(int id, String name, int money, TextureRegion avatar){
-        super(id,name, money, avatar);
+    public Human(int id, String name, int money, int avatarID){
+        super(id,name, money, avatarID);
     }
 }

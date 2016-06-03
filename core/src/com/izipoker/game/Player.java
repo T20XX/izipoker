@@ -3,6 +3,8 @@ package com.izipoker.game;
 import java.io.Serializable;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.interfaces.ClientCallbackInterface;
 
 import com.badlogic.gdx.Gdx;
@@ -19,7 +21,7 @@ public abstract class Player extends Actor{
     private int id;
     private String name;
     private int money;
-    private TextureRegion avatar;
+    private int avatarID;
     private boolean active;
     private boolean playing;
 
@@ -35,17 +37,17 @@ public abstract class Player extends Actor{
         hand = null;
         active = true;
         playing = false;
-        this.avatar = null;
+        this.avatarID = 0;
     }
 
-    Player(int id, String name, int money, TextureRegion avatar) {
+    Player(int id, String name, int money, int avatarID) {
         this.id = id;
         this.name = name;
         this.money = money;
         hand = null;
         active = true;
         playing = false;
-        this.avatar = avatar;
+        this.avatarID = avatarID;
     }
 
     void check(Round r){
@@ -109,8 +111,9 @@ public abstract class Player extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         BitmapFont font = new BitmapFont();
+        batch.draw(TexturesLoad.avatarTex[0][avatarID], super.getX(), super.getY(), super.getWidth(), super.getHeight());
         font.draw(batch, name, 0,0);
-        //batch.draw(avatar, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+
         //font.draw(batch, name, super.getX()-avatar.getWidth(), super.getY()-avatar.getHeight());
     }
 

@@ -8,4 +8,6 @@ public interface ClientCallbackInterface  {
     public void receiveHand(Hand hand);
     public void receiveCard(Card card);
     public void receivePossibleActions(boolean possibleActions[]);
+    public void receiveMoney(int money);
+
 }

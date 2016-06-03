@@ -1,7 +1,7 @@
 package com.izipoker.interfaces;
 
 public interface ServerInterface {
-    public boolean join(String name, ClientCallbackInterface client);
+    public boolean join(String name, int avatarID, ClientCallbackInterface client);
     public void tell(String name, String message);
     public void tellAll(ClientCallbackInterface client, String message);
     public void leave(ClientCallbackInterface c);
@@ -10,4 +10,5 @@ public interface ServerInterface {
     public void sendCard(String name);
     public boolean isLobbyState();
     public void sendPossibleActions(String name, boolean possibleActions[]);
+    public void sendMoney(String name);
 }

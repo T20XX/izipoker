@@ -2,6 +2,7 @@ package com.izipoker.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -21,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.game.Hand;
 import com.izipoker.game.Player;
 import com.izipoker.game.PokerClient;
+import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.interfaces.ServerInterface;
 
 /**
@@ -37,6 +40,7 @@ public class GameAndroid implements Screen{
     private TextButton halfPot, maxPot, allIn, sendBtn;
     private Label amountLbl, nameLbl;
     private TextField chatTF, betTF;
+    private Image avatarImg;
 
     private ServerInterface proxyTable;
     private PokerClient listener;
@@ -70,6 +74,15 @@ public class GameAndroid implements Screen{
     public void buildStage() {
         //Actors
 
+
+        avatarImg = new Image(TexturesLoad.avatarTex[0][listener.getAvatarID()]);
+        avatarImg.setSize(stage.getWidth()/3, stage.getHeight()/4);
+        avatarImg.setPosition(0, stage.getHeight(),Align.topLeft);
+        stage.addActor(avatarImg);
+        amountLbl = new Label(Integer.toString(listener.getMoney()),skin);
+        amountLbl.setWidth(stage.getWidth()/2);
+        amountLbl.setPosition(stage.getWidth(), stage.getHeight() - amountLbl.getHeight(), Align.center);
+        stage.addActor(amountLbl);
 
         nameLbl = new Label("TESTA", skin);
         nameLbl.setWidth(stage.getWidth()/2);
@@ -244,6 +257,9 @@ public class GameAndroid implements Screen{
             checkBtn.setVisible(!listener.getPossibleActions()[1]);
             callBtn.setVisible(!listener.getPossibleActions()[2]);
             raiseBtn.setVisible(!listener.getPossibleActions()[3]);
+            amountLbl.setText(Integer.toString(listener.getMoney()));
+            listener.setChanged(false);
+
         }
 
         stage.act(delta);

@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.game.Human;
 import com.izipoker.game.IZIPokerAndroid;
 import com.izipoker.game.PokerClient;
+import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.interfaces.ClientCallbackInterface;
 import com.izipoker.interfaces.ServerInterface;
 
@@ -36,8 +37,8 @@ public class CreatePlayerAndroid implements Screen{
     private Skin skin;
     private TextField nameTF;
     private TextureRegion avatarTR;
+    private int avatarID = 0;
     private Image avatarImg;
-    private Texture avatarTxt;
 
     private TextButton createBtn;
     private TextButton cancelBtn;
@@ -52,8 +53,8 @@ public class CreatePlayerAndroid implements Screen{
 
         skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
         backgroundTex = new Texture("background.png");
-        avatarTxt = new Texture("avatar.jpg");
-        avatarTR = new TextureRegion(avatarTxt, 0, 0, avatarTxt.getWidth()/7, avatarTxt.getHeight());
+        avatarTR = new TextureRegion();
+        avatarTR.setRegion(TexturesLoad.avatarTex[0][avatarID]);
         this.proxyTable = proxyTable;
         this.callHandler = callHandler;
 
@@ -107,13 +108,14 @@ public class CreatePlayerAndroid implements Screen{
 
                     System.out.println("Mesa " + proxyTable.getName() + "\n");
 
+
+                   // now do conversation
+                   if(proxyTable.isLobbyState()) {
                     // create and expose remote listener
-                    PokerClient listener = new PokerClient();
+                    PokerClient listener = new PokerClient(nameTF.getText(), avatarID);
                     callHandler.exportObject(ClientCallbackInterface.class, listener);
 
-                    // now do conversation
-                   if(proxyTable.isLobbyState()) {
-                       if (!proxyTable.join(nameTF.getText(), listener)) {
+                       if (!proxyTable.join(nameTF.getText(), avatarID, listener)) {
                            System.out.println("Sorry, nickname is already in use.");
                            return;
                        } else {
@@ -144,12 +146,11 @@ public class CreatePlayerAndroid implements Screen{
         avatarImg.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                int xregion = avatarTR.getRegionX() + avatarTR.getRegionWidth();
-
-                if(xregion >= avatarTxt.getWidth()-avatarTxt.getWidth()/7){
-                    xregion = 0;
-                }
-                avatarTR.setRegion(xregion, 0, avatarTxt.getWidth() / 7, avatarTxt.getHeight());
+                avatarID++;
+                if(avatarID >= TexturesLoad.MAX_AVATAR)
+                    avatarID = 0;
+                System.out.println(avatarID);
+                avatarTR.setRegion(TexturesLoad.avatarTex[0][avatarID]);
             };
         });
 

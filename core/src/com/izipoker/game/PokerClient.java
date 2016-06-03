@@ -7,9 +7,14 @@ public class PokerClient implements ClientCallbackInterface {
     private String name = "";
     private int avatarID = 0;
     private Hand hand = null;
-    private int money = 0;
+    private int money;
     private boolean changed = true;
     private boolean possibleActions[] = {false, false, false, false};
+
+    public PokerClient(String name, int avatarID) {
+        this.name = name;
+        this.avatarID = avatarID;
+    }
 
     @Override
     public void notify(String message) {
@@ -35,6 +40,13 @@ public class PokerClient implements ClientCallbackInterface {
         this.changed = true;
     }
 
+    @Override
+    public void receiveMoney(int money) {
+        this.money = money;
+        this.changed = true;
+    }
+
+
     public Hand getHand() {
         return hand;
     }
@@ -53,10 +65,6 @@ public class PokerClient implements ClientCallbackInterface {
 
     public void setChanged(boolean changed) {
         this.changed = changed;
-    }
-
-    public int getMoney() {
-        return money;
     }
 
     public void setMoney(int money) {
@@ -83,4 +91,7 @@ public class PokerClient implements ClientCallbackInterface {
         this.avatarID = avatarID;
     }
 
+    public int getMoney() {
+        return money;
+    }
 }

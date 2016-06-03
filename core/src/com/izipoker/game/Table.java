@@ -6,7 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.izipoker.cardGame.Card;
 import com.izipoker.interfaces.ClientCallbackInterface;
 import com.izipoker.interfaces.ServerInterface;
+//import com.sun.xml.internal.ws.dump.LoggingDumpTube;
 
+import java.awt.Point;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +24,7 @@ public class Table extends Actor implements ServerInterface {
         CLOSED
     }
 
-    private static Texture tableTex =  new Texture("table.png");
+    private static Texture tableTex = new Texture("table.png");
 
     private String name;
     private final int MAX_PLAYER;
@@ -32,10 +34,11 @@ public class Table extends Actor implements ServerInterface {
     private Dealer dealer;
     private Player joker;
     private int SMALL_BLIND = 30;
-    private final int initMoney = 1000; //MUDAR PARA CONSTRUCTOR
+    private final int initMoney = 420; //MUDAR PARA CONSTRUCTOR
     private final int playingTime = 10; //MUDAR PARA CONSTRUCTOR
     private tableState state = tableState.LOBBY;
     private ArrayList<String> chatHistory = new ArrayList<String>();
+    private Point[] position;
 
     //clients map to players
     private HashMap<String, ClientCallbackInterface> clients = new HashMap<String, ClientCallbackInterface>();
@@ -43,26 +46,30 @@ public class Table extends Actor implements ServerInterface {
 
     /**
      * Creates a table given number of players
+     *
      * @param maxPlayers Maximum number of players
      */
-    public Table(String name, int maxPlayers){
+    public Table(String name, int maxPlayers) {
         MAX_PLAYER = maxPlayers;
         seats = new Player[maxPlayers];
         dealer = new Dealer(this);
         rounds = new ArrayList<Round>();
         this.name = name;
+        //position[0].setLocation(100,100);
+
     }
 
     /**
      * Adds a player to the table if there is an empty seat
+     *
      * @param p Player to be added to table
      * @return True if the player is added successfully or false if the table is full
      */
-    public boolean addPlayer(Player p){
-        for(int i = 0; i < seats .length; i++){
-            if (seats[i] == null){
+    public boolean addPlayer(Player p) {
+        for (int i = 0; i < seats.length; i++) {
+            if (seats[i] == null) {
                 seats[i] = p;
-                if(joker == null)
+                if (joker == null)
                     joker = p;
                 return true;
             }
@@ -80,17 +87,17 @@ public class Table extends Actor implements ServerInterface {
         return false;
     }
 
-    public Player nextJoker(){
+    public Player nextJoker() {
         int j, k = 0;
-        for(int i = 0; i < seats.length; i++){
-            if(seats[i] == joker){
-                if(i == seats.length-1)
+        for (int i = 0; i < seats.length; i++) {
+            if (seats[i] == joker) {
+                if (i == seats.length - 1)
                     j = 0;
-                else j = i+1;
-                while(k != seats.length){
-                    if(i == seats.length-1)
+                else j = i + 1;
+                while (k != seats.length) {
+                    if (i == seats.length - 1)
                         j = 0;
-                    if(seats[j].isActive()) {
+                    if (seats[j].isActive()) {
                         joker = seats[j];
                         return joker;
                     }
@@ -102,10 +109,11 @@ public class Table extends Actor implements ServerInterface {
         return null;
     }
 
-    public Player[] getSeats(){
+    public Player[] getSeats() {
         return seats;
     }
-    public void addRounds(Round r){
+
+    public void addRounds(Round r) {
         rounds.add(r);
     }
 
@@ -121,10 +129,10 @@ public class Table extends Actor implements ServerInterface {
         return 2 * SMALL_BLIND;
     }
 
-    public Player[] getActivePlayers(){
+    public Player[] getActivePlayers() {
         ArrayList<Player> activePlayers = new ArrayList<Player>();
-        for(int i = 0; i< seats.length; i++){
-            if(seats[i] != null) {
+        for (int i = 0; i < seats.length; i++) {
+            if (seats[i] != null) {
                 if (seats[i].isActive())
                     activePlayers.add(seats[i]);
             }
@@ -132,9 +140,10 @@ public class Table extends Actor implements ServerInterface {
         return activePlayers.toArray(new Player[activePlayers.size()]);
     }
 
-    public Round getTopRound(){
-        return rounds.get(rounds.size()-1);
+    public Round getTopRound() {
+        return rounds.get(rounds.size() - 1);
     }
+
     public Dealer getDealer() {
         return dealer;
     }
@@ -152,14 +161,15 @@ public class Table extends Actor implements ServerInterface {
         this.name = name;
     }
 
+
     @Override
-    public boolean join(String name, ClientCallbackInterface client) {
+    public boolean join(String name, int avatarID, ClientCallbackInterface client) {
         if (clients.containsKey(name))
             return false;
         clients.put(name, client);
 
-        Player p = new Human(0, name, initMoney);
-        players.put(name,p);
+        Player p = new Human(0, name, initMoney,avatarID);
+        players.put(name, p);
         if (addPlayer(p)) {
             // tells this user is logged in
             client.notify("Congratulations " + name + ", you have joined the table " + this.name);
@@ -168,7 +178,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     @Override
-    public void tell(String name, String message)  {
+    public void tell(String name, String message) {
         //notifyOthers((Player)client, ((Player) client).getName() + ": " + message);
         System.out.println(name + ": " + message);
         chatHistory.add("(" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ") " +
@@ -177,13 +187,13 @@ public class Table extends Actor implements ServerInterface {
     }
 
     @Override
-    public void tellAll(ClientCallbackInterface client, String message)  {
+    public void tellAll(ClientCallbackInterface client, String message) {
         //notifyOthers((Player)client, ((Player) client).getName() + " : " + message);
     }
 
     @Override
-    public void leave(ClientCallbackInterface client)  {
-        removePlayer((Player)client);
+    public void leave(ClientCallbackInterface client) {
+        removePlayer((Player) client);
     }
 
     @Override
@@ -215,13 +225,13 @@ public class Table extends Actor implements ServerInterface {
         (clients.get(name)).receivePossibleActions(possibleActions);
     }
 
-    private void notifyOthers(ClientCallbackInterface client, String message){
+    private void notifyOthers(ClientCallbackInterface client, String message) {
         /*for (Player p:seats){
             p.notify(message);
         }*/
     }
 
-    private void notifyAll(ClientCallbackInterface client, String message){
+    private void notifyAll(ClientCallbackInterface client, String message) {
         /*for (Player p:seats){
             p.notify(message);
         }*/
@@ -229,7 +239,7 @@ public class Table extends Actor implements ServerInterface {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(1,1,1,1);
+        batch.setColor(1, 1, 1, 1);
         batch.draw(tableTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
     }
 
@@ -238,10 +248,19 @@ public class Table extends Actor implements ServerInterface {
     }
 
 
-    public void setState(tableState state) {this.state = state;}
+    public void setState(tableState state) {
+        this.state = state;
+    }
 
 
     public int getPlayingTime() {
         return playingTime;
+    }
+
+
+    @Override
+    public void sendMoney(String name) {
+        (clients.get(name)).receiveMoney(players.get(name).getMoney());
+        //(clients.get(name)).receiveHand(players.get(name).getHand());
     }
 }

@@ -15,6 +15,11 @@ public class TexturesLoad {
 
     public static TextureRegion frontTex[][] = TextureRegion.split(cardsTex,cardsTex.getWidth()/13, cardsTex.getHeight()/4);;
 
+    public static Texture avatarTotal = new Texture("avatar.jpg");
+
+    public final static int MAX_AVATAR = 7;
+
+    public static TextureRegion avatarTex[][] = TextureRegion.split(avatarTotal,avatarTotal.getWidth()/MAX_AVATAR, avatarTotal.getHeight());
 
     public static TexturesLoad getInstance() {
         return ourInstance;
