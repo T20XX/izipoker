@@ -1,9 +1,9 @@
 package com.izipoker.game;
 
-public class CheckPlayer implements Runnable {
+public class CheckPlayerAction implements Runnable {
     private Player player;
 
-    public CheckPlayer(Player p) {
+    public CheckPlayerAction(Player p) {
         player = p;
 
     }

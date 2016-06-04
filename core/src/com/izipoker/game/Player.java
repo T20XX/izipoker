@@ -110,4 +110,11 @@ public abstract class Player extends Actor{
         return acted;
     }
 
+    public void setLastAction(PokerAction lastAction) {
+        this.lastAction = lastAction;
+    }
+
+    public void setActed(boolean acted) {
+        this.acted = acted;
+    }
 }

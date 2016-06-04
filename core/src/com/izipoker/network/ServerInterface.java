@@ -1,5 +1,7 @@
 package com.izipoker.network;
 
+import com.izipoker.game.PokerAction;
+
 public interface ServerInterface {
     public boolean join(String name, int avatarID, ClientCallbackInterface client);
     public void tell(String name, String message);
@@ -11,4 +13,5 @@ public interface ServerInterface {
     public boolean isLobbyState();
     public void sendPossibleActions(String name, boolean possibleActions[]);
     public void sendMoney(String name);
+    public void sendPokerAction(String name, PokerAction action);
 }

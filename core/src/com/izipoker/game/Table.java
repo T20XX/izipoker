@@ -262,4 +262,10 @@ public class Table extends Actor implements ServerInterface {
         (clients.get(name)).receiveMoney(players.get(name).getMoney());
         //(clients.get(name)).receiveHand(players.get(name).getHand());
     }
+
+    @Override
+    public void sendPokerAction(String name, PokerAction action) {
+        players.get(name).setLastAction(action);
+        players.get(name).setActed(true);
+    }
 }

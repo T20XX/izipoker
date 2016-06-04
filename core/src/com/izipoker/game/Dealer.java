@@ -3,11 +3,7 @@ package com.izipoker.game;
 import com.izipoker.cardGame.Card;
 import com.izipoker.cardGame.Deck;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-import javax.swing.Timer;
 
 /**
  * Created by Telmo on 26/04/2016.
@@ -91,7 +87,7 @@ public class Dealer implements Runnable{
                 return;
             for(Player p:r.getCurrentPlayers()){
                 table.sendPossibleActions(p.getName(), new boolean[]{true, false, true, false});
-                Thread t = new Thread(new CheckPlayer(p));
+                Thread t = new Thread(new CheckPlayerAction(p));
                 /*Timer timer = new Timer(table.getPlayingTime(), new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent arg0) {

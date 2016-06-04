@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.game.Hand;
 import com.izipoker.game.Player;
+import com.izipoker.game.PokerAction;
 import com.izipoker.game.PokerClient;
 import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.network.ServerInterface;
@@ -170,20 +171,21 @@ public class GameAndroid implements Screen{
         foldBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.FOLD));
             };
         });
 
         callBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.CALL));
             };
         });
 
         raiseBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.RAISE,Integer.valueOf(betTF.getText())));
                 try {
                     //proxyTable.sendCard(name);
                     //proxyTable.getHand(name);
@@ -200,7 +202,7 @@ public class GameAndroid implements Screen{
         checkBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.CHECK));
             };
         });
 
@@ -222,7 +224,7 @@ public class GameAndroid implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    betSlider.setValue(Integer.valueOf(betTF.getMessageText()));
+                    betSlider.setValue(Integer.valueOf(betTF.getText()));
                 } catch (Exception e){
 
                 }
