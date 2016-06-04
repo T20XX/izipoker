@@ -27,6 +27,9 @@ public class Round {
     private int pot;
     private LinkedList<Player> currentPlayers;
     private roundState state = roundState.PREFLOP;
+    private int highestBet;
+    private Player highestPlayer;
+    private Player joker;
 
 
     public Round(Player[] players, Player p){
@@ -34,6 +37,9 @@ public class Round {
         this.flop = null;
         this.turn = null;
         this.river = null;
+        this.highestBet = 0;
+        this.highestPlayer = null;
+        this.joker = p;
         currentPlayers = new LinkedList<Player>();
         for(int i = 0; i< players.length; i++){
                 currentPlayers.add(players[i]);
@@ -57,6 +63,10 @@ public class Round {
             if (bets.containsKey(p)) {
                 ammount = ammount + bets.get(p);
                 bets.put(p, ammount);
+            }
+            if(ammount > highestBet) {
+                highestBet = ammount;
+                highestPlayer = p;
             }
             Player player = currentPlayers.removeFirst();
             currentPlayers.addLast(player);
@@ -100,6 +110,13 @@ public class Round {
      */
     public void updateState(){
         this.state = roundState.values()[roundState.valueOf(this.state.toString()).ordinal() + 1];
+        highestBet = 0;
+        highestPlayer = null;
+        while(currentPlayers.peek() != joker)
+        {
+            Player player = currentPlayers.removeFirst();
+            currentPlayers.addLast(player);
+        }
     }
 
     public Card[] getFlop() {
@@ -112,6 +129,14 @@ public class Round {
 
     public Card getRiver() {
         return river;
+    }
+
+    public boolean foldPlayer(Player p){
+        if(currentPlayers.peek() == p){
+            currentPlayers.remove(0);
+            return true;
+        }
+        return false;
     }
 
 }
