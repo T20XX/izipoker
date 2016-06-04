@@ -246,6 +246,23 @@ public class Table extends Actor implements ServerInterface {
                 if (seats[i].isActive())
                     seats[i].draw(batch, parentAlpha);
         }
+        if(getTopRound().getFlop()[0] != null){
+            getTopRound().getFlop()[0].setPosition(super.getX()/5, super.getY()/2);
+            getTopRound().getFlop()[0].draw(batch, parentAlpha);
+            getTopRound().getFlop()[1].setPosition(2*super.getX()/5, super.getY()/2);
+            getTopRound().getFlop()[1].draw(batch, parentAlpha);
+            getTopRound().getFlop()[2].setPosition(3*super.getX()/5, super.getY()/2);
+            getTopRound().getFlop()[2].draw(batch, parentAlpha);
+        }
+
+        if(getTopRound().getRiver() != null){
+            getTopRound().getRiver().setPosition(4*super.getX()/5, super.getY()/2);
+            getTopRound().getRiver().draw(batch,parentAlpha);
+        }
+        if(getTopRound().getTurn() != null){
+            getTopRound().getTurn().setPosition(super.getX(),super.getY()/2);
+            getTopRound().getTurn().draw(batch,parentAlpha);
+        }
 
     }
 
