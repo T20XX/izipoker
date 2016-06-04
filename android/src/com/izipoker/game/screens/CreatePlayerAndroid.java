@@ -19,14 +19,9 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.game.IZIPokerAndroid;
 import com.izipoker.game.PokerClient;
-<<<<<<< HEAD
 import com.izipoker.graphics.TexturesLoad;
-import com.izipoker.interfaces.ClientCallbackInterface;
-import com.izipoker.interfaces.ServerInterface;
-=======
 import com.izipoker.network.ClientCallbackInterface;
 import com.izipoker.network.ServerInterface;
->>>>>>> 5a8871a004d54f4cbaa29088c3118985e922f771
 
 import lipermi.handler.CallHandler;
 

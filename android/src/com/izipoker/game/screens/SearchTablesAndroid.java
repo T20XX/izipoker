@@ -21,7 +21,6 @@ import com.izipoker.network.ClientConnection;
 import com.izipoker.network.ServerInterface;
 
 import lipermi.handler.CallHandler;
-import lipermi.net.Client;
 
 /**
  * Created by Telmo on 03/05/2016.
@@ -66,7 +65,7 @@ public class SearchTablesAndroid implements Screen{
 
         ipTF = new TextField("", skin);
         ipTF.setMessageText("Ex: 127.xxx.xxx.xxx");
-        ipTF.setText("192.168.1.72"); //DEBUGING
+        ipTF.setText("192.168.1.130"); //DEBUGING
         ipTF.setAlignment(Align.center);
         ipTF.setSize(
                 7 * stage.getWidth() / 8,
@@ -123,13 +122,13 @@ public class SearchTablesAndroid implements Screen{
                 }*/
 
 
-                System.out.println("encontramos");
                 ClientConnection connection = new ClientConnection();
-                System.out.println("encontramos");
-                connection.findService();
-                System.out.println("encontramos");
-                connection.connectToServer();
-                System.out.println("encontramos");
+                //to emulator works
+                connection.connectToServer(ipTF.getText(), 4455);
+                if (connection.getProxyTable() == null) {
+                    connection.findService();
+                    connection.connectToServer();
+                    }
                 proxyTable = connection.getProxyTable();
                 callHandler = connection.getCallHandler();
                 IZIPokerAndroid.getInstance().setScreen(new CreatePlayerAndroid(proxyTable, callHandler));

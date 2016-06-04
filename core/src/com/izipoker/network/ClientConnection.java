@@ -1,8 +1,6 @@
 package com.izipoker.network;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.izipoker.game.PokerClient;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -12,7 +10,6 @@ import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
-import lipermi.exception.LipeRMIException;
 import lipermi.handler.CallHandler;
 import lipermi.net.Client;
 
@@ -28,6 +25,25 @@ public class ClientConnection {
     private ServerInterface proxyTable;
     private ServiceListener serviceListener;
     private JmDNS mdnsService;
+
+
+    /**
+     * Performs the connection to the server's IP address, given hostname and port.
+     */
+    public void connectToServer(String hostname, int port) {
+        if (hostname != null) {
+            // Retrieves the server's event handler.
+            callHandler = new CallHandler();
+            try {
+                client = new Client(hostname, port, callHandler);
+                proxyTable = (ServerInterface) client.getGlobal(ServerInterface.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
 
     /**
      * Performs the connection to the server's IP address.

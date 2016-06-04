@@ -2,18 +2,13 @@ package com.izipoker.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-<<<<<<< HEAD
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-=======
->>>>>>> 5a8871a004d54f4cbaa29088c3118985e922f771
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -26,12 +21,8 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.game.Hand;
 import com.izipoker.game.Player;
 import com.izipoker.game.PokerClient;
-<<<<<<< HEAD
 import com.izipoker.graphics.TexturesLoad;
-import com.izipoker.interfaces.ServerInterface;
-=======
 import com.izipoker.network.ServerInterface;
->>>>>>> 5a8871a004d54f4cbaa29088c3118985e922f771
 
 /**
  * Created by Telmo on 03/05/2016.
