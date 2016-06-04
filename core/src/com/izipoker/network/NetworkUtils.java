@@ -10,19 +10,16 @@ import java.nio.channels.SocketChannel;
 import java.util.Collections;
 import java.util.Enumeration;
 
-import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceEvent;
-import javax.jmdns.ServiceInfo;
-import javax.jmdns.ServiceListener;
-
-
+/**
+ * Class with util methods related with network configuration
+ */
 public class NetworkUtils {
 
     /**
+     * Function from report example project available in moodle webpage
+     *
      * Parses the IP address in the URL of the client's host.
-     *
      * @param url The URL of the client's host.
-     *
      * @return Returns a textual representation of the server's IP address.
      */
     public static String parseHostName(String url) {
@@ -50,8 +47,9 @@ public class NetworkUtils {
     }
 
     /**
-     * Returns the network address of a valid network interface.
+     * Function from report example project available in moodle webpage
      *
+     * Returns the network address of a valid network interface.
      * @return Returns the network address of a valid network interface.
      * @throws IOException An exception could be thrown when establishing socket communication.
      */

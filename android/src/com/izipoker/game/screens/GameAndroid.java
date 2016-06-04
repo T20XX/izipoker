@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.game.Hand;
 import com.izipoker.game.Player;
 import com.izipoker.game.PokerAction;
-import com.izipoker.game.PokerClient;
+import com.izipoker.network.PokerClient;
 import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.network.ServerInterface;
 
@@ -298,15 +298,15 @@ public class GameAndroid implements Screen{
                 hand = listener.getHand();
             }*/
         //Actions Buttons update
-        foldBtn.setVisible(!listener.getPossibleActions()[0]);
-        checkBtn.setVisible(!listener.getPossibleActions()[1]);
-        callBtn.setVisible(!listener.getPossibleActions()[2]);
-        raiseBtn.setVisible(!listener.getPossibleActions()[3]);
-        betTF.setVisible(!listener.getPossibleActions()[3]);
-        betSlider.setVisible(!listener.getPossibleActions()[3]);
-        halfPot.setVisible(!listener.getPossibleActions()[3]);
-        maxPot.setVisible(!listener.getPossibleActions()[3]);
-        allIn.setVisible(!listener.getPossibleActions()[3]);
+        foldBtn.setVisible(listener.getPossibleActions()[0]);
+        checkBtn.setVisible(listener.getPossibleActions()[1]);
+        callBtn.setVisible(listener.getPossibleActions()[2]);
+        raiseBtn.setVisible(listener.getPossibleActions()[3]);
+        betTF.setVisible(listener.getPossibleActions()[3]);
+        betSlider.setVisible(listener.getPossibleActions()[3]);
+        halfPot.setVisible(listener.getPossibleActions()[3]);
+        maxPot.setVisible(listener.getPossibleActions()[3]);
+        allIn.setVisible(listener.getPossibleActions()[3]);
 
         //Amount update
         amountLbl.setText(Integer.toString(listener.getMoney()));

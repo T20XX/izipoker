@@ -10,6 +10,7 @@ import java.util.Map;
  * Represents a round in a poker game
  */
 public class Round {
+
     /**
      * Represents the multiples states in a poker round
      */
@@ -131,9 +132,21 @@ public class Round {
         return river;
     }
 
+    public int getHighestBet() {
+        return highestBet;
+    }
+
+
+    public Player getJoker() {
+        return joker;
+    }
+
     public boolean foldPlayer(Player p){
         if(currentPlayers.peek() == p){
             currentPlayers.remove(0);
+            if (p == joker){
+                joker = currentPlayers.peek();
+            }
             return true;
         }
         return false;

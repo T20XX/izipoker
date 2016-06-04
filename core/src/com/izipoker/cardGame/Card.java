@@ -6,28 +6,13 @@ import com.izipoker.graphics.TexturesLoad;
 
 import java.io.Serializable;
 
+/**
+ * Represents a card with a value and a suit from any card game
+ */
 public class Card extends Actor implements Serializable {
 
     // need to indicate the this on both sides (server and client) to make sure objects are compatible.
     private static final long serialVersionUID = 1L;
-
-    //private static Texture cardsTex =  new Texture("cards.png");
-
-    //private static Texture backTex = new Texture("backCard.png");
-
-    //private TextureRegion frontTex;
-
-    /*int main(){
-        Card c1 = new Card(1,suitType.DIAMONDS);
-        System.out.println(c1.getValue());
-        System.out.println(c1.getRank().toString());
-
-        Card c2 = new Card(rankType.ACE,suitType.DIAMONDS);
-        System.out.println(c2.getValue());
-        System.out.println(c2.getRank().toString());
-
-        return 0;
-    }*/
 
     /**
      * Rank of cards
@@ -209,15 +194,27 @@ public class Card extends Actor implements Serializable {
         this.suit = suit;
     }
 
-
+    /**
+     * Gets the flipped state of the card
+     * @return True if the card is facing up, false otherwise
+     */
     public boolean isFlipped() {
         return flipped;
     }
 
+    /**
+     * Sets the orientation of the card
+     * @param flipped True to face up and false to face down
+     */
     public void setFlipped(boolean flipped) {
         this.flipped = flipped;
     }
 
+    /**
+     * Flip the card
+     * If the card is facing down, sets facing up
+     * If the card is facing up, sets facing down
+     */
     public void flip() {
         this.flipped = !this.flipped;
     }
@@ -231,6 +228,10 @@ public class Card extends Actor implements Serializable {
         return this.rank.toString() + " of " + this.suit.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     * Draws the card according to its orientation
+     */
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if (isFlipped()){

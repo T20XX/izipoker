@@ -3,10 +3,13 @@ package com.izipoker.cardGame;
 import java.util.Random;
 
 /**
- * Created by up201405840 on 12-04-2016.
+ * Represents a deck of 52 different cards, can be used in any card game implementation
  */
 public class Deck {
 
+    /**
+     * Cards from the deck
+     */
     private Card cards[] = new Card[52];
     private int index = 0;
 
@@ -49,8 +52,8 @@ public class Deck {
     }
 
     /**
-     *
-     * @return
+     * Get the card on the top of the deck
+     * @return Card on top of the deck
      */
     public Card getTopCard() {
         if (index < this.cards.length) {

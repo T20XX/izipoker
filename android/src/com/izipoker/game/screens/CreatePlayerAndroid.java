@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.game.IZIPokerAndroid;
-import com.izipoker.game.PokerClient;
+import com.izipoker.network.PokerClient;
 import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.network.ClientCallbackInterface;
 import com.izipoker.network.ServerInterface;

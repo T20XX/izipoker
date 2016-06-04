@@ -94,11 +94,12 @@ public class Dealer implements Runnable{
     @Override
     public void run() {
         table.setState(Table.tableState.PLAYING);
-        System.out.println("Vou enviar as cartas!");
-        while (table.getActivePlayers().length > 1){
-            Round r = table.getTopRound();
+        Round r;
 
+        while (table.getActivePlayers().length > 1){
             createRound();
+            r = table.getTopRound();
+
             deck.shuffle(1);
             giveHands();
 
@@ -147,8 +148,11 @@ public class Dealer implements Runnable{
      */
     private void handleTableActions(){
         Round r = table.getTopRound();
-        for(Player p:r.getCurrentPlayers()){
-            table.sendPossibleActions(p.getName(), new boolean[]{true, false, true, false});
+        Player p;
+        boolean atLeastOnePlayed = false;
+        while(r.getCurrentPlayers().peek() != r.getJoker() && !atLeastOnePlayed){
+            p = r.getCurrentPlayers().peek();
+            table.sendPossibleActions(p.getName(), checkPossibleActions(p));
             Thread t = new Thread(new CheckPlayerAction(p));
             t.start();
             try {
@@ -157,9 +161,11 @@ public class Dealer implements Runnable{
                 e.printStackTrace();
             }
             if(t.isAlive()){
+                table.sendPossibleActions(p.getName(),new boolean[]{false, false, false, false});
                 t.interrupt();
             }
             handlePlayerAction(p);
+            atLeastOnePlayed = true;
         }
     }
 
@@ -170,23 +176,38 @@ public class Dealer implements Runnable{
     private void handlePlayerAction(Player p){
         Round r = table.getTopRound();
         if(!p.hasActed()){
-            //r.removePlayer();
+            r.foldPlayer(p);
         } else {
             switch(p.getLastAction().getType()){
                 case FOLD:
-                    //r.removePlayer();
+                    r.foldPlayer(p);
                     break;
                 case CHECK:
-                    //r.removePlayer();
                     r.addBet(p,0);
                     break;
                 case CALL:
-                    //r.addBet(p,r.highestBet);
+                    r.addBet(p,r.getHighestBet());
                     break;
                 case RAISE:
                     r.addBet(p,p.getLastAction().getAmount());
             }
             p.setActed(false);
         }
+    }
+
+    private boolean[] checkPossibleActions(Player p){
+        boolean[] possibleActions = new boolean[]{true, false, false, false};
+        Round r = table.getTopRound();
+
+        if(r.getHighestBet() == 0)
+            possibleActions[1] = true;
+
+        if(p.getMoney() == r.getHighestBet())
+            possibleActions[2] = true;
+
+        if(p.getMoney() > r.getHighestBet())
+            possibleActions[3] = true;
+
+        return possibleActions;
     }
 }

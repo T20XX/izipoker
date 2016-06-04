@@ -1,8 +1,11 @@
-package com.izipoker.game;
+package com.izipoker.network;
 
 import com.izipoker.cardGame.Card;
-import com.izipoker.network.ClientCallbackInterface;
+import com.izipoker.game.Hand;
 
+/**
+ * Represents a poker client with all local variables to store server info
+ */
 public class PokerClient implements ClientCallbackInterface {
     private String name = "";
     private int avatarID = 0;
@@ -11,6 +14,11 @@ public class PokerClient implements ClientCallbackInterface {
     private boolean changed = true;
     private boolean possibleActions[] = {false, false, false, false};
 
+    /**
+     * Client constructor
+     * @param name Name of the client
+     * @param avatarID Number of the avatar
+     */
     public PokerClient(String name, int avatarID) {
         this.name = name;
         this.avatarID = avatarID;
@@ -46,39 +54,50 @@ public class PokerClient implements ClientCallbackInterface {
         this.changed = true;
     }
 
-
+    /**
+     * Gets hand
+     * @return Hand with two cards
+     */
     public Hand getHand() {
         return hand;
     }
 
+    /**
+     * Gets array of booleans indicating possible actions
+     * @return
+     */
     public boolean[] getPossibleActions() {
         return possibleActions;
     }
 
-    public void setPossibleActions(boolean[] possibleActions) {
-        this.possibleActions = possibleActions;
-    }
-
+    /**
+     * Gets changed state
+     * @return True if something changed, false otherwise
+     */
     public boolean isChanged() {
         return changed;
     }
 
+    /**
+     * Sets client to changed state
+     * @param changed Boolean to set changed state
+     */
     public void setChanged(boolean changed) {
         this.changed = changed;
     }
 
-    public void setMoney(int money) {
-        this.money = money;
-    }
-
-    public void setHand(Hand hand) {
-        this.hand = hand;
-    }
-
+    /**
+     * Gets name
+     * @return Name of the player (client side)
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name of the player (client side)
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
