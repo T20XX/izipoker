@@ -99,10 +99,13 @@ public abstract class Player extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         BitmapFont font = new BitmapFont();
-        batch.draw(TexturesLoad.avatarTex[0][avatarID], super.getX(), super.getY(), super.getWidth(), super.getHeight());
-        font.draw(batch, name, 0,0);
+        if(this.isActive()) {
+            batch.draw(TexturesLoad.avatarTex[0][avatarID], super.getX(), super.getY(), super.getWidth(), super.getHeight());
+            font.setColor(1.0f, 1.0f, 1.0f,1.0f);
+            font.draw(batch, name, super.getX(), super.getY());
 
-        //font.draw(batch, name, super.getX()-avatar.getWidth(), super.getY()-avatar.getHeight());
+        }
+
     }
 
 

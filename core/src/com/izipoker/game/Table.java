@@ -238,8 +238,15 @@ public class Table extends Actor implements ServerInterface {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+
         batch.setColor(1, 1, 1, 1);
         batch.draw(tableTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+        for (int i = 0; i < seats.length; i++) {
+            if (seats[i] != null)
+                if (seats[i].isActive())
+                    seats[i].draw(batch, parentAlpha);
+        }
+
     }
 
     public ArrayList<String> getChatHistory() {
