@@ -7,9 +7,12 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * Created by Jorge on 03/05/2016.
+ * Represents a round in a poker game
  */
 public class Round {
+    /**
+     * Represents the multiples states in a poker round
+     */
     public enum roundState{
         PREFLOP,
         FLOP,

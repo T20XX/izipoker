@@ -117,4 +117,9 @@ public abstract class Player extends Actor{
     public void setActed(boolean acted) {
         this.acted = acted;
     }
+
+    public PokerAction getLastAction() {
+        return lastAction;
+    }
+
 }
