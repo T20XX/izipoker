@@ -172,6 +172,7 @@ public class GameAndroid implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.FOLD));
+                disableActionButtons();
             };
         });
 
@@ -179,6 +180,7 @@ public class GameAndroid implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.CALL));
+                disableActionButtons();
             };
         });
 
@@ -186,6 +188,7 @@ public class GameAndroid implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.RAISE,Integer.valueOf(betTF.getText())));
+                disableActionButtons();
                 try {
                     //proxyTable.sendCard(name);
                     //proxyTable.getHand(name);
@@ -203,6 +206,7 @@ public class GameAndroid implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.CHECK));
+                disableActionButtons();
             };
         });
 
@@ -249,16 +253,7 @@ public class GameAndroid implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(listener.isChanged()){
-            /*amountLbl.setText(Integer.toString(listener.getMoney()));
-            if(listener.getHand() != null){
-                hand = listener.getHand();
-            }*/
-            foldBtn.setVisible(!listener.getPossibleActions()[0]);
-            checkBtn.setVisible(!listener.getPossibleActions()[1]);
-            callBtn.setVisible(!listener.getPossibleActions()[2]);
-            raiseBtn.setVisible(!listener.getPossibleActions()[3]);
-            amountLbl.setText(Integer.toString(listener.getMoney()));
-            listener.setChanged(false);
+            updateChanges();
 
         }
 
@@ -283,5 +278,38 @@ public class GameAndroid implements Screen{
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    public void disableActionButtons(){
+        foldBtn.setVisible(false);
+        checkBtn.setVisible(false);
+        callBtn.setVisible(false);
+        raiseBtn.setVisible(false);
+        betTF.setVisible(false);
+        betSlider.setVisible(false);
+        halfPot.setVisible(false);
+        maxPot.setVisible(false);
+        allIn.setVisible(false);
+    }
+
+    public void updateChanges(){
+                    /*amountLbl.setText(Integer.toString(listener.getMoney()));
+            if(listener.getHand() != null){
+                hand = listener.getHand();
+            }*/
+        //Actions Buttons update
+        foldBtn.setVisible(!listener.getPossibleActions()[0]);
+        checkBtn.setVisible(!listener.getPossibleActions()[1]);
+        callBtn.setVisible(!listener.getPossibleActions()[2]);
+        raiseBtn.setVisible(!listener.getPossibleActions()[3]);
+        betTF.setVisible(!listener.getPossibleActions()[3]);
+        betSlider.setVisible(!listener.getPossibleActions()[3]);
+        halfPot.setVisible(!listener.getPossibleActions()[3]);
+        maxPot.setVisible(!listener.getPossibleActions()[3]);
+        allIn.setVisible(!listener.getPossibleActions()[3]);
+
+        //Amount update
+        amountLbl.setText(Integer.toString(listener.getMoney()));
+        listener.setChanged(false);
     }
 }
