@@ -17,7 +17,12 @@ public abstract class Player extends Actor{
     private PokerAction lastAction;
 
     private boolean acted = false;
-
+    /**
+     * Player constructor
+     * @param id    Player ID
+     * @param name  Player Name
+     * @param money    Player Money
+     */
     Player(int id, String name, int money) {
         this.id = id;
         this.name = name;
@@ -27,7 +32,13 @@ public abstract class Player extends Actor{
         playing = false;
         this.avatarID = 0;
     }
-
+    /**
+     * Player constructor (sets difficulty to MEDIUM(default))
+     * @param id    Player ID
+     * @param name  Player Name
+     * @param money    Player Money
+     * @param avatarID Player Avatar ID
+     */
     Player(int id, String name, int money, int avatarID) {
         this.id = id;
         this.name = name;
@@ -38,64 +49,105 @@ public abstract class Player extends Actor{
         this.avatarID = avatarID;
     }
 
-    void check(Round r){
-        
-    }
 
-    void call(Round r){
-
-    }
-
-    void bet(int n, Round r){
-        //add to
-    }
-
+    /**
+     *
+     * @return ID of player
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id new ID of player
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return Player name
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     *
+     * @param name new name of player
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return money of Player
+     */
     public int getMoney() {
         return money;
     }
 
+    /**
+     *
+     * @param money new Money of player
+     */
     public void setMoney(int money) {
         this.money = money;
     }
 
+    /**
+     *
+     * @return True if Player is active
+     */
     public boolean isActive() {
         return active;
     }
 
+    /**
+     *
+     * @param active set if player is active or not
+     */
     public void setActive(boolean active) {
         this.active = active;
     }
 
+    /**
+     *
+     * @return True if player is playing
+     */
     public boolean isPlaying() {
         return playing;
     }
 
+    /**
+     *
+     * @param playing set True if player is playing
+     */
     public void setPlaying(boolean playing) {
         this.playing = playing;
     }
 
+    /**
+     *
+     * @return hand of player
+     */
     public Hand getHand() {
         return hand;
     }
 
+    /**
+     *
+     * @param hand new hand of player
+     */
     public void setHand(Hand hand){this.hand = hand;}
 
+    /**
+     * {@inheritDoc}
+     * Draws the player according to its orientation
+     */
     @Override
     public void draw(Batch batch, float parentAlpha) {
         BitmapFont font = new BitmapFont();
@@ -108,19 +160,34 @@ public abstract class Player extends Actor{
 
     }
 
-
+    /**
+     *
+     * @return True if player has acted
+     */
     public boolean hasActed() {
         return acted;
     }
 
+    /**
+     *
+     * @param lastAction check last action
+     */
     public void setLastAction(PokerAction lastAction) {
         this.lastAction = lastAction;
     }
 
+    /**
+     *
+     * @param acted set True is player acted
+     */
     public void setActed(boolean acted) {
         this.acted = acted;
     }
 
+    /**
+     *
+     * @return last action of the player
+     */
     public PokerAction getLastAction() {
         return lastAction;
     }
