@@ -34,7 +34,7 @@ public class Table extends Actor implements ServerInterface {
     private Dealer dealer;
     private Player joker;
     private int SMALL_BLIND = 30;
-    private final int initMoney = 420; //MUDAR PARA CONSTRUCTOR
+    private final int initMoney = 1000; //MUDAR PARA CONSTRUCTOR
     private final int playingTime = 10; //MUDAR PARA CONSTRUCTOR
     private tableState state = tableState.LOBBY;
     private ArrayList<String> chatHistory = new ArrayList<String>();
@@ -88,7 +88,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     public Player nextJoker() {
-        int j, k = 0;
+        /*int j, k = 0;
         for (int i = 0; i < seats.length; i++) {
             if (seats[i] == joker) {
                 if (i == seats.length - 1)
@@ -106,7 +106,18 @@ public class Table extends Actor implements ServerInterface {
                 }
             }
         }
-        return null;
+        return null;*/
+        int i;
+        for (i = 0; i < seats.length; i++) {
+            if (seats[i] == joker) {
+                break;
+            }
+        }
+        i = (i+1)%seats.length;
+        while(!seats[i].isActive()){
+            i = (i+1)%seats.length;
+        }
+        return seats[i];
     }
 
     public Player[] getSeats() {
@@ -166,15 +177,17 @@ public class Table extends Actor implements ServerInterface {
     public boolean join(String name, int avatarID, ClientCallbackInterface client) {
         if (clients.containsKey(name))
             return false;
-        clients.put(name, client);
 
         Player p = new Human(0, name, initMoney,avatarID);
-        players.put(name, p);
         if (addPlayer(p)) {
             // tells this user is logged in
+            clients.put(name, client);
+            players.put(name, p);
             client.notify("Congratulations " + name + ", you have joined the table " + this.name);
+            return true;
+
         }
-        return true;
+        return false;
     }
 
     @Override

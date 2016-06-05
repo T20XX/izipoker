@@ -59,30 +59,33 @@ public class Round {
         }
     }
 
-    public boolean addBet(Player p,int ammount){
+    public boolean addCall(Player p){
+        return addBet(p, highestBet-bets.get(p));
+    }
+
+    public boolean addBet(Player p,int amount){
         if(currentPlayers.peek() == p) {
             if (bets.containsKey(p)) {
-                ammount = ammount + bets.get(p);
-                bets.put(p, ammount);
+                bets.put(p, bets.get(p) + amount);
             }
-            if(ammount > highestBet) {
-                highestBet = ammount;
+            if(amount > highestBet) {
+                highestBet = amount;
                 highestPlayer = p;
             }
             Player player = currentPlayers.removeFirst();
             currentPlayers.addLast(player);
-            p.setMoney(p.getMoney()-ammount);
+            p.setMoney(p.getMoney()-amount);
             return true;
         }
         return false;
     }
 
     public void addToPot(){
-        int ammount = 0;
-        for(int i = 0; i < currentPlayers.size(); i++){
-            ammount += bets.get(currentPlayers.get(i));
+        int total = 0;
+        for(int bet:bets.values()){
+            total += bet;
         }
-        pot = ammount;
+        pot = total;
     }
     public LinkedList<Player> getCurrentPlayers() {
         return currentPlayers;

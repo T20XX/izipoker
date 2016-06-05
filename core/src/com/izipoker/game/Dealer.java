@@ -28,11 +28,11 @@ public class Dealer implements Runnable{
      */
     public boolean createRound(){
         if(table.getActivePlayers().length >= 2) {
-            //Round round = new Round(table.getActivePlayers(), table.getJoker());
-            Round round = new Round(table.getActivePlayers(), table.getActivePlayers()[0]);
+            Round round = new Round(table.getActivePlayers(), table.getJoker());
+            //Round round = new Round(table.getActivePlayers(), table.getActivePlayers()[0]);
             table.addRounds(round);
-            //round.getFirstPlayer().bet(table.getSmallBlind(), round);
-            //round.getFirstPlayer().bet(table.getBigBlind(), round);
+            round.addBet(round.getFirstPlayer(),table.getSmallBlind());
+            round.addBet(round.getFirstPlayer(),table.getBigBlind());
             return true;
         }
         else return false;
@@ -110,6 +110,8 @@ public class Dealer implements Runnable{
                 table.sendMoney(p.getName());
             }
 
+            System.out.println(table.getJoker().getName());
+
 
             System.out.println("PRE-FLOP");
             handleTableActions();
@@ -169,6 +171,7 @@ public class Dealer implements Runnable{
         boolean atLeastOnePlayed = false;
         while(r.getCurrentPlayers().peek() != r.getJoker() || !atLeastOnePlayed){
             p = r.getCurrentPlayers().peek();
+            System.out.println(p.getName() + " Turn");
             table.sendPossibleActions(p.getName(), checkPossibleActions(p));
             Thread t = new Thread(new CheckPlayerAction(p));
             t.start();
@@ -178,11 +181,9 @@ public class Dealer implements Runnable{
                 e.printStackTrace();
             }
             if(t.isAlive()){
-                System.out.println("Passou tempo a mais");
                 table.sendPossibleActions(p.getName(),new boolean[]{false, false, false, false});
                 t.stop();
             }
-            System.out.println("Ele respondeu");
             handlePlayerAction(p);
             atLeastOnePlayed = true;
         }
@@ -196,24 +197,24 @@ public class Dealer implements Runnable{
         Round r = table.getTopRound();
         if(!p.hasActed()){
             r.foldPlayer(p);
-            System.out.println("Fold por tempo a mais");
+            System.out.println(p.getName() + " Folded by timeout");
         } else {
             switch(p.getLastAction().getType()){
                 case FOLD:
                     r.foldPlayer(p);
-                    System.out.println("Fold");
+                    System.out.println(p.getName() + " Folded");
                     break;
                 case CHECK:
                     r.addBet(p,0);
-                    System.out.println("Check");
+                    System.out.println(p.getName() + " Checked");
                     break;
                 case CALL:
-                    r.addBet(p,r.getHighestBet());
-                    System.out.println("Call");
+                    r.addCall(p);
+                    System.out.println(p.getName() + " Called");
                     break;
                 case RAISE:
                     r.addBet(p, p.getLastAction().getAmount());
-                    System.out.println("Raise");
+                    System.out.println(p.getName() + " Raised");
                     break;
             }
             p.setActed(false);
@@ -224,10 +225,10 @@ public class Dealer implements Runnable{
         boolean[] possibleActions = new boolean[]{true, false, false, false};
         Round r = table.getTopRound();
 
-        if(r.getHighestBet() == 0)
+        if(r.getHighestBet() == 0) {
             possibleActions[1] = true;
-
-        if(p.getMoney() > r.getHighestBet()) {
+            possibleActions[3] = true;
+        } else if(p.getMoney() > r.getHighestBet()) {
             possibleActions[2] = true;
             possibleActions[3] = true;
         } else if(p.getMoney() == r.getHighestBet()){
