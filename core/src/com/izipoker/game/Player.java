@@ -155,7 +155,7 @@ public abstract class Player extends Actor{
             batch.draw(TexturesLoad.avatarTex[0][avatarID], super.getX(), super.getY(), super.getWidth(), super.getHeight());
             font.setColor(1.0f, 1.0f, 1.0f,1.0f);
             font.draw(batch, name, super.getX(), super.getY());
-
+            font.draw(batch, money + "", super.getX(), super.getY()-10);
         }
 
     }

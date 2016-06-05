@@ -71,6 +71,7 @@ public class Round {
             }
             Player player = currentPlayers.removeFirst();
             currentPlayers.addLast(player);
+            p.setMoney(p.getMoney()-ammount);
             return true;
         }
         return false;
@@ -118,6 +119,7 @@ public class Round {
             Player player = currentPlayers.removeFirst();
             currentPlayers.addLast(player);
         }
+        addToPot();
     }
 
     public Card[] getFlop() {
@@ -151,5 +153,7 @@ public class Round {
         }
         return false;
     }
-
+    public int getPot(){
+        return pot;
+    }
 }

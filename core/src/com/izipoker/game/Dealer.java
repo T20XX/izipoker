@@ -113,6 +113,8 @@ public class Dealer implements Runnable{
 
             System.out.println("PRE-FLOP");
             handleTableActions();
+            r.addToPot();
+            System.out.print(r.getPot());
             System.out.println("SAIMOS PRE-FLOP");
 
             if(r.getCurrentPlayers().size() != 1){
@@ -120,6 +122,8 @@ public class Dealer implements Runnable{
                 r.updateState();
                 showFlop();
                 handleTableActions();
+                r.addToPot();
+                System.out.print(r.getPot());
                 System.out.println("SAIMOS FLOP");
 
                 if(r.getCurrentPlayers().size() != 1){
@@ -127,6 +131,8 @@ public class Dealer implements Runnable{
                     r.updateState();
                     showTurn();
                     handleTableActions();
+                    r.addToPot();
+                    System.out.print(r.getPot());
                     System.out.println("SAIMOS TURN");
 
                     if(r.getCurrentPlayers().size() != 1) {
@@ -134,6 +140,8 @@ public class Dealer implements Runnable{
                         r.updateState();
                         showRiver();
                         handleTableActions();
+                        r.addToPot();
+                        System.out.print(r.getPot());
                         System.out.println("SAIMOS RIVER");
 
                         if(r.getCurrentPlayers().size() != 1) {
