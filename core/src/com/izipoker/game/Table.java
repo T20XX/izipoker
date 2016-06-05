@@ -248,22 +248,24 @@ public class Table extends Actor implements ServerInterface {
         }
         if (!rounds.isEmpty()) {
             if (getTopRound().getFlop() != null) {
-                getTopRound().getFlop()[0].setPosition(super.getX() / 5, super.getY() / 2);
+                getTopRound().getFlop()[0].setBounds(2*super.getWidth() / 7, super.getHeight() / 2, 100, 100);
                 getTopRound().getFlop()[0].draw(batch, parentAlpha);
-                getTopRound().getFlop()[1].setPosition(2 * super.getX() / 5, super.getY() / 2);
+                getTopRound().getFlop()[1].setBounds(3 * super.getWidth() / 7, super.getHeight() / 2,100,100);
                 getTopRound().getFlop()[1].draw(batch, parentAlpha);
-                getTopRound().getFlop()[2].setPosition(3 * super.getX() / 5, super.getY() / 2);
+                getTopRound().getFlop()[2].setBounds(4 * super.getWidth() / 7, super.getHeight() / 2, 100, 100);
                 getTopRound().getFlop()[2].draw(batch, parentAlpha);
             }
 
-            if (getTopRound().getRiver() != null) {
-                getTopRound().getRiver().setPosition(4 * super.getX() / 5, super.getY() / 2);
-                getTopRound().getRiver().draw(batch, parentAlpha);
-            }
             if (getTopRound().getTurn() != null) {
-                getTopRound().getTurn().setPosition(super.getX(), super.getY() / 2);
+                getTopRound().getTurn().setBounds(5 * super.getWidth() / 7, super.getHeight() / 2, 100, 100);
                 getTopRound().getTurn().draw(batch, parentAlpha);
             }
+
+            if (getTopRound().getRiver() != null) {
+                getTopRound().getRiver().setBounds(6 * super.getWidth() / 7, super.getHeight() / 2,100,100);
+                getTopRound().getRiver().draw(batch, parentAlpha);
+            }
+
         }
 
     }

@@ -64,7 +64,7 @@ public class Dealer implements Runnable{
         ArrayList<Card> tempFlop = new ArrayList<Card>();
         for(int i= 0; i < 3; i++) {
             Card temp = deck.getTopCard();
-            temp.flip();
+            temp.setFlipped(true);
             tempFlop.add(temp);
         }
         table.getTopRound().setFlop(tempFlop.toArray(new Card[tempFlop.size()]));
@@ -75,7 +75,7 @@ public class Dealer implements Runnable{
      */
     public void showTurn(){
         deck.getTopCard();
-        deck.getTopCard().flip();
+        deck.getTopCard().setFlipped(true);
         table.getTopRound().setTurn(deck.getTopCard());
     }
 
@@ -84,7 +84,7 @@ public class Dealer implements Runnable{
      */
     public void showRiver() {
         deck.getTopCard();
-        deck.getTopCard().flip();
+        deck.getTopCard().setFlipped(true);
         table.getTopRound().setRiver(deck.getTopCard());
     }
 
@@ -110,22 +110,31 @@ public class Dealer implements Runnable{
                 table.sendMoney(p.getName());
             }
 
+
+            System.out.println("PRE-FLOP");
             handleTableActions();
+            System.out.println("SAIMOS PRE-FLOP");
 
             if(r.getCurrentPlayers().size() != 1){
+                System.out.println("FLOP");
                 r.updateState();
                 showFlop();
                 handleTableActions();
+                System.out.println("SAIMOS FLOP");
 
                 if(r.getCurrentPlayers().size() != 1){
+                    System.out.println("TURN");
                     r.updateState();
                     showTurn();
                     handleTableActions();
+                    System.out.println("SAIMOS TURN");
 
                     if(r.getCurrentPlayers().size() != 1) {
+                        System.out.println("RIVER");
                         r.updateState();
                         showRiver();
                         handleTableActions();
+                        System.out.println("SAIMOS RIVER");
 
                         if(r.getCurrentPlayers().size() != 1) {
                             r.updateState();
@@ -161,9 +170,11 @@ public class Dealer implements Runnable{
                 e.printStackTrace();
             }
             if(t.isAlive()){
+                System.out.println("Passou tempo a mais");
                 table.sendPossibleActions(p.getName(),new boolean[]{false, false, false, false});
                 t.stop();
             }
+            System.out.println("Ele respondeu");
             handlePlayerAction(p);
             atLeastOnePlayed = true;
         }
@@ -177,19 +188,24 @@ public class Dealer implements Runnable{
         Round r = table.getTopRound();
         if(!p.hasActed()){
             r.foldPlayer(p);
+            System.out.println("Fold por tempo a mais");
         } else {
             switch(p.getLastAction().getType()){
                 case FOLD:
                     r.foldPlayer(p);
+                    System.out.println("Fold");
                     break;
                 case CHECK:
                     r.addBet(p,0);
+                    System.out.println("Check");
                     break;
                 case CALL:
                     r.addBet(p,r.getHighestBet());
+                    System.out.println("Call");
                     break;
                 case RAISE:
-                    r.addBet(p,p.getLastAction().getAmount());
+                    r.addBet(p, p.getLastAction().getAmount());
+                    System.out.println("Raise");
                     break;
             }
             p.setActed(false);

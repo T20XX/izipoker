@@ -34,8 +34,8 @@ public class PokerClient implements ClientCallbackInterface {
         //System.out.println(hand.getCards()[0]);
         //System.out.println(hand.getCards()[1]);
         this.hand = hand;
-        hand.getCards()[0].flip();
-        hand.getCards()[1].flip();
+        hand.getCards()[0].setFlipped(true);
+        hand.getCards()[1].setFlipped(true);
         this.changed = true;
     }
 

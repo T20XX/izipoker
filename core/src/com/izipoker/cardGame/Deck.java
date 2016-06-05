@@ -67,7 +67,7 @@ public class Deck {
     public void resetDeck() {
         for (int i = 0; i < index; i++)
         {
-            this.cards[index].setFlipped(false);
+            this.cards[i].setFlipped(false);
         }
         index = 0;
     }
