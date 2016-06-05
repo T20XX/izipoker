@@ -189,17 +189,7 @@ public class GameAndroid implements Screen{
             public void clicked(InputEvent event, float x, float y) {
                 proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.RAISE,Integer.valueOf(betTF.getText())));
                 disableActionButtons();
-                try {
-                    //proxyTable.sendCard(name);
-                    //proxyTable.getHand(name);
-                    hand = listener.getHand();
-                    hand.getCards()[0].setBounds(stage.getWidth() / 4, stage.getHeight() - stage.getHeight() / 3, stage.getWidth() / 4, stage.getHeight() / 5);
-                    stage.addActor(hand.getCards()[0]);
-                    hand.getCards()[1].setBounds(stage.getWidth() / 2, stage.getHeight() - stage.getHeight() / 3, stage.getWidth() / 4, stage.getHeight() / 5);
-                    stage.addActor(hand.getCards()[1]);
-                } catch(Exception e){
 
-                }
             };
         });
         checkBtn.addListener(new ClickListener() {
@@ -293,10 +283,24 @@ public class GameAndroid implements Screen{
     }
 
     public void updateChanges(){
-                    /*amountLbl.setText(Integer.toString(listener.getMoney()));
+
             if(listener.getHand() != null){
-                hand = listener.getHand();
-            }*/
+                if(hand != listener.getHand()) {
+                    if(hand != null) {
+                        hand.getCards()[0].remove();
+                        hand.getCards()[1].remove();
+                    }
+                    try {
+                        hand = listener.getHand();
+                        hand.getCards()[0].setBounds(stage.getWidth() / 4, stage.getHeight() - stage.getHeight() / 3, stage.getWidth() / 4, stage.getHeight() / 5);
+                        stage.addActor(hand.getCards()[0]);
+                        hand.getCards()[1].setBounds(stage.getWidth() / 2, stage.getHeight() - stage.getHeight() / 3, stage.getWidth() / 4, stage.getHeight() / 5);
+                        stage.addActor(hand.getCards()[1]);
+                    } catch (Exception e) {
+
+                    }
+                }
+            }
         //Actions Buttons update
         foldBtn.setVisible(listener.getPossibleActions()[0]);
         checkBtn.setVisible(listener.getPossibleActions()[1]);
