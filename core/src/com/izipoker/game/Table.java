@@ -13,9 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by Jorge on 03/05/2016.
- */
+
 public class Table extends Actor implements ServerInterface {
 
     public enum tableState {
@@ -35,7 +33,7 @@ public class Table extends Actor implements ServerInterface {
     private Player joker;
     private int SMALL_BLIND = 30;
     private final int initMoney = 1000; //MUDAR PARA CONSTRUCTOR
-    private final int playingTime = 10; //MUDAR PARA CONSTRUCTOR
+    private final int playingTime = 30; //MUDAR PARA CONSTRUCTOR
     private tableState state = tableState.LOBBY;
     private ArrayList<String> chatHistory = new ArrayList<String>();
     private Point[] position;
@@ -117,7 +115,8 @@ public class Table extends Actor implements ServerInterface {
         while(!seats[i].isActive()){
             i = (i+1)%seats.length;
         }
-        return seats[i];
+        joker = seats[i];
+        return joker;
     }
 
     public Player[] getSeats() {
@@ -312,7 +311,6 @@ public class Table extends Actor implements ServerInterface {
     @Override
     public void sendMoney(String name) {
         (clients.get(name)).receiveMoney(players.get(name).getMoney());
-        //(clients.get(name)).receiveHand(players.get(name).getHand());
     }
 
     @Override

@@ -110,13 +110,13 @@ public class Dealer implements Runnable{
                 table.sendMoney(p.getName());
             }
 
-            System.out.println(table.getJoker().getName());
+            System.out.println("Joker: " + table.getJoker().getName());
 
 
             System.out.println("PRE-FLOP");
             handleTableActions();
             r.addToPot();
-            System.out.print(r.getPot());
+            System.out.println(r.getPot());
             System.out.println("SAIMOS PRE-FLOP");
 
             if(r.getCurrentPlayers().size() != 1){
@@ -125,7 +125,7 @@ public class Dealer implements Runnable{
                 showFlop();
                 handleTableActions();
                 r.addToPot();
-                System.out.print(r.getPot());
+                System.out.println(r.getPot());
                 System.out.println("SAIMOS FLOP");
 
                 if(r.getCurrentPlayers().size() != 1){
@@ -134,7 +134,7 @@ public class Dealer implements Runnable{
                     showTurn();
                     handleTableActions();
                     r.addToPot();
-                    System.out.print(r.getPot());
+                    System.out.println(r.getPot());
                     System.out.println("SAIMOS TURN");
 
                     if(r.getCurrentPlayers().size() != 1) {
@@ -143,7 +143,7 @@ public class Dealer implements Runnable{
                         showRiver();
                         handleTableActions();
                         r.addToPot();
-                        System.out.print(r.getPot());
+                        System.out.println(r.getPot());
                         System.out.println("SAIMOS RIVER");
 
                         if(r.getCurrentPlayers().size() != 1) {
@@ -169,7 +169,7 @@ public class Dealer implements Runnable{
         Round r = table.getTopRound();
         Player p;
         boolean atLeastOnePlayed = false;
-        while(r.getCurrentPlayers().peek() != r.getJoker() || !atLeastOnePlayed){
+        while((r.getCurrentPlayers().peek() != r.getHighestPlayer() || !atLeastOnePlayed) && r.getCurrentPlayers().size() > 1){
             p = r.getCurrentPlayers().peek();
             System.out.println(p.getName() + " Turn");
             table.sendPossibleActions(p.getName(), checkPossibleActions(p));

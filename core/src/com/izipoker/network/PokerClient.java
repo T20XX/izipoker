@@ -115,4 +115,12 @@ public class PokerClient implements ClientCallbackInterface {
     public int getMoney() {
         return money;
     }
+
+    public void setPossibleActions(boolean[] possibleActions) {
+        this.possibleActions = possibleActions;
+    }
+
+    public void resetPossibleActions() {
+        this.possibleActions = new boolean[]{false, false, false, false};
+    }
 }
