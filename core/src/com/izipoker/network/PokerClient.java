@@ -31,9 +31,11 @@ public class PokerClient implements ClientCallbackInterface {
 
     @Override
     public void receiveHand(Hand hand) {
-        System.out.println(hand.getCards()[0]);
-        System.out.println(hand.getCards()[1]);
+        //System.out.println(hand.getCards()[0]);
+        //System.out.println(hand.getCards()[1]);
         this.hand = hand;
+        hand.getCards()[0].flip();
+        hand.getCards()[1].flip();
         this.changed = true;
     }
 

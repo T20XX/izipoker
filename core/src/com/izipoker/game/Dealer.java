@@ -104,30 +104,30 @@ public class Dealer implements Runnable{
             giveHands();
 
             for(Player p:table.getActivePlayers()) {
-                System.out.println(p.getHand().getCards()[0]);
-                System.out.println(p.getHand().getCards()[1]);
+               // System.out.println(p.getHand().getCards()[0]);
+               // System.out.println(p.getHand().getCards()[1]);
                 table.sendHand(p.getName());
                 table.sendMoney(p.getName());
             }
 
             handleTableActions();
 
-            if(r.getCurrentPlayers().size() == 1){
+            if(r.getCurrentPlayers().size() != 1){
                 r.updateState();
                 showFlop();
                 handleTableActions();
 
-                if(r.getCurrentPlayers().size() == 1){
+                if(r.getCurrentPlayers().size() != 1){
                     r.updateState();
                     showTurn();
                     handleTableActions();
 
-                    if(r.getCurrentPlayers().size() == 1) {
+                    if(r.getCurrentPlayers().size() != 1) {
                         r.updateState();
                         showRiver();
                         handleTableActions();
 
-                        if(r.getCurrentPlayers().size() == 1) {
+                        if(r.getCurrentPlayers().size() != 1) {
                             r.updateState();
 
                             //check hands!
@@ -150,7 +150,7 @@ public class Dealer implements Runnable{
         Round r = table.getTopRound();
         Player p;
         boolean atLeastOnePlayed = false;
-        while(r.getCurrentPlayers().peek() != r.getJoker() && !atLeastOnePlayed){
+        while(r.getCurrentPlayers().peek() != r.getJoker() || !atLeastOnePlayed){
             p = r.getCurrentPlayers().peek();
             table.sendPossibleActions(p.getName(), checkPossibleActions(p));
             Thread t = new Thread(new CheckPlayerAction(p));
@@ -162,7 +162,7 @@ public class Dealer implements Runnable{
             }
             if(t.isAlive()){
                 table.sendPossibleActions(p.getName(),new boolean[]{false, false, false, false});
-                t.interrupt();
+                t.stop();
             }
             handlePlayerAction(p);
             atLeastOnePlayed = true;
@@ -190,6 +190,7 @@ public class Dealer implements Runnable{
                     break;
                 case RAISE:
                     r.addBet(p,p.getLastAction().getAmount());
+                    break;
             }
             p.setActed(false);
         }
@@ -202,11 +203,12 @@ public class Dealer implements Runnable{
         if(r.getHighestBet() == 0)
             possibleActions[1] = true;
 
-        if(p.getMoney() == r.getHighestBet())
+        if(p.getMoney() > r.getHighestBet()) {
             possibleActions[2] = true;
-
-        if(p.getMoney() > r.getHighestBet())
             possibleActions[3] = true;
+        } else if(p.getMoney() == r.getHighestBet()){
+            possibleActions[2] = true;
+        }
 
         return possibleActions;
     }

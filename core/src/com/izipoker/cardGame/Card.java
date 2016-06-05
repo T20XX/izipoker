@@ -235,7 +235,7 @@ public class Card extends Actor implements Serializable {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if (isFlipped()){
-            batch.draw(TexturesLoad.frontTex[getValue() - 1][suitType.valueOf(this.suit.toString()).ordinal()], super.getX(), super.getY(), super.getWidth(), super.getHeight());
+            batch.draw(TexturesLoad.frontTex[suitType.valueOf(this.suit.toString()).ordinal()][getValue() - 1], super.getX(), super.getY(), super.getWidth(), super.getHeight());
         } else {
             batch.draw(TexturesLoad.backTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
         }

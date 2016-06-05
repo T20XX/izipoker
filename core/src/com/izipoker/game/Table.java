@@ -202,9 +202,9 @@ public class Table extends Actor implements ServerInterface {
 
     @Override
     public void sendHand(String name) {
-        System.out.println(name);
-        System.out.println(players.get(name).getHand().getCards()[0]);
-        System.out.println(players.get(name).getHand().getCards()[1]);
+        //System.out.println(name);
+        //System.out.println(players.get(name).getHand().getCards()[0]);
+        //System.out.println(players.get(name).getHand().getCards()[1]);
         //(clients.get(name)).notify(players.get(name).getHand().getCards()[1].toString());
         (clients.get(name)).receiveHand(players.get(name).getHand());
     }
@@ -246,22 +246,24 @@ public class Table extends Actor implements ServerInterface {
                 if (seats[i].isActive())
                     seats[i].draw(batch, parentAlpha);
         }
-        if(getTopRound().getFlop()[0] != null){
-            getTopRound().getFlop()[0].setPosition(super.getX()/5, super.getY()/2);
-            getTopRound().getFlop()[0].draw(batch, parentAlpha);
-            getTopRound().getFlop()[1].setPosition(2*super.getX()/5, super.getY()/2);
-            getTopRound().getFlop()[1].draw(batch, parentAlpha);
-            getTopRound().getFlop()[2].setPosition(3*super.getX()/5, super.getY()/2);
-            getTopRound().getFlop()[2].draw(batch, parentAlpha);
-        }
+        if (!rounds.isEmpty()) {
+            if (getTopRound().getFlop() != null) {
+                getTopRound().getFlop()[0].setPosition(super.getX() / 5, super.getY() / 2);
+                getTopRound().getFlop()[0].draw(batch, parentAlpha);
+                getTopRound().getFlop()[1].setPosition(2 * super.getX() / 5, super.getY() / 2);
+                getTopRound().getFlop()[1].draw(batch, parentAlpha);
+                getTopRound().getFlop()[2].setPosition(3 * super.getX() / 5, super.getY() / 2);
+                getTopRound().getFlop()[2].draw(batch, parentAlpha);
+            }
 
-        if(getTopRound().getRiver() != null){
-            getTopRound().getRiver().setPosition(4*super.getX()/5, super.getY()/2);
-            getTopRound().getRiver().draw(batch,parentAlpha);
-        }
-        if(getTopRound().getTurn() != null){
-            getTopRound().getTurn().setPosition(super.getX(),super.getY()/2);
-            getTopRound().getTurn().draw(batch,parentAlpha);
+            if (getTopRound().getRiver() != null) {
+                getTopRound().getRiver().setPosition(4 * super.getX() / 5, super.getY() / 2);
+                getTopRound().getRiver().draw(batch, parentAlpha);
+            }
+            if (getTopRound().getTurn() != null) {
+                getTopRound().getTurn().setPosition(super.getX(), super.getY() / 2);
+                getTopRound().getTurn().draw(batch, parentAlpha);
+            }
         }
 
     }

@@ -3,14 +3,12 @@ package com.izipoker.game.desktop.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -63,17 +61,18 @@ public class MainMenuDesktop implements Screen{
         stage.addActor(title);
 
         startBtn = new TextButton("START GAME", skin);
-        startBtn.setWidth(stage.getWidth()/6);
-        startBtn.setPosition( stage.getWidth() / 2, 3 * stage.getHeight() / 5, Align.center);
+        startBtn.setWidth(stage.getWidth() / 6);
+        startBtn.setPosition(stage.getWidth() / 2, 3 * stage.getHeight() / 5, Align.center);
         stage.addActor(startBtn);
 
         exitBtn = new TextButton("EXIT", skin);
-        exitBtn.setWidth(stage.getWidth()/6);
-        exitBtn.setPosition( stage.getWidth() / 2, 2 * stage.getHeight() / 5, Align.center);
+        exitBtn.setWidth(stage.getWidth() / 6);
+        exitBtn.setPosition(stage.getWidth() / 2, 2 * stage.getHeight() / 5, Align.center);
         stage.addActor(exitBtn);
 
-        Card c = new Card(13, Card.suitType.SPADES);
+        Card c = new Card(Card.rankType.ACE, Card.suitType.CLUBS);
         c.setBounds(0,0,100,100);
+        c.flip();
         stage.addActor(c);
 
 
