@@ -1,7 +1,6 @@
 package com.izipoker.game;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.izipoker.graphics.TexturesLoad;
 
@@ -150,12 +149,10 @@ public abstract class Player extends Actor{
      */
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        BitmapFont font = new BitmapFont();
         if(this.isActive()) {
             batch.draw(TexturesLoad.avatarTex[0][avatarID], super.getX(), super.getY(), super.getWidth(), super.getHeight());
-            font.setColor(1.0f, 1.0f, 1.0f,1.0f);
-            font.draw(batch, name, super.getX(), super.getY());
-            font.draw(batch, money + "", super.getX(), super.getY()-10);
+            TexturesLoad.font.draw(batch, name, super.getX(), super.getY());
+            TexturesLoad.font.draw(batch, money + "", super.getX(), super.getY()-10);
         }
 
     }

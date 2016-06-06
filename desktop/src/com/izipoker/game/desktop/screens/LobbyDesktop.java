@@ -19,8 +19,6 @@ import com.izipoker.game.desktop.IZIPokerDesktop;
 import com.izipoker.network.NetworkUtils;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 /**
  * Created by Telmo on 03/05/2016.
@@ -36,7 +34,7 @@ public class LobbyDesktop implements Screen{
 
     //Game variables
     private Table table;
-    private int lastPlayersSize = 0;
+    //private int lastPlayersSize = 0;
 
 
     public LobbyDesktop(Table table) {
@@ -104,7 +102,7 @@ public class LobbyDesktop implements Screen{
         Gdx.gl.glClearColor(0, 0.5f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(table.getActivePlayers().length != lastPlayersSize){
+        /*if(table.getActivePlayers().length != lastPlayersSize){
             System.out.println(lastPlayersSize);
             lastPlayersSize = table.getActivePlayers().length;
             for(Player p : table.getActivePlayers()){
@@ -114,7 +112,7 @@ public class LobbyDesktop implements Screen{
                     stage.addActor(p);
                 }
             }
-        }
+        }*/
 
         stage.act(delta);
         stage.draw();

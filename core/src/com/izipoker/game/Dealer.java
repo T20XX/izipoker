@@ -60,7 +60,6 @@ public class Dealer implements Runnable{
      * Sets the flop (first three cards) in the current round
      */
     public void showFlop(){
-        deck.getTopCard();
         ArrayList<Card> tempFlop = new ArrayList<Card>();
         for(int i= 0; i < 3; i++) {
             Card temp = deck.getTopCard();
@@ -74,18 +73,18 @@ public class Dealer implements Runnable{
      * Sets the turn (fourth card) in the current round
      */
     public void showTurn(){
-        deck.getTopCard();
-        deck.getTopCard().setFlipped(true);
-        table.getTopRound().setTurn(deck.getTopCard());
+        Card temp = deck.getTopCard();
+        temp.setFlipped(true);
+        table.getTopRound().setTurn(temp);
     }
 
     /**
      * Sets the river (fifth card) in the current round
      */
     public void showRiver() {
-        deck.getTopCard();
-        deck.getTopCard().setFlipped(true);
-        table.getTopRound().setRiver(deck.getTopCard());
+        Card temp = deck.getTopCard();
+        temp.setFlipped(true);
+        table.getTopRound().setRiver(temp);
     }
 
     /**

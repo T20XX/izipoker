@@ -1,6 +1,7 @@
 package com.izipoker.graphics;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
@@ -36,6 +37,14 @@ public class TexturesLoad {
      * Use like [0][number of avatar]
      */
     public static TextureRegion avatarTex[][] = TextureRegion.split(avatarTotal,avatarTotal.getWidth()/MAX_AVATAR, avatarTotal.getHeight());
+
+
+    public static BitmapFont font;
+
+    static {
+        font = new BitmapFont();
+        font.setColor(1.0f, 1.0f, 1.0f,1.0f);
+    }
 
     public static TexturesLoad getInstance() {
         return ourInstance;
