@@ -51,8 +51,8 @@ public class Round {
             Player player = currentPlayers.removeFirst();
             currentPlayers.addLast(player);
         }
-        Player player = currentPlayers.removeFirst();
-        currentPlayers.addLast(player);
+        /*Player player = currentPlayers.removeFirst();
+        currentPlayers.addLast(player);*/
         bets = new HashMap<Player, Integer>();
         for(int i = 0; i < currentPlayers.size(); i++){
             bets.put(currentPlayers.get(i), 0);

@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Align;
 import com.izipoker.cardGame.Card;
+import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.network.ClientCallbackInterface;
 import com.izipoker.network.ServerInterface;
 
@@ -257,16 +259,16 @@ public class Table extends Actor implements ServerInterface {
         for (int i = 0; i < seats.length; i++) {
             if (seats[i] != null)
                 if (seats[i].isActive()) {
-                    if(i < 4)
-                    seats[i].setPosition(i%4*super.getWidth()/4,4*super.getHeight()/6);
-                    else if(i == 4)
-                        seats[i].setPosition(4*super.getWidth()/4,4*super.getHeight()/6);
-                    else if(i >4 )
-                        seats[i].setPosition(i%4*super.getWidth()/4,2*super.getHeight()/6);
-                    seats[i].draw(batch, parentAlpha);
+                    seats[i].setSize(super.getWidth()/8,super.getHeight()/4);
+                    if(i < 4) {
+                        seats[i].setPosition(i * (super.getWidth() / 3), super.getHeight(), Align.top);
+                    }else if(i >= 4 ) {
+                        seats[i].setPosition(super.getWidth() - i % 4 * super.getWidth() / 3, 0, Align.bottom);
+                    }
+                        seats[i].draw(batch, parentAlpha);
                 }
         }
-        BitmapFont font = new BitmapFont();
+
         if (!rounds.isEmpty()) {
             if (getTopRound().getFlop() != null) {
                 getTopRound().getFlop()[0].setBounds(2*super.getWidth() / 7, super.getHeight() / 2, 100, 100);
@@ -286,8 +288,7 @@ public class Table extends Actor implements ServerInterface {
                 getTopRound().getRiver().setBounds(6 * super.getWidth() / 7, super.getHeight() / 2,100,100);
                 getTopRound().getRiver().draw(batch, parentAlpha);
             }
-            font.setColor(1.0f, 1.0f, 1.0f,1.0f);
-            font.draw(batch,getTopRound().getPot()+"", super.getX()+100, super.getY()+100);
+            TexturesLoad.font.draw(batch,getTopRound().getPot()+"", super.getX()+100, super.getY()+100);
 
         }
 
