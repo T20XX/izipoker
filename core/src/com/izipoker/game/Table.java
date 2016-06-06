@@ -9,7 +9,6 @@ import com.izipoker.cardGame.Card;
 import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.network.ClientCallbackInterface;
 import com.izipoker.network.ServerInterface;
-import com.sun.deploy.util.ArrayUtil;
 
 import java.awt.Point;
 import java.awt.image.AreaAveragingScaleFilter;
@@ -27,9 +26,9 @@ public class Table extends Actor implements ServerInterface {
     }
 
     private final int MAX_PLAYER;
-    private ArrayList<Player> seats;
     private final int initMoney = 1000; //MUDAR PARA CONSTRUCTOR
     private final int playingTime = 30; //MUDAR PARA CONSTRUCTOR
+    private ArrayList<Player> seats;
     private String name;
     //private Card[] cardsOnTable;
     private ArrayList<Round> rounds;
@@ -64,7 +63,7 @@ public class Table extends Actor implements ServerInterface {
      * @param p Player to be added to table
      * @return True if the player is added successfully or false if the table is full
      */
-   public boolean addPlayer(Player p) {
+    public boolean addPlayer(Player p) {
        /* for (int i = 0; i < seats.length; i++) {
             if (seats[i] == null) {
                seats[i] = p;
@@ -74,13 +73,13 @@ public class Table extends Actor implements ServerInterface {
             }
         }
         return false;*/
-       if(seats.size() < MAX_PLAYER){
-           seats.add(p);
-           if(joker == null)
-               joker = p;
-           return true;
-       }
-       return false;
+        if (seats.size() < MAX_PLAYER) {
+            seats.add(p);
+            if (joker == null)
+                joker = p;
+            return true;
+        }
+        return false;
     }
 
     public boolean removePlayer(Player p) {
@@ -120,67 +119,17 @@ public class Table extends Actor implements ServerInterface {
                 break;
             }
         }
-        i = (i+1)%seats.size();
-        while(!seats.get(i).isActive()){
-            i = (i+1)%seats.size();
+        i = (i + 1) % seats.size();
+        while (!seats.get(i).isActive()) {
+            i = (i + 1) % seats.size();
         }
         joker = seats.get(i);
         return joker;
     }
 
-    public Player[] getSeats() {
-        return seats.toArray(new Player[seats.size()]);
-    }
-
     public void addRounds(Round r) {
         rounds.add(r);
     }
-
-    public Player getJoker() {
-        return joker;
-    }
-
-    public int getSmallBlind() {
-        return SMALL_BLIND;
-    }
-
-    public int getBigBlind() {
-        return 2 * SMALL_BLIND;
-
-    }
-
-    public Player[] getActivePlayers() {
-        ArrayList<Player> activePlayers = new ArrayList<Player>();
-        for (int i = 0; i < seats.size(); i++) {
-            if (seats.get(i) != null) {
-                if (seats.get(i).isActive())
-                    activePlayers.add(seats.get(i));
-            }
-        }
-        return activePlayers.toArray(new Player[activePlayers.size()]);
-    }
-
-    public Round getTopRound() {
-        return rounds.get(rounds.size() - 1);
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public ArrayList<Round> getRounds() {
-        return rounds;
-    }
-
-
-    /*public String getName() {
-        return name;
-    }*/
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
 
     @Override
     public boolean join(String name, int avatarID, ClientCallbackInterface client) {
@@ -263,13 +212,13 @@ public class Table extends Actor implements ServerInterface {
         for (int i = 0; i < seats.size(); i++) {
             if (seats.get(i) == null)
                 if (seats.get(i).isActive()) {
-                    seats.get(i).setSize(super.getWidth()/8,super.getHeight()/4);
-                    if(i < 4) {
+                    seats.get(i).setSize(super.getWidth() / 8, super.getHeight() / 4);
+                    if (i < 4) {
                         seats.get(i).setPosition(i * (super.getWidth() / 3), super.getHeight(), Align.top);
-                    }else if(i >= 4 ) {
+                    } else if (i >= 4) {
                         seats.get(i).setPosition(super.getWidth() - i % 4 * super.getWidth() / 3, 0, Align.bottom);
                     }
-                        seats.get(i).draw(batch, parentAlpha);
+                    seats.get(i).draw(batch, parentAlpha);
 
                 }
         }
@@ -294,7 +243,7 @@ public class Table extends Actor implements ServerInterface {
                 getTopRound().getRiver().draw(batch, parentAlpha);
             }
 
-            TexturesLoad.font.draw(batch, getTopRound().getPot() + "", super.getWidth()/2, super.getHeight()/2);
+            TexturesLoad.font.draw(batch, getTopRound().getPot() + "", super.getWidth() / 2, super.getHeight() / 2);
         }
 
     }
@@ -304,16 +253,62 @@ public class Table extends Actor implements ServerInterface {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Player[] getActivePlayers() {
+        ArrayList<Player> activePlayers = new ArrayList<Player>();
+        for (int i = 0; i < seats.size(); i++) {
+            if (seats.get(i) != null) {
+                if (seats.get(i).isActive())
+                    activePlayers.add(seats.get(i));
+            }
+        }
+        return activePlayers.toArray(new Player[activePlayers.size()]);
+    }
+
+    public int getBigBlind() {
+        return 2 * SMALL_BLIND;
+
+    }
 
     public ArrayList<String> getChatHistory() {
         return chatHistory;
     }
 
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+
+    /*public String getName() {
+        return name;
+    }*/
+
+    public Player getJoker() {
+        return joker;
+    }
 
     public int getPlayingTime() {
         return playingTime;
     }
 
+    public ArrayList<Round> getRounds() {
+        return rounds;
+    }
+
+    public Player[] getSeats() {
+        return seats.toArray(new Player[seats.size()]);
+    }
+
+    public int getSmallBlind() {
+        return SMALL_BLIND;
+    }
+
+    public Round getTopRound() {
+        return rounds.get(rounds.size() - 1);
+    }
 
     public void setState(tableState state) {
         this.state = state;
