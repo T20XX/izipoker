@@ -48,7 +48,9 @@
     <orderEntry type="library" exported="" name="jinput-platform-2.0.5-natives-windows" level="project" />
     <orderEntry type="library" exported="" name="jinput-platform-2.0.5-natives-osx" level="project" />
     <orderEntry type="library" exported="" name="lipermi-0.4" level="project" />
-    <orderEntry type="library" exported="" name="lipermi-0.4" level="project" />
+    <orderEntry type="library" exported="" name="jmdns" level="project" />
+    <orderEntry type="library" exported="" name="C__Users_Telmo_git_izipoker_desktop_build_libs_lipermi_0_4_jar" level="project" />
+    <orderEntry type="library" exported="" name="jmdns" level="project" />
     <orderEntry type="library" exported="" name="desktop.desktop-1.0" level="project" />
   </component>
 </module>

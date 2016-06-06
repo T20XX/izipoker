@@ -39,4 +39,5 @@ task afterEclipseImport(description: "Post processing after project generation",
 }
 dependencies {
     compile files('build/libs/lipermi-0.4.jar')
+    compile files('build/libs/jmdns.jar')
 }
