@@ -75,6 +75,7 @@ public class Round {
             Player player = currentPlayers.removeFirst();
             currentPlayers.addLast(player);
             p.setMoney(p.getMoney()-amount);
+            pot += amount;
             return true;
         }
         return false;
@@ -116,6 +117,9 @@ public class Round {
     public void updateState(){
         this.state = roundState.values()[roundState.valueOf(this.state.toString()).ordinal() + 1];
         highestBet = 0;
+        for(int i = 0; i < currentPlayers.size();i++){
+            bets.put(currentPlayers.get(i),0);
+        }
         highestPlayer = joker;
         while(currentPlayers.peek() != joker)
         {
