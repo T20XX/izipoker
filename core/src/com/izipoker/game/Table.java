@@ -210,7 +210,7 @@ public class Table extends Actor implements ServerInterface {
 
         batch.draw(TexturesLoad.tableTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
         for (int i = 0; i < seats.size(); i++) {
-            if (seats.get(i) == null)
+            //if (seats.get(i) != null) {
                 if (seats.get(i).isActive()) {
                     seats.get(i).setSize(super.getWidth() / 8, super.getHeight() / 4);
                     if (i < 4) {
@@ -221,6 +221,7 @@ public class Table extends Actor implements ServerInterface {
                     seats.get(i).draw(batch, parentAlpha);
 
                 }
+            //}
         }
 
         if (!rounds.isEmpty()) {
