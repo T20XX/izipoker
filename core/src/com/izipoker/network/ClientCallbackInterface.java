@@ -9,5 +9,6 @@ public interface ClientCallbackInterface  {
     public void receiveCard(Card card);
     public void receivePossibleActions(boolean possibleActions[]);
     public void receiveMoney(int money);
+    public void receiveHighestBet(int highestbet);
 
 }

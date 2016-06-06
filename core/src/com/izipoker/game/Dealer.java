@@ -172,6 +172,7 @@ public class Dealer implements Runnable{
         while(r.getCurrentPlayers().peek() != r.getJoker() || !atLeastOnePlayed){
             p = r.getCurrentPlayers().peek();
             System.out.println(p.getName() + " Turn");
+            table.sendHighestBet(p.getName());
             table.sendPossibleActions(p.getName(), checkPossibleActions(p));
             Thread t = new Thread(new CheckPlayerAction(p));
             t.start();
@@ -210,10 +211,12 @@ public class Dealer implements Runnable{
                     break;
                 case CALL:
                     r.addCall(p);
+                    table.sendMoney(p.getName());
                     System.out.println(p.getName() + " Called");
                     break;
                 case RAISE:
                     r.addBet(p, p.getLastAction().getAmount());
+                    table.sendMoney(p.getName());
                     System.out.println(p.getName() + " Raised");
                     break;
             }

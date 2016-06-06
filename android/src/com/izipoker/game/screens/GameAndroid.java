@@ -100,7 +100,7 @@ public class GameAndroid implements Screen{
         sendBtn.setPosition(stage.getWidth(), stage.getHeight()/2, Align.right);
         stage.addActor(sendBtn);
 
-        betSlider = new Slider(50, 500, 10, true, skin);
+        betSlider = new Slider(listener.getHighestBet(),listener.getMoney(), 10, true, skin);
         betSlider.setWidth(stage.getWidth()/6);
         betSlider.setHeight(stage.getHeight()/3);
         betSlider.setPosition(stage.getWidth()- betSlider.getWidth()/2, stage.getHeight()/6, Align.center);
@@ -308,6 +308,7 @@ public class GameAndroid implements Screen{
         raiseBtn.setVisible(listener.getPossibleActions()[3]);
         betTF.setVisible(listener.getPossibleActions()[3]);
         betSlider.setVisible(listener.getPossibleActions()[3]);
+        betSlider.setRange(listener.getHighestBet(),listener.getMoney());
         halfPot.setVisible(listener.getPossibleActions()[3]);
         maxPot.setVisible(listener.getPossibleActions()[3]);
         allIn.setVisible(listener.getPossibleActions()[3]);

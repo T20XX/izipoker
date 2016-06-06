@@ -14,4 +14,5 @@ public interface ServerInterface {
     public void sendPossibleActions(String name, boolean possibleActions[]);
     public void sendMoney(String name);
     public void sendPokerAction(String name, PokerAction action);
+    public void sendHighestBet(String name);
 }
