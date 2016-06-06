@@ -318,4 +318,9 @@ public class Table extends Actor implements ServerInterface {
         players.get(name).setLastAction(action);
         players.get(name).setActed(true);
     }
+
+    @Override
+    public void sendHighestBet(String name) {
+        (clients.get(name)).receiveHighestBet(getTopRound().getHighestBet());
+    }
 }

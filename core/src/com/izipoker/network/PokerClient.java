@@ -13,6 +13,7 @@ public class PokerClient implements ClientCallbackInterface {
     private int money;
     private boolean changed = true;
     private boolean possibleActions[] = {false, false, false, false};
+    private int highestBet;
 
     /**
      * Client constructor
@@ -53,6 +54,12 @@ public class PokerClient implements ClientCallbackInterface {
     @Override
     public void receiveMoney(int money) {
         this.money = money;
+        this.changed = true;
+    }
+
+    @Override
+    public void receiveHighestBet(int highestbet) {
+        this.highestBet = highestbet;
         this.changed = true;
     }
 
@@ -115,6 +122,11 @@ public class PokerClient implements ClientCallbackInterface {
     public int getMoney() {
         return money;
     }
+
+    public int getHighestBet() {
+        return highestBet;
+    }
+
 
     public void setPossibleActions(boolean[] possibleActions) {
         this.possibleActions = possibleActions;
