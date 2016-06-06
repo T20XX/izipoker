@@ -144,8 +144,6 @@ public class Dealer implements Runnable {
 
                         if (r.getCurrentPlayers().size() != 1) {
                             r.updateState();
-                            handleTableActions();
-
                             //check hands!
                         }
                     }
@@ -153,6 +151,7 @@ public class Dealer implements Runnable {
             }
             Player winner = r.getCurrentPlayers().get(0);
             winner.setMoney(winner.getMoney() + r.getPot());
+            removeLoserPlayer();
             setNewJoker();
 
         }
@@ -237,8 +236,17 @@ public class Dealer implements Runnable {
             possibleActions[3] = true;
         } else if (p.getMoney() == r.getHighestBet()) {
             possibleActions[2] = true;
+        } else if(p.getMoney() < r.getHighestBet()){
+            possibleActions[3] = true;
         }
 
         return possibleActions;
+    }
+    public void removeLoserPlayer(){
+
+        for(int i = 0; i < table.getSeats().length;i++){
+            if(table.getSeats()[i].getMoney() <= 0)
+                table.removePlayer(table.getSeats()[i]);
+        }
     }
 }

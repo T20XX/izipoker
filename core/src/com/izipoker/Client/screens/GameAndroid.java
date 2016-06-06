@@ -36,7 +36,7 @@ public class GameAndroid implements Screen {
     private Slider betSlider;
     private Player player;
     private Hand hand;
-    private TextButton halfPot, maxPot, allIn, sendBtn;
+    private TextButton thirdMoney, halfMoney, allIn, sendBtn;
     private Label amountLbl, nameLbl;
     private TextField chatTF, betTF;
     private Image avatarImg;
@@ -83,7 +83,7 @@ public class GameAndroid implements Screen {
         amountLbl.setPosition(stage.getWidth(), stage.getHeight() - amountLbl.getHeight(), Align.center);
         stage.addActor(amountLbl);
 
-        nameLbl = new Label("TESTA", skin);
+        nameLbl = new Label(listener.getName(), skin);
         nameLbl.setWidth(stage.getWidth() / 2);
         nameLbl.setPosition(stage.getWidth() / 2 + nameLbl.getHeight(), stage.getHeight() - nameLbl.getHeight(), Align.center);
         stage.addActor(nameLbl);
@@ -133,19 +133,19 @@ public class GameAndroid implements Screen {
         stage.addActor(betTF);
 
 
-        halfPot = new TextButton("1/2", skin);
-        halfPot.setWidth(stage.getWidth() / 6);
-        halfPot.setPosition(7 * stage.getWidth() / 10, stage.getHeight() / 4 + halfPot.getHeight() / 2, Align.center);
-        stage.addActor(halfPot);
+        thirdMoney = new TextButton("1/3", skin);
+        thirdMoney.setWidth(stage.getWidth() / 6);
+        thirdMoney.setPosition(7 * stage.getWidth() / 10, stage.getHeight() / 4 + thirdMoney.getHeight() / 2, Align.center);
+        stage.addActor(thirdMoney);
 
-        maxPot = new TextButton("POT", skin);
-        maxPot.setWidth(stage.getWidth() / 6);
-        maxPot.setPosition(7 * stage.getWidth() / 10, halfPot.getY() - halfPot.getHeight(), Align.center);
-        stage.addActor(maxPot);
+        halfMoney = new TextButton("1/2", skin);
+        halfMoney.setWidth(stage.getWidth() / 6);
+        halfMoney.setPosition(7 * stage.getWidth() / 10, thirdMoney.getY() - thirdMoney.getHeight(), Align.center);
+        stage.addActor(halfMoney);
 
         allIn = new TextButton("MAX", skin);
         allIn.setWidth(stage.getWidth() / 6);
-        allIn.setPosition(7 * stage.getWidth() / 10, maxPot.getY() - maxPot.getHeight(), Align.center);
+        allIn.setPosition(7 * stage.getWidth() / 10, halfMoney.getY() - halfMoney.getHeight(), Align.center);
         stage.addActor(allIn);
 
        /* c_1 = player.getHand().getCards()[0];
@@ -168,6 +168,32 @@ public class GameAndroid implements Screen {
                 c_2.flip();
             };
         });*/
+        allIn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                int money = listener.getMoney();
+                if(betSlider.getMinValue() <= money && betSlider.getMaxValue() >= money)
+                    betSlider.setValue(money);
+            }
+        });
+        thirdMoney.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                int money = listener.getMoney()/3;
+                if(betSlider.getMinValue() <= money && betSlider.getMaxValue() >= money)
+                    betSlider.setValue(money);
+
+            }
+        });
+        halfMoney.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                int money = listener.getMoney()/2;
+                if(betSlider.getMinValue() <= money && betSlider.getMaxValue() >= money)
+                    betSlider.setValue(money);
+
+            }
+        });
         foldBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -190,7 +216,7 @@ public class GameAndroid implements Screen {
         raiseBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.RAISE, Integer.valueOf(betTF.getText())));
+                proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.RAISE, (int)betSlider.getValue()));
                 disableActionButtons();
                 listener.resetPossibleActions();
 
@@ -287,8 +313,8 @@ public class GameAndroid implements Screen {
         raiseBtn.setVisible(false);
         betTF.setVisible(false);
         betSlider.setVisible(false);
-        halfPot.setVisible(false);
-        maxPot.setVisible(false);
+        thirdMoney.setVisible(false);
+        halfMoney.setVisible(false);
         allIn.setVisible(false);
     }
 
@@ -318,9 +344,11 @@ public class GameAndroid implements Screen {
         raiseBtn.setVisible(listener.getPossibleActions()[3]);
         betTF.setVisible(listener.getPossibleActions()[3]);
         betSlider.setVisible(listener.getPossibleActions()[3]);
+        if(listener.getHighestBet() < listener.getMoney())
         betSlider.setRange(listener.getHighestBet(), listener.getMoney());
-        halfPot.setVisible(listener.getPossibleActions()[3]);
-        maxPot.setVisible(listener.getPossibleActions()[3]);
+        else betSlider.setRange(listener.getMoney(), listener.getMoney());
+        thirdMoney.setVisible(listener.getPossibleActions()[3]);
+        halfMoney.setVisible(listener.getPossibleActions()[3]);
         allIn.setVisible(listener.getPossibleActions()[3]);
 
         //Amount update
