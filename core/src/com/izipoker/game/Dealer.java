@@ -154,6 +154,7 @@ public class Dealer implements Runnable{
                     }
                 }
             }
+            r.getCurrentPlayers().get(0).setMoney(r.getPot());
             setNewJoker();
         }
         table.setState(Table.tableState.CLOSED);
