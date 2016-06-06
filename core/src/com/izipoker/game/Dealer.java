@@ -141,7 +141,6 @@ public class Dealer implements Runnable {
                         handleTableActions();
                         System.out.println(r.getPot());
                         System.out.println("SAIMOS RIVER");
-
                         if (r.getCurrentPlayers().size() != 1) {
                             r.updateState();
                             handleTableActions();
