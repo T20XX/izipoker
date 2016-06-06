@@ -13,9 +13,9 @@ import static org.junit.Assert.*;
  */
 public class TableTest {
     @Test
-    public void testAddPlayertoTable(){
-        Table t = new Table("teste",8);
-        Player p = new Human(0,"Teste",1000);
+    public void testAddPlayertoTable() {
+        Table t = new Table("teste", 8);
+        Player p = new Human(0, "Teste", 1000);
 
         assertNull(t.getSeats()[0]);
         t.addPlayer(p);

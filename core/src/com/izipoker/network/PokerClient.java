@@ -17,7 +17,8 @@ public class PokerClient implements ClientCallbackInterface {
 
     /**
      * Client constructor
-     * @param name Name of the client
+     *
+     * @param name     Name of the client
      * @param avatarID Number of the avatar
      */
     public PokerClient(String name, int avatarID) {
@@ -63,52 +64,8 @@ public class PokerClient implements ClientCallbackInterface {
         this.changed = true;
     }
 
-    /**
-     * Gets hand
-     * @return Hand with two cards
-     */
-    public Hand getHand() {
-        return hand;
-    }
-
-    /**
-     * Gets array of booleans indicating possible actions
-     * @return
-     */
-    public boolean[] getPossibleActions() {
-        return possibleActions;
-    }
-
-    /**
-     * Gets changed state
-     * @return True if something changed, false otherwise
-     */
-    public boolean isChanged() {
-        return changed;
-    }
-
-    /**
-     * Sets client to changed state
-     * @param changed Boolean to set changed state
-     */
-    public void setChanged(boolean changed) {
-        this.changed = changed;
-    }
-
-    /**
-     * Gets name
-     * @return Name of the player (client side)
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets name of the player (client side)
-     * @param name
-     */
-    public void setName(String name) {
-        this.name = name;
+    public void resetPossibleActions() {
+        this.possibleActions = new boolean[]{false, false, false, false};
     }
 
     public int getAvatarID() {
@@ -119,20 +76,69 @@ public class PokerClient implements ClientCallbackInterface {
         this.avatarID = avatarID;
     }
 
-    public int getMoney() {
-        return money;
+    /**
+     * Gets hand
+     *
+     * @return Hand with two cards
+     */
+    public Hand getHand() {
+        return hand;
     }
 
     public int getHighestBet() {
         return highestBet;
     }
 
+    public int getMoney() {
+        return money;
+    }
+
+    /**
+     * Gets name
+     *
+     * @return Name of the player (client side)
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets name of the player (client side)
+     *
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Gets array of booleans indicating possible actions
+     *
+     * @return
+     */
+    public boolean[] getPossibleActions() {
+        return possibleActions;
+    }
 
     public void setPossibleActions(boolean[] possibleActions) {
         this.possibleActions = possibleActions;
     }
 
-    public void resetPossibleActions() {
-        this.possibleActions = new boolean[]{false, false, false, false};
+    /**
+     * Gets changed state
+     *
+     * @return True if something changed, false otherwise
+     */
+    public boolean isChanged() {
+        return changed;
+    }
+
+    /**
+     * Sets client to changed state
+     *
+     * @param changed Boolean to set changed state
+     */
+    public void setChanged(boolean changed) {
+        this.changed = changed;
     }
 }

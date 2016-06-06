@@ -10,7 +10,7 @@ public class CheckPlayerAction implements Runnable {
 
     @Override
     public void run() {
-        while(!player.hasActed()){
+        while (!player.hasActed()) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {

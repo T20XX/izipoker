@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class CardTest {
 
     @Test
-    public void testCardbyRank(){
+    public void testCardbyRank() {
 
         Card c1 = new Card(Card.rankType.ACE, Card.suitType.SPADES);
         assertEquals(Card.rankType.ACE, c1.getRank());
@@ -21,7 +21,7 @@ public class CardTest {
     }
 
     @Test
-    public void testCardbyValue(){
+    public void testCardbyValue() {
 
         Card c2 = new Card(1, Card.suitType.DIAMONDS);
         assertEquals(Card.rankType.TWO, c2.getRank());
@@ -30,7 +30,7 @@ public class CardTest {
     }
 
     @Test
-    public void testFlipping(){
+    public void testFlipping() {
         Card c1 = new Card(Card.rankType.ACE, Card.suitType.SPADES);
 
         assertEquals(false, c1.isFlipped());

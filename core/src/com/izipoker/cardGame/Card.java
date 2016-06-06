@@ -11,13 +11,10 @@ import java.io.Serializable;
  */
 public class Card extends Actor implements Serializable {
 
-    // need to indicate the this on both sides (server and client) to make sure objects are compatible.
-    private static final long serialVersionUID = 1L;
-
     /**
      * Rank of cards
      */
-    public enum rankType{
+    public enum rankType {
         /**
          * Card 2 (value: 1)
          */
@@ -75,7 +72,7 @@ public class Card extends Actor implements Serializable {
     /**
      * Suit of cards
      */
-    public enum suitType{
+    public enum suitType {
         /**
          * Hearts suit
          */
@@ -94,16 +91,16 @@ public class Card extends Actor implements Serializable {
         SPADES
     }
 
+    // need to indicate the this on both sides (server and client) to make sure objects are compatible.
+    private static final long serialVersionUID = 1L;
     /**
      * Rank of the card
      */
     private rankType rank;
-
     /**
      * Suit of the card
      */
     private suitType suit;
-
     private boolean flipped = false;
 
     /*private static final Map<rankType, Integer> valueMap;
@@ -127,10 +124,11 @@ public class Card extends Actor implements Serializable {
 
     /**
      * Creates a card by giving a rank and a suit
+     *
      * @param r Rank of the card
      * @param s Suit of the card
      */
-    public Card(rankType r, suitType s){
+    public Card(rankType r, suitType s) {
         rank = r;
         suit = s;
         //getFrontTexFromCards();
@@ -138,11 +136,12 @@ public class Card extends Actor implements Serializable {
 
     /**
      * Creates a card by giving a value and a suit
+     *
      * @param value Value of the card
-     * @param s Suit of the card
+     * @param s     Suit of the card
      * @see rankType To check rank and value match
      */
-    public Card(int value, suitType s){
+    public Card(int value, suitType s) {
         suit = s;
         rank = rankType.values()[value - 1];
         //getFrontTexFromCards();
@@ -157,6 +156,38 @@ public class Card extends Actor implements Serializable {
     }*/
 
     /**
+     * Flip the card
+     * If the card is facing down, sets facing up
+     * If the card is facing up, sets facing down
+     */
+    public void flip() {
+        this.flipped = !this.flipped;
+    }
+
+    /**
+     * {@inheritDoc}
+     * Draws the card according to its orientation
+     */
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        if (isFlipped()) {
+            batch.draw(TexturesLoad.frontTex[suitType.valueOf(this.suit.toString()).ordinal()][getValue() - 1], super.getX(), super.getY(), super.getWidth(), super.getHeight());
+        } else {
+            batch.draw(TexturesLoad.backTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+        }
+    }
+
+    /**
+     * Used for debugging purposes
+     *
+     * @return A string composed by the rank followed by its suit
+     */
+    @Override
+    public String toString() {
+        return this.rank.toString() + " of " + this.suit.toString();
+    }
+
+    /**
      * @return Rank of the card
      */
     public rankType getRank() {
@@ -165,18 +196,11 @@ public class Card extends Actor implements Serializable {
 
     /**
      * Sets the rank of the card
+     *
      * @param rank New rank to set
      */
     public void setRank(rankType rank) {
         this.rank = rank;
-    }
-
-    /**
-     * @return Value of the card from 1 to 13
-     * @see rankType To check rank and value match
-     */
-    public int getValue(){
-        return rankType.valueOf(rank.toString()).ordinal() + 1;
     }
 
     /**
@@ -188,6 +212,7 @@ public class Card extends Actor implements Serializable {
 
     /**
      * Sets the suit of the card
+     *
      * @param suit New suit to set
      */
     public void setSuit(suitType suit) {
@@ -195,7 +220,16 @@ public class Card extends Actor implements Serializable {
     }
 
     /**
+     * @return Value of the card from 1 to 13
+     * @see rankType To check rank and value match
+     */
+    public int getValue() {
+        return rankType.valueOf(rank.toString()).ordinal() + 1;
+    }
+
+    /**
      * Gets the flipped state of the card
+     *
      * @return True if the card is facing up, false otherwise
      */
     public boolean isFlipped() {
@@ -204,41 +238,11 @@ public class Card extends Actor implements Serializable {
 
     /**
      * Sets the orientation of the card
+     *
      * @param flipped True to face up and false to face down
      */
     public void setFlipped(boolean flipped) {
         this.flipped = flipped;
-    }
-
-    /**
-     * Flip the card
-     * If the card is facing down, sets facing up
-     * If the card is facing up, sets facing down
-     */
-    public void flip() {
-        this.flipped = !this.flipped;
-    }
-
-    /**
-     * Used for debugging purposes
-     * @return A string composed by the rank followed by its suit
-     */
-    @Override
-    public String toString(){
-        return this.rank.toString() + " of " + this.suit.toString();
-    }
-
-    /**
-     * {@inheritDoc}
-     * Draws the card according to its orientation
-     */
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        if (isFlipped()){
-            batch.draw(TexturesLoad.frontTex[suitType.valueOf(this.suit.toString()).ordinal()][getValue() - 1], super.getX(), super.getY(), super.getWidth(), super.getHeight());
-        } else {
-            batch.draw(TexturesLoad.backTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
-        }
     }
 
     /*public static Texture getCardsTex() {

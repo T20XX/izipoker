@@ -83,7 +83,6 @@ public class LobbyDesktop implements Screen{
                 g.setScreen(new GameDesktop(table));
             }
 
-            ;
         });
 
     }

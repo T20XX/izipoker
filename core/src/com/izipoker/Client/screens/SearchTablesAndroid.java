@@ -25,7 +25,7 @@ import lipermi.handler.CallHandler;
 /**
  * Created by Telmo on 03/05/2016.
  */
-public class SearchTablesAndroid implements Screen{
+public class SearchTablesAndroid implements Screen {
     private Stage stage;
     private Skin skin;
 
@@ -128,36 +128,36 @@ public class SearchTablesAndroid implements Screen{
                 if (connection.getProxyTable() == null) {
                     connection.findService();
                     connection.connectToServer();
-                    }
+                }
                 proxyTable = connection.getProxyTable();
                 callHandler = connection.getCallHandler();
                 IZIPokerClient.getInstance().setScreen(new CreatePlayerAndroid(proxyTable, callHandler));
             }
 
-            ;
         });
 
         cancelBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 IZIPokerClient.getInstance().setScreen(new MainMenuAndroid());
-            };
+            }
         });
 
         continueDialogBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                IZIPokerClient.getInstance().setScreen(new CreatePlayerAndroid(proxyTable, callHandler));            };
+                IZIPokerClient.getInstance().setScreen(new CreatePlayerAndroid(proxyTable, callHandler));
+            }
         });
     }
 
     public void create() {
-        stage = new Stage( new StretchViewport(200.0f, 400.0f, new OrthographicCamera()));
+        stage = new Stage(new StretchViewport(200.0f, 400.0f, new OrthographicCamera()));
         Gdx.input.setInputProcessor(stage);
     }
 
     @Override
-    public void show(){
+    public void show() {
     }
 
     @Override
@@ -175,17 +175,20 @@ public class SearchTablesAndroid implements Screen{
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
     public void dispose() {
-    stage.dispose();
+        stage.dispose();
         backgroundTex.dispose();
     }
 }

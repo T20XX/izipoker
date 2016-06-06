@@ -6,13 +6,9 @@ import com.izipoker.client.screens.MainMenuAndroid;
 /**
  * Created by Telmo on 03/05/2016.
  */
-public class IZIPokerClient  extends Game {
+public class IZIPokerClient extends Game {
 
     private static IZIPokerClient instance = new IZIPokerClient();
-
-    public static IZIPokerClient getInstance() {
-        return instance;
-    }
 
     private IZIPokerClient() {
     }
@@ -20,5 +16,9 @@ public class IZIPokerClient  extends Game {
     @Override
     public void create() {
         this.screen = new MainMenuAndroid();
+    }
+
+    public static IZIPokerClient getInstance() {
+        return instance;
     }
 }
