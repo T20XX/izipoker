@@ -122,7 +122,17 @@ public class PokerClient implements ClientCallbackInterface {
     public int getMoney() {
         return money;
     }
+<<<<<<< HEAD
     public int getHighestBet(){
         return highestBet;
+=======
+
+    public void setPossibleActions(boolean[] possibleActions) {
+        this.possibleActions = possibleActions;
+    }
+
+    public void resetPossibleActions() {
+        this.possibleActions = new boolean[]{false, false, false, false};
+>>>>>>> a4270a3478ba287c6500873dc2249abd4b06c803
     }
 }

@@ -25,9 +25,7 @@ import com.izipoker.network.ServerInterface;
 
 import lipermi.handler.CallHandler;
 
-/**
- * Created by Telmo on 03/05/2016.
- */
+
 public class CreatePlayerAndroid implements Screen{
     private Stage stage;
 

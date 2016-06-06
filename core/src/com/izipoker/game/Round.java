@@ -159,4 +159,9 @@ public class Round {
     public int getPot(){
         return pot;
     }
+
+
+    public Player getHighestPlayer() {
+        return highestPlayer;
+    }
 }

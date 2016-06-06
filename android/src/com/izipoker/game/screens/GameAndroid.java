@@ -173,6 +173,7 @@ public class GameAndroid implements Screen{
             public void clicked(InputEvent event, float x, float y) {
                 proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.FOLD));
                 disableActionButtons();
+                listener.resetPossibleActions();
             };
         });
 
@@ -181,23 +182,32 @@ public class GameAndroid implements Screen{
             public void clicked(InputEvent event, float x, float y) {
                 proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.CALL));
                 disableActionButtons();
-            };
+                listener.resetPossibleActions();
+            }
+
+            ;
         });
 
         raiseBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.RAISE,Integer.valueOf(betTF.getText())));
+                proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.RAISE, Integer.valueOf(betTF.getText())));
                 disableActionButtons();
+                listener.resetPossibleActions();
 
-            };
+            }
+
+            ;
         });
         checkBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.CHECK));
                 disableActionButtons();
-            };
+                listener.resetPossibleActions();
+            }
+
+            ;
         });
 
         sendBtn.addListener(new ClickListener() {
