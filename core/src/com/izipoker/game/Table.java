@@ -9,8 +9,10 @@ import com.izipoker.cardGame.Card;
 import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.network.ClientCallbackInterface;
 import com.izipoker.network.ServerInterface;
+import com.sun.deploy.util.ArrayUtil;
 
 import java.awt.Point;
+import java.awt.image.AreaAveragingScaleFilter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +30,7 @@ public class Table extends Actor implements ServerInterface {
 
     private String name;
     private final int MAX_PLAYER;
-    private Player[] seats;
+    private ArrayList<Player> seats;
     //private Card[] cardsOnTable;
     private ArrayList<Round> rounds;
     private Dealer dealer;
@@ -51,7 +53,7 @@ public class Table extends Actor implements ServerInterface {
      */
     public Table(String name, int maxPlayers) {
         MAX_PLAYER = maxPlayers;
-        seats = new Player[maxPlayers];
+        seats = new ArrayList<Player>();
         dealer = new Dealer(this);
         rounds = new ArrayList<Round>();
         this.name = name;
@@ -65,26 +67,34 @@ public class Table extends Actor implements ServerInterface {
      * @param p Player to be added to table
      * @return True if the player is added successfully or false if the table is full
      */
-    public boolean addPlayer(Player p) {
-        for (int i = 0; i < seats.length; i++) {
+   public boolean addPlayer(Player p) {
+       /* for (int i = 0; i < seats.length; i++) {
             if (seats[i] == null) {
-                seats[i] = p;
+               seats[i] = p;
                 if (joker == null)
                     joker = p;
                 return true;
             }
         }
-        return false;
+        return false;*/
+       if(seats.size() < MAX_PLAYER){
+           seats.add(p);
+           if(joker == null)
+               joker = p;
+           return true;
+       }
+       return false;
     }
 
     public boolean removePlayer(Player p) {
-        for (int i = 0; i < seats.length; i++) {
+       /* for (int i = 0; i < seats.length; i++) {
             if (seats[i] == p) {
                 seats[i] = null;
                 return true;
             }
         }
-        return false;
+        return false;*/
+        return seats.remove(p);
     }
 
     public Player nextJoker() {
@@ -108,21 +118,21 @@ public class Table extends Actor implements ServerInterface {
         }
         return null;*/
         int i;
-        for (i = 0; i < seats.length; i++) {
-            if (seats[i] == joker) {
+        for (i = 0; i < seats.size(); i++) {
+            if (seats.get(i) == joker) {
                 break;
             }
         }
-        i = (i+1)%seats.length;
-        while(!seats[i].isActive()){
-            i = (i+1)%seats.length;
+        i = (i+1)%seats.size();
+        while(!seats.get(i).isActive()){
+            i = (i+1)%seats.size();
         }
-        joker = seats[i];
+        joker = seats.get(i);
         return joker;
     }
 
     public Player[] getSeats() {
-        return seats;
+        return seats.toArray(new Player[seats.size()]);
     }
 
     public void addRounds(Round r) {
@@ -139,14 +149,15 @@ public class Table extends Actor implements ServerInterface {
 
     public int getBigBlind() {
         return 2 * SMALL_BLIND;
+
     }
 
     public Player[] getActivePlayers() {
         ArrayList<Player> activePlayers = new ArrayList<Player>();
-        for (int i = 0; i < seats.length; i++) {
-            if (seats[i] != null) {
-                if (seats[i].isActive())
-                    activePlayers.add(seats[i]);
+        for (int i = 0; i < seats.size(); i++) {
+            if (seats.get(i) != null) {
+                if (seats.get(i).isActive())
+                    activePlayers.add(seats.get(i));
             }
         }
         return activePlayers.toArray(new Player[activePlayers.size()]);
@@ -256,24 +267,24 @@ public class Table extends Actor implements ServerInterface {
 
         batch.setColor(1, 1, 1, 1);
         batch.draw(tableTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
-        for (int i = 0; i < seats.length; i++) {
-            if (seats[i] != null)
-                if (seats[i].isActive()) {
-                    seats[i].setSize(super.getWidth()/8,super.getHeight()/4);
+        for (int i = 0; i < seats.size(); i++) {
+            if (seats.get(i) == null)
+                if (seats.get(i).isActive()) {
+                    seats.get(i).setSize(super.getWidth()/8,super.getHeight()/4);
                     if(i < 4) {
-                        seats[i].setPosition(i * (super.getWidth() / 3), super.getHeight(), Align.top);
+                        seats.get(i).setPosition(i * (super.getWidth() / 3), super.getHeight(), Align.top);
                     }else if(i >= 4 ) {
-                        seats[i].setPosition(super.getWidth() - i % 4 * super.getWidth() / 3, 0, Align.bottom);
+                        seats.get(i).setPosition(super.getWidth() - i % 4 * super.getWidth() / 3, 0, Align.bottom);
                     }
-                        seats[i].draw(batch, parentAlpha);
+                        seats.get(i).draw(batch, parentAlpha);
                 }
         }
 
         if (!rounds.isEmpty()) {
             if (getTopRound().getFlop() != null) {
-                getTopRound().getFlop()[0].setBounds(2*super.getWidth() / 7, super.getHeight() / 2, 100, 100);
+                getTopRound().getFlop()[0].setBounds(2 * super.getWidth() / 7, super.getHeight() / 2, 100, 100);
                 getTopRound().getFlop()[0].draw(batch, parentAlpha);
-                getTopRound().getFlop()[1].setBounds(3 * super.getWidth() / 7, super.getHeight() / 2,100,100);
+                getTopRound().getFlop()[1].setBounds(3 * super.getWidth() / 7, super.getHeight() / 2, 100, 100);
                 getTopRound().getFlop()[1].draw(batch, parentAlpha);
                 getTopRound().getFlop()[2].setBounds(4 * super.getWidth() / 7, super.getHeight() / 2, 100, 100);
                 getTopRound().getFlop()[2].draw(batch, parentAlpha);
@@ -285,10 +296,10 @@ public class Table extends Actor implements ServerInterface {
             }
 
             if (getTopRound().getRiver() != null) {
-                getTopRound().getRiver().setBounds(6 * super.getWidth() / 7, super.getHeight() / 2,100,100);
+                getTopRound().getRiver().setBounds(6 * super.getWidth() / 7, super.getHeight() / 2, 100, 100);
                 getTopRound().getRiver().draw(batch, parentAlpha);
             }
-            TexturesLoad.font.draw(batch,getTopRound().getPot()+"", super.getX()+100, super.getY()+100);
+            TexturesLoad.font.draw(batch, getTopRound().getPot() + "", super.getWidth()/2, super.getHeight()/2);
 
         }
 
@@ -324,4 +335,5 @@ public class Table extends Actor implements ServerInterface {
     public void sendHighestBet(String name) {
         (clients.get(name)).receiveHighestBet(getTopRound().getHighestBet());
     }
+
 }

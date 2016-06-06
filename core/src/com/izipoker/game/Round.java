@@ -126,7 +126,6 @@ public class Round {
             Player player = currentPlayers.removeFirst();
             currentPlayers.addLast(player);
         }
-        addToPot();
     }
 
     public Card[] getFlop() {

@@ -114,7 +114,6 @@ public class Dealer implements Runnable{
 
             System.out.println("PRE-FLOP");
             handleTableActions();
-            r.addToPot();
             System.out.println(r.getPot());
             System.out.println("SAIMOS PRE-FLOP");
 
@@ -123,7 +122,6 @@ public class Dealer implements Runnable{
                 r.updateState();
                 showFlop();
                 handleTableActions();
-                r.addToPot();
                 System.out.println(r.getPot());
                 System.out.println("SAIMOS FLOP");
 
@@ -132,7 +130,6 @@ public class Dealer implements Runnable{
                     r.updateState();
                     showTurn();
                     handleTableActions();
-                    r.addToPot();
                     System.out.println(r.getPot());
                     System.out.println("SAIMOS TURN");
 
@@ -141,7 +138,6 @@ public class Dealer implements Runnable{
                         r.updateState();
                         showRiver();
                         handleTableActions();
-                        r.addToPot();
                         System.out.println(r.getPot());
                         System.out.println("SAIMOS RIVER");
 
@@ -154,8 +150,10 @@ public class Dealer implements Runnable{
                     }
                 }
             }
-            r.getCurrentPlayers().get(0).setMoney(r.getPot());
+            Player winner = r.getCurrentPlayers().get(0);
+            winner.setMoney(winner.getMoney() + r.getPot());
             setNewJoker();
+
         }
         table.setState(Table.tableState.CLOSED);
     }
