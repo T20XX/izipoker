@@ -1,4 +1,4 @@
-package com.izipoker.game.screens;
+package com.izipoker.client.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.izipoker.game.IZIPokerAndroid;
+import com.izipoker.client.IZIPokerClient;
 
 /**
  * Created by Telmo on 03/05/2016.
@@ -79,7 +79,7 @@ public class MainMenuAndroid implements Screen{
         startBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Game g = IZIPokerAndroid.getInstance();
+                Game g = IZIPokerClient.getInstance();
                 g.setScreen(new SearchTablesAndroid());
             }
 

@@ -150,9 +150,10 @@ public abstract class Player extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if(this.isActive()) {
-            batch.draw(TexturesLoad.avatarTex[0][avatarID], super.getX(), super.getY(), super.getWidth(), super.getHeight());
+
             TexturesLoad.font.draw(batch, name, super.getX(), super.getY());
             TexturesLoad.font.draw(batch, money + "", super.getX(), super.getY()-10);
+            batch.draw(TexturesLoad.avatarTex[0][avatarID], super.getX(), super.getY(), super.getWidth(), super.getHeight());
         }
 
     }

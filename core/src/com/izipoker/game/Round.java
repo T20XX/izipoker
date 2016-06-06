@@ -116,7 +116,7 @@ public class Round {
     public void updateState(){
         this.state = roundState.values()[roundState.valueOf(this.state.toString()).ordinal() + 1];
         highestBet = 0;
-        highestPlayer = null;
+        highestPlayer = joker;
         while(currentPlayers.peek() != joker)
         {
             Player player = currentPlayers.removeFirst();

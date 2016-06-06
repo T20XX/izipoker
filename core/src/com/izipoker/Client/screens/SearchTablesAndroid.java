@@ -1,4 +1,4 @@
-package com.izipoker.game.screens;
+package com.izipoker.client.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.izipoker.game.IZIPokerAndroid;
+import com.izipoker.client.IZIPokerClient;
 import com.izipoker.network.ClientConnection;
 import com.izipoker.network.ServerInterface;
 
@@ -65,7 +65,7 @@ public class SearchTablesAndroid implements Screen{
 
         ipTF = new TextField("", skin);
         ipTF.setMessageText("Ex: 127.xxx.xxx.xxx");
-        ipTF.setText("192.168.1.130"); //DEBUGING
+        ipTF.setText("172.30.4.199"); //DEBUGING
         ipTF.setAlignment(Align.center);
         ipTF.setSize(
                 7 * stage.getWidth() / 8,
@@ -131,7 +131,7 @@ public class SearchTablesAndroid implements Screen{
                     }
                 proxyTable = connection.getProxyTable();
                 callHandler = connection.getCallHandler();
-                IZIPokerAndroid.getInstance().setScreen(new CreatePlayerAndroid(proxyTable, callHandler));
+                IZIPokerClient.getInstance().setScreen(new CreatePlayerAndroid(proxyTable, callHandler));
             }
 
             ;
@@ -140,14 +140,14 @@ public class SearchTablesAndroid implements Screen{
         cancelBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                IZIPokerAndroid.getInstance().setScreen(new MainMenuAndroid());
+                IZIPokerClient.getInstance().setScreen(new MainMenuAndroid());
             };
         });
 
         continueDialogBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                IZIPokerAndroid.getInstance().setScreen(new CreatePlayerAndroid(proxyTable, callHandler));            };
+                IZIPokerClient.getInstance().setScreen(new CreatePlayerAndroid(proxyTable, callHandler));            };
         });
     }
 

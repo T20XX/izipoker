@@ -1,4 +1,4 @@
-package com.izipoker.game.screens;
+package com.izipoker.client.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -21,8 +21,8 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.game.Hand;
 import com.izipoker.game.Player;
 import com.izipoker.game.PokerAction;
-import com.izipoker.network.PokerClient;
 import com.izipoker.graphics.TexturesLoad;
+import com.izipoker.network.PokerClient;
 import com.izipoker.network.ServerInterface;
 
 /**

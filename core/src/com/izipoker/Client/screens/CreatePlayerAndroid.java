@@ -1,4 +1,4 @@
-package com.izipoker.game.screens;
+package com.izipoker.client.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -17,10 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.izipoker.game.IZIPokerAndroid;
-import com.izipoker.network.PokerClient;
+import com.izipoker.client.IZIPokerClient;
 import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.network.ClientCallbackInterface;
+import com.izipoker.network.PokerClient;
 import com.izipoker.network.ServerInterface;
 
 import lipermi.handler.CallHandler;
@@ -98,7 +98,7 @@ public class CreatePlayerAndroid implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                /* Human p = new Human(0, nameTF.getText(), 0, avatarTR);
-                Game g = IZIPokerAndroid.getInstance();
+                Game g = IZIPokerClient.getInstance();
                 g.setScreen(new GameAndroid(p));*/
                try {
 
@@ -115,7 +115,7 @@ public class CreatePlayerAndroid implements Screen{
                            System.out.println("Sorry, nickname is already in use.");
                            return;
                        } else {
-                           IZIPokerAndroid.getInstance().setScreen(new GameAndroid(nameTF.getText(), proxyTable, listener));
+                           IZIPokerClient.getInstance().setScreen(new GameAndroid(nameTF.getText(), proxyTable, listener));
                        }
                    }else {
                            Dialog resultDialog = new Dialog("Error", skin);
@@ -135,7 +135,7 @@ public class CreatePlayerAndroid implements Screen{
         cancelBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                IZIPokerAndroid.getInstance().setScreen(new SearchTablesAndroid());
+                IZIPokerClient.getInstance().setScreen(new SearchTablesAndroid());
             };
         });
 
