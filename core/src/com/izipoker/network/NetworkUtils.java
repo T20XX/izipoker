@@ -17,8 +17,9 @@ public class NetworkUtils {
 
     /**
      * Function from report example project available in moodle webpage
-     *
+     * <p/>
      * Parses the IP address in the URL of the client's host.
+     *
      * @param url The URL of the client's host.
      * @return Returns a textual representation of the server's IP address.
      */
@@ -28,13 +29,12 @@ public class NetworkUtils {
         boolean foundNumeric = false;
         char next;
         try {
-            while ((next = (char)sReader.read()) != -1) {
+            while ((next = (char) sReader.read()) != -1) {
                 if (foundNumeric) {
                     if (next == ':')
                         return sBuilder.toString();
                     else sBuilder.append(next);
-                }
-                else if (Character.isDigit(next)) {
+                } else if (Character.isDigit(next)) {
                     foundNumeric = true;
                     sBuilder.append(next);
                 }
@@ -48,19 +48,20 @@ public class NetworkUtils {
 
     /**
      * Function from report example project available in moodle webpage
-     *
+     * <p/>
      * Returns the network address of a valid network interface.
+     *
      * @return Returns the network address of a valid network interface.
      * @throws IOException An exception could be thrown when establishing socket communication.
      */
     public static InetAddress getNetworkAddress() throws IOException {
         Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-        for (NetworkInterface interf: Collections.list(interfaces)) {
+        for (NetworkInterface interf : Collections.list(interfaces)) {
             if (interf.isLoopback() || !interf.isUp())
                 continue;
 
             Enumeration<InetAddress> addresses = interf.getInetAddresses();
-            for (InetAddress address: Collections.list(addresses)) {
+            for (InetAddress address : Collections.list(addresses)) {
                 if (address instanceof Inet6Address || !address.isReachable(3000))
                     continue;
 
@@ -70,12 +71,10 @@ public class NetworkUtils {
                     socket.socket().setSoTimeout(3000);
 
                     socket.connect(new InetSocketAddress("google.com", 80));
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                     continue;
-                }
-                finally {
+                } finally {
                     socket.close();
                 }
 

@@ -26,22 +26,19 @@ public class Table extends Actor implements ServerInterface {
         CLOSED
     }
 
-    private static Texture tableTex = new Texture("table.png");
-
-    private String name;
     private final int MAX_PLAYER;
     private ArrayList<Player> seats;
+    private final int initMoney = 1000; //MUDAR PARA CONSTRUCTOR
+    private final int playingTime = 30; //MUDAR PARA CONSTRUCTOR
+    private String name;
     //private Card[] cardsOnTable;
     private ArrayList<Round> rounds;
     private Dealer dealer;
     private Player joker;
     private int SMALL_BLIND = 30;
-    private final int initMoney = 1000; //MUDAR PARA CONSTRUCTOR
-    private final int playingTime = 30; //MUDAR PARA CONSTRUCTOR
     private tableState state = tableState.LOBBY;
     private ArrayList<String> chatHistory = new ArrayList<String>();
     private Point[] position;
-
     //clients map to players
     private HashMap<String, ClientCallbackInterface> clients = new HashMap<String, ClientCallbackInterface>();
     private HashMap<String, Player> players = new HashMap<String, Player>();
@@ -190,7 +187,7 @@ public class Table extends Actor implements ServerInterface {
         if (clients.containsKey(name))
             return false;
 
-        Player p = new Human(0, name, initMoney,avatarID);
+        Player p = new Human(0, name, initMoney, avatarID);
         if (addPlayer(p)) {
             // tells this user is logged in
             clients.put(name, client);
@@ -212,26 +209,12 @@ public class Table extends Actor implements ServerInterface {
     }
 
     @Override
-    public void tellAll(ClientCallbackInterface client, String message) {
-        //notifyOthers((Player)client, ((Player) client).getName() + " : " + message);
-    }
-
-    @Override
     public void leave(ClientCallbackInterface client) {
         removePlayer((Player) client);
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
     public void sendHand(String name) {
-        //System.out.println(name);
-        //System.out.println(players.get(name).getHand().getCards()[0]);
-        //System.out.println(players.get(name).getHand().getCards()[1]);
-        //(clients.get(name)).notify(players.get(name).getHand().getCards()[1].toString());
         (clients.get(name)).receiveHand(players.get(name).getHand());
     }
 
@@ -241,32 +224,42 @@ public class Table extends Actor implements ServerInterface {
     }
 
     @Override
-    public boolean isLobbyState() {
-        return (state == tableState.LOBBY);
-    }
-
-    @Override
     public void sendPossibleActions(String name, boolean[] possibleActions) {
         (clients.get(name)).receivePossibleActions(possibleActions);
     }
 
-    private void notifyOthers(ClientCallbackInterface client, String message) {
-        /*for (Player p:seats){
-            p.notify(message);
-        }*/
+    @Override
+    public void sendMoney(String name) {
+        (clients.get(name)).receiveMoney(players.get(name).getMoney());
     }
 
-    private void notifyAll(ClientCallbackInterface client, String message) {
-        /*for (Player p:seats){
-            p.notify(message);
-        }*/
+    @Override
+    public void sendPokerAction(String name, PokerAction action) {
+        players.get(name).setLastAction(action);
+        players.get(name).setActed(true);
+    }
+
+
+    /*public String getName() {
+        return name;
+    }*/
+
+    @Override
+    public void sendHighestBet(String name) {
+        (clients.get(name)).receiveHighestBet(getTopRound().getHighestBet());
+    }
+
+    @Override
+    public boolean isLobbyState() {
+        return (state == tableState.LOBBY);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
         batch.setColor(1, 1, 1, 1);
-        batch.draw(tableTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+
+        batch.draw(TexturesLoad.tableTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
         for (int i = 0; i < seats.size(); i++) {
             if (seats.get(i) == null)
                 if (seats.get(i).isActive()) {
@@ -277,6 +270,7 @@ public class Table extends Actor implements ServerInterface {
                         seats.get(i).setPosition(super.getWidth() - i % 4 * super.getWidth() / 3, 0, Align.bottom);
                     }
                         seats.get(i).draw(batch, parentAlpha);
+
                 }
         }
 
@@ -299,19 +293,20 @@ public class Table extends Actor implements ServerInterface {
                 getTopRound().getRiver().setBounds(6 * super.getWidth() / 7, super.getHeight() / 2, 100, 100);
                 getTopRound().getRiver().draw(batch, parentAlpha);
             }
-            TexturesLoad.font.draw(batch, getTopRound().getPot() + "", super.getWidth()/2, super.getHeight()/2);
 
+            TexturesLoad.font.draw(batch, getTopRound().getPot() + "", super.getWidth()/2, super.getHeight()/2);
         }
 
     }
 
-    public ArrayList<String> getChatHistory() {
-        return chatHistory;
+    @Override
+    public String getName() {
+        return name;
     }
 
 
-    public void setState(tableState state) {
-        this.state = state;
+    public ArrayList<String> getChatHistory() {
+        return chatHistory;
     }
 
 
@@ -320,20 +315,8 @@ public class Table extends Actor implements ServerInterface {
     }
 
 
-    @Override
-    public void sendMoney(String name) {
-        (clients.get(name)).receiveMoney(players.get(name).getMoney());
-    }
-
-    @Override
-    public void sendPokerAction(String name, PokerAction action) {
-        players.get(name).setLastAction(action);
-        players.get(name).setActed(true);
-    }
-
-    @Override
-    public void sendHighestBet(String name) {
-        (clients.get(name)).receiveHighestBet(getTopRound().getHighestBet());
+    public void setState(tableState state) {
+        this.state = state;
     }
 
 }

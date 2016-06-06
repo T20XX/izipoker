@@ -8,48 +8,41 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * Singleton class used to store textures and graphics related variables
  */
 public class TexturesLoad {
-    private static TexturesLoad ourInstance = new TexturesLoad();
-
-    /**
-     * Texture of the cards facing down
-     */
-    public static Texture backTex = new Texture("backCard.png");
-
-    private static Texture cardsTex =  new Texture("cards.png");
-
-    /**
-     * 2D Array of 52 cards textures in total
-     */
-    public static TextureRegion frontTex[][] = TextureRegion.split(cardsTex,cardsTex.getWidth()/13, cardsTex.getHeight()/4);;
-
-    /**
-     * Texture with all avatars
-     */
-    private static Texture avatarTotal = new Texture("avatar.jpg");
-
     /**
      * Number of avatars
      */
     public final static int MAX_AVATAR = 7;
-
+    /**
+     * Texture of the cards facing down
+     */
+    public static Texture backTex = new Texture("backCard.png");
+    public static BitmapFont font;
+    public static Texture tableTex = new Texture("table.png");
+    private static TexturesLoad ourInstance = new TexturesLoad();
+    private static Texture cardsTex = new Texture("cards.png");
+    /**
+     * 2D Array of 52 cards textures in total
+     */
+    public static TextureRegion frontTex[][] = TextureRegion.split(cardsTex, cardsTex.getWidth() / 13, cardsTex.getHeight() / 4);
+    /**
+     * Texture with all avatars
+     */
+    private static Texture avatarTotal = new Texture("avatar.jpg");
     /**
      * 2D Array of avatars texture
      * Use like [0][number of avatar]
      */
-    public static TextureRegion avatarTex[][] = TextureRegion.split(avatarTotal,avatarTotal.getWidth()/MAX_AVATAR, avatarTotal.getHeight());
-
-
-    public static BitmapFont font;
+    public static TextureRegion avatarTex[][] = TextureRegion.split(avatarTotal, avatarTotal.getWidth() / MAX_AVATAR, avatarTotal.getHeight());
 
     static {
         font = new BitmapFont();
-        font.setColor(1.0f, 1.0f, 1.0f,1.0f);
+        font.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
+    private TexturesLoad() {
     }
 
     public static TexturesLoad getInstance() {
         return ourInstance;
-    }
-
-    private TexturesLoad() {
     }
 }

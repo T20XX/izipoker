@@ -173,11 +173,11 @@ public class ClientConnection {
 
     }
 
-    public ServerInterface getProxyTable() {
-        return proxyTable;
-    }
-
     public CallHandler getCallHandler() {
         return callHandler;
+    }
+
+    public ServerInterface getProxyTable() {
+        return proxyTable;
     }
 }

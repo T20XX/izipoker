@@ -26,7 +26,7 @@ import com.izipoker.network.ServerInterface;
 import lipermi.handler.CallHandler;
 
 
-public class CreatePlayerAndroid implements Screen{
+public class CreatePlayerAndroid implements Screen {
     private Stage stage;
 
     private Texture backgroundTex;
@@ -42,7 +42,7 @@ public class CreatePlayerAndroid implements Screen{
     private ServerInterface proxyTable;
     private CallHandler callHandler;
 
-    public CreatePlayerAndroid (ServerInterface proxyTable, CallHandler callHandler) {
+    public CreatePlayerAndroid(ServerInterface proxyTable, CallHandler callHandler) {
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         //backgroundText = new Texture
@@ -54,10 +54,10 @@ public class CreatePlayerAndroid implements Screen{
         this.proxyTable = proxyTable;
         this.callHandler = callHandler;
 
-      //  startTexUp = new Texture("startBtnUp.png");
-       // startTexDown = new Texture("startBtnDown.png");
+        //  startTexUp = new Texture("startBtnUp.png");
+        // startTexDown = new Texture("startBtnDown.png");
         //exitTexUp = new Texture("exitBtnUp.png");
-         //exitTexDown = new Texture("exitBtnDown.png");
+        //exitTexDown = new Texture("exitBtnDown.png");
 
         buildStage();
 
@@ -76,7 +76,7 @@ public class CreatePlayerAndroid implements Screen{
 
 
         avatarImg = new Image(avatarTR);
-        avatarImg.setPosition(stage.getWidth()/2, 3*stage.getHeight()/4, Align.center);
+        avatarImg.setPosition(stage.getWidth() / 2, 3 * stage.getHeight() / 4, Align.center);
         stage.addActor(avatarImg);
 
         createBtn = new TextButton("CREATE", skin);
@@ -100,61 +100,60 @@ public class CreatePlayerAndroid implements Screen{
                /* Human p = new Human(0, nameTF.getText(), 0, avatarTR);
                 Game g = IZIPokerClient.getInstance();
                 g.setScreen(new GameAndroid(p));*/
-               try {
+                try {
 
                     System.out.println("Mesa " + proxyTable.getName() + "\n");
 
 
-                   // now do conversation
-                   if(proxyTable.isLobbyState()) {
-                    // create and expose remote listener
-                    PokerClient listener = new PokerClient(nameTF.getText(), avatarID);
-                    callHandler.exportObject(ClientCallbackInterface.class, listener);
+                    // now do conversation
+                    if (proxyTable.isLobbyState()) {
+                        // create and expose remote listener
+                        PokerClient listener = new PokerClient(nameTF.getText(), avatarID);
+                        callHandler.exportObject(ClientCallbackInterface.class, listener);
 
-                       if (!proxyTable.join(nameTF.getText(), avatarID, listener)) {
-                           System.out.println("Sorry, nickname is already in use.");
-                           return;
-                       } else {
-                           IZIPokerClient.getInstance().setScreen(new GameAndroid(nameTF.getText(), proxyTable, listener));
-                       }
-                   }else {
-                           Dialog resultDialog = new Dialog("Error", skin);
-                           resultDialog.text("Game has already started");
-                           resultDialog.button("BACK");
-                           resultDialog.show(stage);
-                       }
+                        if (!proxyTable.join(nameTF.getText(), avatarID, listener)) {
+                            System.out.println("Sorry, nickname is already in use.");
+                            return;
+                        } else {
+                            IZIPokerClient.getInstance().setScreen(new GameAndroid(nameTF.getText(), proxyTable, listener));
+                        }
+                    } else {
+                        Dialog resultDialog = new Dialog("Error", skin);
+                        resultDialog.text("Game has already started");
+                        resultDialog.button("BACK");
+                        resultDialog.show(stage);
+                    }
                 } catch (Exception e) {
                     System.err.println("Client exception: " + e.toString());
                     e.printStackTrace();
                 }
             }
 
-            ;
         });
 
         cancelBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 IZIPokerClient.getInstance().setScreen(new SearchTablesAndroid());
-            };
+            }
         });
 
         avatarImg.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 avatarID++;
-                if(avatarID >= TexturesLoad.MAX_AVATAR)
+                if (avatarID >= TexturesLoad.MAX_AVATAR)
                     avatarID = 0;
                 System.out.println(avatarID);
                 avatarTR.setRegion(TexturesLoad.avatarTex[0][avatarID]);
-            };
+            }
         });
 
     }
 
     public void create() {
         //stage = new Stage(new ScreenViewport());
-        stage = new Stage( new StretchViewport(200.0f, 400.0f, new OrthographicCamera()));
+        stage = new Stage(new StretchViewport(200.0f, 400.0f, new OrthographicCamera()));
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -177,22 +176,25 @@ public class CreatePlayerAndroid implements Screen{
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
     public void dispose() {
         stage.dispose();
         backgroundTex.dispose();
 
-       // startTexUp.dispose();
+        // startTexUp.dispose();
         //startTexDown.dispose();
-         //exitTexUp.dispose();
-          //exitTexDown.dispose();
+        //exitTexUp.dispose();
+        //exitTexDown.dispose();
     }
 }

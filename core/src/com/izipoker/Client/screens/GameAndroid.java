@@ -28,7 +28,7 @@ import com.izipoker.network.ServerInterface;
 /**
  * Created by Telmo on 03/05/2016.
  */
-public class GameAndroid implements Screen{
+public class GameAndroid implements Screen {
     private Stage stage;
 
     private TextButton foldBtn, callBtn, raiseBtn, checkBtn;
@@ -45,7 +45,7 @@ public class GameAndroid implements Screen{
     private PokerClient listener;
     private String name;
 
-    public GameAndroid (String name, ServerInterface proxyTable, PokerClient listener) {
+    public GameAndroid(String name, ServerInterface proxyTable, PokerClient listener) {
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         //backgroundText = new Texture
@@ -54,7 +54,7 @@ public class GameAndroid implements Screen{
         this.name = name;
         this.proxyTable = proxyTable;
         this.listener = listener;
-       // player = p;
+        // player = p;
         //p.setHand(new Hand(new Card(Card.rankType.ACE, Card.suitType.CLUBS), new Card(Card.rankType.TWO, Card.suitType.SPADES)));
 
         //  startTexUp = new Texture("startBtnUp.png");
@@ -75,77 +75,77 @@ public class GameAndroid implements Screen{
 
 
         avatarImg = new Image(TexturesLoad.avatarTex[0][listener.getAvatarID()]);
-        avatarImg.setSize(stage.getWidth()/3, stage.getHeight()/4);
-        avatarImg.setPosition(0, stage.getHeight(),Align.topLeft);
+        avatarImg.setSize(stage.getWidth() / 3, stage.getHeight() / 4);
+        avatarImg.setPosition(0, stage.getHeight(), Align.topLeft);
         stage.addActor(avatarImg);
-        amountLbl = new Label(Integer.toString(listener.getMoney()),skin);
-        amountLbl.setWidth(stage.getWidth()/2);
+        amountLbl = new Label(Integer.toString(listener.getMoney()), skin);
+        amountLbl.setWidth(stage.getWidth() / 2);
         amountLbl.setPosition(stage.getWidth(), stage.getHeight() - amountLbl.getHeight(), Align.center);
         stage.addActor(amountLbl);
 
         nameLbl = new Label("TESTA", skin);
-        nameLbl.setWidth(stage.getWidth()/2);
-        nameLbl.setPosition(stage.getWidth()/2+nameLbl.getHeight(), stage.getHeight() - nameLbl.getHeight(), Align.center);
+        nameLbl.setWidth(stage.getWidth() / 2);
+        nameLbl.setPosition(stage.getWidth() / 2 + nameLbl.getHeight(), stage.getHeight() - nameLbl.getHeight(), Align.center);
         stage.addActor(nameLbl);
 
-        chatTF = new TextField("",skin);
+        chatTF = new TextField("", skin);
         chatTF.setMessageText("Chat ...");
-        chatTF.setWidth(3*stage.getWidth()/4);
-        chatTF.setPosition(0, stage.getHeight()/2, Align.left);
+        chatTF.setWidth(3 * stage.getWidth() / 4);
+        chatTF.setPosition(0, stage.getHeight() / 2, Align.left);
         stage.addActor(chatTF);
 
-        sendBtn = new TextButton("SEND",skin);
-        sendBtn.setWidth(stage.getWidth()/4);
+        sendBtn = new TextButton("SEND", skin);
+        sendBtn.setWidth(stage.getWidth() / 4);
         sendBtn.setHeight(chatTF.getHeight());
-        sendBtn.setPosition(stage.getWidth(), stage.getHeight()/2, Align.right);
+        sendBtn.setPosition(stage.getWidth(), stage.getHeight() / 2, Align.right);
         stage.addActor(sendBtn);
 
-        betSlider = new Slider(listener.getHighestBet(),listener.getMoney(), 10, true, skin);
-        betSlider.setWidth(stage.getWidth()/6);
-        betSlider.setHeight(stage.getHeight()/3);
-        betSlider.setPosition(stage.getWidth()- betSlider.getWidth()/2, stage.getHeight()/6, Align.center);
+        betSlider = new Slider(listener.getHighestBet(), listener.getMoney(), 10, true, skin);
+        betSlider.setWidth(stage.getWidth() / 6);
+        betSlider.setHeight(stage.getHeight() / 3);
+        betSlider.setPosition(stage.getWidth() - betSlider.getWidth() / 2, stage.getHeight() / 6, Align.center);
         stage.addActor(betSlider);
 
         foldBtn = new TextButton("FOLD", skin);
-        foldBtn.setWidth(stage.getWidth()/3);
-        foldBtn.setPosition( stage.getWidth() / 4, stage.getHeight()/4 - 2*foldBtn.getHeight() , Align.center);
+        foldBtn.setWidth(stage.getWidth() / 3);
+        foldBtn.setPosition(stage.getWidth() / 4, stage.getHeight() / 4 - 2 * foldBtn.getHeight(), Align.center);
         stage.addActor(foldBtn);
 
         callBtn = new TextButton("CALL", skin);
-        callBtn.setWidth(stage.getWidth()/3);
-        callBtn.setPosition(stage.getWidth() / 4, stage.getHeight()/4 + (2)*callBtn.getHeight() , Align.center);
+        callBtn.setWidth(stage.getWidth() / 3);
+        callBtn.setPosition(stage.getWidth() / 4, stage.getHeight() / 4 + (2) * callBtn.getHeight(), Align.center);
         stage.addActor(callBtn);
 
         checkBtn = new TextButton("CHECK", skin);
-        checkBtn.setWidth(stage.getWidth()/3);
-        checkBtn.setPosition(stage.getWidth() / 4, stage.getHeight()/4 , Align.center);
+        checkBtn.setWidth(stage.getWidth() / 3);
+        checkBtn.setPosition(stage.getWidth() / 4, stage.getHeight() / 4, Align.center);
         stage.addActor(checkBtn);
 
 
         raiseBtn = new TextButton("RAISE", skin);
-        raiseBtn.setWidth(stage.getWidth()/3);
-        raiseBtn.setPosition(3* stage.getWidth() / 5, stage.getHeight()/4 + 2*raiseBtn.getHeight() , Align.center);
+        raiseBtn.setWidth(stage.getWidth() / 3);
+        raiseBtn.setPosition(3 * stage.getWidth() / 5, stage.getHeight() / 4 + 2 * raiseBtn.getHeight(), Align.center);
         stage.addActor(raiseBtn);
 
         betTF = new TextField("69", skin);
-        betTF.setWidth(stage.getWidth()/6);
-        betTF.setPosition(7* stage.getWidth() / 8, stage.getHeight()/4 + 2*raiseBtn.getHeight() , Align.center);
+        betTF.setWidth(stage.getWidth() / 6);
+        betTF.setPosition(7 * stage.getWidth() / 8, stage.getHeight() / 4 + 2 * raiseBtn.getHeight(), Align.center);
         stage.addActor(betTF);
 
 
         halfPot = new TextButton("1/2", skin);
-        halfPot.setWidth(stage.getWidth()/6);
-        halfPot.setPosition(7* stage.getWidth() / 10, stage.getHeight()/4 + halfPot.getHeight()/2 , Align.center);
+        halfPot.setWidth(stage.getWidth() / 6);
+        halfPot.setPosition(7 * stage.getWidth() / 10, stage.getHeight() / 4 + halfPot.getHeight() / 2, Align.center);
         stage.addActor(halfPot);
 
         maxPot = new TextButton("POT", skin);
-        maxPot.setWidth(stage.getWidth()/6);
-        maxPot.setPosition(7* stage.getWidth() / 10, halfPot.getY() - halfPot.getHeight() , Align.center);
+        maxPot.setWidth(stage.getWidth() / 6);
+        maxPot.setPosition(7 * stage.getWidth() / 10, halfPot.getY() - halfPot.getHeight(), Align.center);
         stage.addActor(maxPot);
 
         allIn = new TextButton("MAX", skin);
-        allIn.setWidth(stage.getWidth()/6);
-        allIn.setPosition(7* stage.getWidth() / 10,maxPot.getY() - maxPot.getHeight() , Align.center);
+        allIn.setWidth(stage.getWidth() / 6);
+        allIn.setPosition(7 * stage.getWidth() / 10, maxPot.getY() - maxPot.getHeight(), Align.center);
         stage.addActor(allIn);
 
        /* c_1 = player.getHand().getCards()[0];
@@ -174,7 +174,7 @@ public class GameAndroid implements Screen{
                 proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.FOLD));
                 disableActionButtons();
                 listener.resetPossibleActions();
-            };
+            }
         });
 
         callBtn.addListener(new ClickListener() {
@@ -185,7 +185,6 @@ public class GameAndroid implements Screen{
                 listener.resetPossibleActions();
             }
 
-            ;
         });
 
         raiseBtn.addListener(new ClickListener() {
@@ -197,7 +196,6 @@ public class GameAndroid implements Screen{
 
             }
 
-            ;
         });
         checkBtn.addListener(new ClickListener() {
             @Override
@@ -207,7 +205,6 @@ public class GameAndroid implements Screen{
                 listener.resetPossibleActions();
             }
 
-            ;
         });
 
         sendBtn.addListener(new ClickListener() {
@@ -215,13 +212,13 @@ public class GameAndroid implements Screen{
             public void clicked(InputEvent event, float x, float y) {
                 proxyTable.tell(name, chatTF.getText());
                 chatTF.setText("");
-            };
+            }
         });
 
         betSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                betTF.setText(String.valueOf((int)betSlider.getValue()));
+                betTF.setText(String.valueOf((int) betSlider.getValue()));
             }
         });
         betTF.addListener(new ChangeListener() {
@@ -229,7 +226,7 @@ public class GameAndroid implements Screen{
             public void changed(ChangeEvent event, Actor actor) {
                 try {
                     betSlider.setValue(Integer.valueOf(betTF.getText()));
-                } catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -239,7 +236,7 @@ public class GameAndroid implements Screen{
 
     public void create() {
         //stage = new Stage(new ScreenViewport());
-        stage = new Stage( new StretchViewport(200.0f, 400.0f, new OrthographicCamera()));
+        stage = new Stage(new StretchViewport(200.0f, 400.0f, new OrthographicCamera()));
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -252,7 +249,7 @@ public class GameAndroid implements Screen{
         Gdx.gl.glClearColor(0, 0.5f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(listener.isChanged()){
+        if (listener.isChanged()) {
             updateChanges();
 
         }
@@ -267,20 +264,23 @@ public class GameAndroid implements Screen{
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
     public void dispose() {
         stage.dispose();
     }
 
-    public void disableActionButtons(){
+    public void disableActionButtons() {
         foldBtn.setVisible(false);
         checkBtn.setVisible(false);
         callBtn.setVisible(false);
@@ -292,25 +292,25 @@ public class GameAndroid implements Screen{
         allIn.setVisible(false);
     }
 
-    public void updateChanges(){
+    public void updateChanges() {
 
-            if(listener.getHand() != null){
-                if(hand != listener.getHand()) {
-                    if(hand != null) {
-                        hand.getCards()[0].remove();
-                        hand.getCards()[1].remove();
-                    }
-                    try {
-                        hand = listener.getHand();
-                        hand.getCards()[0].setBounds(stage.getWidth() / 4, stage.getHeight() - stage.getHeight() / 3, stage.getWidth() / 4, stage.getHeight() / 5);
-                        stage.addActor(hand.getCards()[0]);
-                        hand.getCards()[1].setBounds(stage.getWidth() / 2, stage.getHeight() - stage.getHeight() / 3, stage.getWidth() / 4, stage.getHeight() / 5);
-                        stage.addActor(hand.getCards()[1]);
-                    } catch (Exception e) {
+        if (listener.getHand() != null) {
+            if (hand != listener.getHand()) {
+                if (hand != null) {
+                    hand.getCards()[0].remove();
+                    hand.getCards()[1].remove();
+                }
+                try {
+                    hand = listener.getHand();
+                    hand.getCards()[0].setBounds(stage.getWidth() / 4, stage.getHeight() - stage.getHeight() / 3, stage.getWidth() / 4, stage.getHeight() / 5);
+                    stage.addActor(hand.getCards()[0]);
+                    hand.getCards()[1].setBounds(stage.getWidth() / 2, stage.getHeight() - stage.getHeight() / 3, stage.getWidth() / 4, stage.getHeight() / 5);
+                    stage.addActor(hand.getCards()[1]);
+                } catch (Exception e) {
 
-                    }
                 }
             }
+        }
         //Actions Buttons update
         foldBtn.setVisible(listener.getPossibleActions()[0]);
         checkBtn.setVisible(listener.getPossibleActions()[1]);
@@ -318,7 +318,7 @@ public class GameAndroid implements Screen{
         raiseBtn.setVisible(listener.getPossibleActions()[3]);
         betTF.setVisible(listener.getPossibleActions()[3]);
         betSlider.setVisible(listener.getPossibleActions()[3]);
-        betSlider.setRange(listener.getHighestBet(),listener.getMoney());
+        betSlider.setRange(listener.getHighestBet(), listener.getMoney());
         halfPot.setVisible(listener.getPossibleActions()[3]);
         maxPot.setVisible(listener.getPossibleActions()[3]);
         allIn.setVisible(listener.getPossibleActions()[3]);

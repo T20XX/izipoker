@@ -147,7 +147,6 @@ public class CreateTableDesktop implements Screen{
                 }
             }
 
-            ;
         });
 
         tableSizeSlider.addListener(new ChangeListener() {

@@ -16,25 +16,25 @@ public class Deck {
     /**
      * Creates a deck with 52 cards, 13 from each suit
      */
-    public Deck(){
+    public Deck() {
         //intializes with 52 cards
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < 13; j++){
-                cards[i*13 + j] = new Card(j+1, Card.suitType.values()[i]);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 13; j++) {
+                cards[i * 13 + j] = new Card(j + 1, Card.suitType.values()[i]);
             }
         }
     }
 
     /**
      * Shuffles the deck by placing cards randomly in the stack
+     *
      * @param n Number of deck shuffling (simulating real life shuffling)
      */
-    public void shuffle(int n){
+    public void shuffle(int n) {
         resetDeck();
-        for (int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             Random rnd = new Random();
-            for (int j = cards.length - 1; j > 0; j--)
-            {
+            for (int j = cards.length - 1; j > 0; j--) {
                 int index = rnd.nextInt(j + 1);
                 // Simple swap
                 Card tmp = cards[index];
@@ -42,6 +42,27 @@ public class Deck {
                 cards[j] = tmp;
             }
         }
+    }
+
+    public void resetDeck() {
+        for (int i = 0; i < index; i++) {
+            this.cards[i].setFlipped(false);
+        }
+        index = 0;
+    }
+
+    /**
+     * Used for debugging purposes
+     *
+     * @return A string with all 52 cards, one per line
+     */
+    @Override
+    public String toString() {
+        String tmp = new String();
+        for (int i = 0; i < cards.length; i++) {
+            tmp += cards[i] + "\n";
+        }
+        return tmp;
     }
 
     /**
@@ -53,6 +74,7 @@ public class Deck {
 
     /**
      * Get the card on the top of the deck
+     *
      * @return Card on top of the deck
      */
     public Card getTopCard() {
@@ -62,26 +84,5 @@ public class Deck {
         } else {
             return null;
         }
-    }
-
-    public void resetDeck() {
-        for (int i = 0; i < index; i++)
-        {
-            this.cards[i].setFlipped(false);
-        }
-        index = 0;
-    }
-
-    /**
-     * Used for debugging purposes
-     * @return A string with all 52 cards, one per line
-     */
-    @Override
-    public String toString(){
-        String tmp = new String();
-        for (int i = 0; i < cards.length; i++) {
-            tmp += cards[i] + "\n";
-        }
-        return tmp;
     }
 }

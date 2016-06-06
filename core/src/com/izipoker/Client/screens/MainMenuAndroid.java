@@ -21,7 +21,7 @@ import com.izipoker.client.IZIPokerClient;
 /**
  * Created by Telmo on 03/05/2016.
  */
-public class MainMenuAndroid implements Screen{
+public class MainMenuAndroid implements Screen {
     private Stage stage;
     private Skin skin;
 
@@ -32,7 +32,7 @@ public class MainMenuAndroid implements Screen{
     private TextButton startBtn;
     private TextButton exitBtn;
 
-    public MainMenuAndroid () {
+    public MainMenuAndroid() {
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
         skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
@@ -64,7 +64,7 @@ public class MainMenuAndroid implements Screen{
         startBtn.setSize(
                 7 * stage.getWidth() / 8,
                 stage.getHeight() / 8);
-        startBtn.setPosition( stage.getWidth() / 2, 3 * stage.getHeight() /6, Align.center);
+        startBtn.setPosition(stage.getWidth() / 2, 3 * stage.getHeight() / 6, Align.center);
         stage.addActor(startBtn);
 
         exitBtn = new TextButton("EXIT", skin);
@@ -83,21 +83,20 @@ public class MainMenuAndroid implements Screen{
                 g.setScreen(new SearchTablesAndroid());
             }
 
-            ;
         });
 
         exitBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.exit();
-            };
+            }
         });
 
     }
 
     public void create() {
-       //stage = new Stage(new ScreenViewport());
-        stage = new Stage( new StretchViewport(200.0f, 400.0f, new OrthographicCamera()));
+        //stage = new Stage(new ScreenViewport());
+        stage = new Stage(new StretchViewport(200.0f, 400.0f, new OrthographicCamera()));
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -116,21 +115,24 @@ public class MainMenuAndroid implements Screen{
 
     @Override
     public void resize(int width, int height) {
-       stage.getViewport().update(width, height);
+        stage.getViewport().update(width, height);
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
     public void dispose() {
-    stage.dispose();
+        stage.dispose();
         backgroundTex.dispose();
     }
 }
