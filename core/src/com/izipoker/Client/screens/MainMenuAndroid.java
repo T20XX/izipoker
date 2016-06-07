@@ -5,64 +5,51 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.client.IZIPokerClient;
+import com.izipoker.graphics.TexturesLoad;
 
-/**
- * Created by Telmo on 03/05/2016.
- */
+
 public class MainMenuAndroid implements Screen {
     private Stage stage;
-    private Skin skin;
-
-
-    private Texture backgroundTex;
 
     private Label title;
     private TextButton startBtn;
     private TextButton exitBtn;
 
     public MainMenuAndroid() {
-        //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
-        skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
 
-        //backgroundText = new Texture
-
-        backgroundTex = new Texture("background.png");
 
         buildStage();
     }
 
     public void buildStage() {
         //Actors
-        Image tmp1 = new Image(backgroundTex);
+        Image tmp1 = new Image(TexturesLoad.backgroundTex);
         tmp1.setSize(stage.getWidth() * 2, stage.getHeight());
         tmp1.setPosition(0, 0);
         stage.addActor(tmp1);
 
-        title = new Label("IZI POKER", skin);
+        title = new Label("IZI POKER", TexturesLoad.skin);
         title.setPosition(stage.getWidth() / 2, 5 * stage.getHeight() / 6, Align.center);
         stage.addActor(title);
 
-        startBtn = new TextButton("START", skin);
+        startBtn = new TextButton("START", TexturesLoad.skin);
         startBtn.setSize(
                 7 * stage.getWidth() / 8,
                 stage.getHeight() / 8);
         startBtn.setPosition(stage.getWidth() / 2, 3 * stage.getHeight() / 6, Align.center);
         stage.addActor(startBtn);
 
-        exitBtn = new TextButton("EXIT", skin);
+        exitBtn = new TextButton("EXIT", TexturesLoad.skin);
         exitBtn.setSize(
                 7 * stage.getWidth() / 8,
                 stage.getHeight() / 8);
@@ -128,6 +115,5 @@ public class MainMenuAndroid implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        backgroundTex.dispose();
     }
 }

@@ -91,6 +91,10 @@ public class CreatePlayerAndroid implements Screen {
                         callHandler.exportObject(ClientCallbackInterface.class, listener);
 
                         if (!proxyTable.join(nameTF.getText(), avatarID, listener)) {
+                            Dialog resultDialog = new Dialog("Error", TexturesLoad.skin);
+                            resultDialog.text("Nickname is already in use\nOr table is full");
+                            resultDialog.button("BACK");
+                            resultDialog.show(stage);
                             System.out.println("Sorry, nickname is already in use.");
                             return;
                         } else {

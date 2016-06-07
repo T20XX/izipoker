@@ -4,19 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.client.IZIPokerClient;
+import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.network.ClientConnection;
 import com.izipoker.network.ServerInterface;
 
@@ -25,28 +23,20 @@ import lipermi.handler.CallHandler;
 
 public class SearchTablesAndroid implements Screen {
     private Stage stage;
-    private Skin skin;
-
-
-    private Texture backgroundTex;
 
     private TextField ipTF;
     private TextButton searchTableBtn;
     private TextButton cancelBtn;
 
-    private Dialog resultDialog;
     private TextButton continueDialogBtn;
-    private TextButton cancelDialogBtn;
 
     private ServerInterface proxyTable;
     private CallHandler callHandler;
-    private ClientConnection connection;
+    private Dialog resultDialog;
 
     public SearchTablesAndroid() {
         create();
-        skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
 
-        backgroundTex = new Texture("background.png");
         proxyTable = null;
         callHandler = null;
 
@@ -56,14 +46,14 @@ public class SearchTablesAndroid implements Screen {
 
     public void buildStage() {
         //Actors
-        Image tmp1 = new Image(backgroundTex);
+        Image tmp1 = new Image(TexturesLoad.backgroundTex);
         tmp1.setSize(stage.getWidth() * 2, stage.getHeight());
         tmp1.setPosition(0, 0);
         stage.addActor(tmp1);
 
-        ipTF = new TextField("", skin);
-        ipTF.setMessageText("Ex: 127.xxx.xxx.xxx");
-        ipTF.setText("172.30.4.199"); //DEBUGING
+        ipTF = new TextField("", TexturesLoad.skin);
+        ipTF.setMessageText("IP(faster) EMPTY(slower)");
+        //ipTF.setText("172.30.4.199"); //DEBUGING
         ipTF.setAlignment(Align.center);
         ipTF.setSize(
                 7 * stage.getWidth() / 8,
@@ -71,12 +61,12 @@ public class SearchTablesAndroid implements Screen {
         ipTF.setPosition(stage.getWidth() / 2, 5 * stage.getHeight() / 6, Align.center);
         stage.addActor(ipTF);
 
-        searchTableBtn = new TextButton("SEARCH TABLE", skin);
+        searchTableBtn = new TextButton("SEARCH TABLE", TexturesLoad.skin);
         searchTableBtn.setSize(ipTF.getWidth(), ipTF.getHeight());
         searchTableBtn.setPosition(stage.getWidth() / 2, 3 * stage.getHeight() / 6, Align.center);
         stage.addActor(searchTableBtn);
 
-        cancelBtn = new TextButton("CANCEL", skin);
+        cancelBtn = new TextButton("CANCEL", TexturesLoad.skin);
         cancelBtn.setSize(ipTF.getWidth(), ipTF.getHeight());
         cancelBtn.setPosition(
                 stage.getWidth() / 2,
@@ -85,7 +75,7 @@ public class SearchTablesAndroid implements Screen {
         stage.addActor(cancelBtn);
 
         //Dialog
-        continueDialogBtn = new TextButton("CONTINUE", skin);
+        continueDialogBtn = new TextButton("CONTINUE", TexturesLoad.skin);
 
 
         //Listeners
@@ -103,7 +93,18 @@ public class SearchTablesAndroid implements Screen {
                 }
                 proxyTable = connection.getProxyTable();
                 callHandler = connection.getCallHandler();
-                IZIPokerClient.getInstance().setScreen(new CreatePlayerAndroid(proxyTable, callHandler));
+                if (proxyTable != null) {
+                    resultDialog = new Dialog("Table Found", TexturesLoad.skin);
+                    resultDialog.text(proxyTable.getName());
+                    resultDialog.button(continueDialogBtn);
+                    resultDialog.button("CANCEL");
+                    resultDialog.show(stage);
+                } else {
+                    resultDialog = new Dialog("Error", TexturesLoad.skin);
+                    resultDialog.text("Connection failed");
+                    resultDialog.button("BACK");
+                    resultDialog.show(stage);
+                }
             }
 
         });
@@ -161,6 +162,5 @@ public class SearchTablesAndroid implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        backgroundTex.dispose();
     }
 }

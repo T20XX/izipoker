@@ -44,8 +44,8 @@ public class GameDesktop implements Screen{
         chat = new TextArea("CHAT\n", TexturesLoad.skin);
         chatSP = new ScrollPane(chat);
         chat.setPrefRows(chat.getLines());
-        chatSP.setSize(stage.getWidth() / 4, stage.getHeight() / 3);
-        chatSP.setPosition(0, 0, Align.bottomLeft);
+        chatSP.setSize(stage.getWidth() / 6, stage.getHeight() / 3);
+        chatSP.setPosition(0, stage.getHeight()/2, Align.left);
         chatSP.layout();
         stage.addActor(chatSP);
 
@@ -73,7 +73,6 @@ public class GameDesktop implements Screen{
                 chat.appendText(table.getChatHistory().get(i) + "\n");
             }
             lastChatSize = table.getChatHistory().size();
-            System.out.println(chat.getLines());
             chat.setPrefRows(chat.getLines());
             chat.moveCursorLine(chat.getLines());
             chatSP.layout();
