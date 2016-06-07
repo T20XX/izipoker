@@ -32,6 +32,8 @@ public class Round {
     private int highestBet;
     private Player highestPlayer;
     private Player joker;
+    private Player smallBlinder;
+    private Player bigBlinder;
 
     public Round(Player[] players, Player p) {
         this.pot = 0;
@@ -56,6 +58,8 @@ public class Round {
         for (int i = 0; i < currentPlayers.size(); i++) {
             bets.put(currentPlayers.get(i), 0);
         }
+        smallBlinder = joker;
+        bigBlinder = currentPlayers.get(1);
     }
 
     public boolean addCall(Player p) {
@@ -169,5 +173,16 @@ public class Round {
 
     public void setTurn(Card turn) {
         this.turn = turn;
+    }
+    public Map<Player,Integer> getBets() {
+        return bets;
+    }
+
+
+    public Player getSmallBlinder(){
+        return smallBlinder;
+    }
+    public Player getBigBlinder(){
+        return bigBlinder;
     }
 }

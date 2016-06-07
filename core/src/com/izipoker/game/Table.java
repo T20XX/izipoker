@@ -212,39 +212,56 @@ public class Table extends Actor implements ServerInterface {
         for (int i = 0; i < seats.size(); i++) {
             //if (seats.get(i) != null) {
                 if (seats.get(i).isActive()) {
-                    seats.get(i).setSize(super.getWidth() / 8, super.getHeight() / 4);
+                    seats.get(i).setSize(super.getWidth() / 8, super.getHeight() / 6);
                     if (i < 4) {
-                        seats.get(i).setPosition(i * (super.getWidth() / 3), super.getHeight(), Align.top);
+                        seats.get(i).setPosition((i+1) * (super.getWidth() / 5), super.getHeight(), Align.top);
+                        if(!rounds.isEmpty()) {
+                            TexturesLoad.font.draw(batch, getTopRound().getBets().get(seats.get(i)) + "", (i+1) * (super.getWidth() / 5), 13 * super.getHeight() / 16);
+                            if(seats.get(i) == getTopRound().getSmallBlinder())
+                                TexturesLoad.font.draw(batch, "SB",(i+1) * (super.getWidth() / 5), 6 * super.getHeight() / 8);
+                            if(seats.get(i) == getTopRound().getBigBlinder())
+                                TexturesLoad.font.draw(batch, "BB", (i+1) * (super.getWidth() / 5), 6 * super.getHeight() / 8);
+                        }
                     } else if (i >= 4) {
-                        seats.get(i).setPosition(super.getWidth() - i % 4 * super.getWidth() / 3, 0, Align.bottom);
+                        seats.get(i).setPosition(super.getWidth() - ((i % 4)+1) *   super.getWidth() / 5, 0, Align.bottom);
+                        if(!rounds.isEmpty()) {
+                            TexturesLoad.font.draw(batch, getTopRound().getBets().get(seats.get(i)) + "", super.getWidth() - ((i % 4)+1) *   super.getWidth() / 5, 5 * super.getHeight() / 16);
+                            if(seats.get(i) == getTopRound().getSmallBlinder())
+                                TexturesLoad.font.draw(batch, "SB", super.getWidth() - ((i % 4)+1) *   super.getWidth() / 5, 2 * super.getHeight() / 8);
+                            if(seats.get(i) == getTopRound().getBigBlinder())
+                                TexturesLoad.font.draw(batch, "BB", super.getWidth() - ((i % 4)+1) *   super.getWidth() / 5, 2 * super.getHeight() / 8);
+                        }
                     }
                     seats.get(i).draw(batch, parentAlpha);
-
                 }
             //}
         }
 
         if (!rounds.isEmpty()) {
             if (getTopRound().getFlop() != null) {
-                getTopRound().getFlop()[0].setBounds(2 * super.getWidth() / 7, super.getHeight() / 2, 100, 100);
+                getTopRound().getFlop()[0].setSize(super.getWidth()/10, super.getHeight()/6);
+                getTopRound().getFlop()[0].setPosition(2*super.getWidth()/8, super.getHeight() / 2, Align.center);
                 getTopRound().getFlop()[0].draw(batch, parentAlpha);
-                getTopRound().getFlop()[1].setBounds(3 * super.getWidth() / 7, super.getHeight() / 2, 100, 100);
+                getTopRound().getFlop()[1].setSize(super.getWidth()/10, super.getHeight()/6);
+                getTopRound().getFlop()[1].setPosition(3*super.getWidth()/8, super.getHeight() / 2, Align.center);
                 getTopRound().getFlop()[1].draw(batch, parentAlpha);
-                getTopRound().getFlop()[2].setBounds(4 * super.getWidth() / 7, super.getHeight() / 2, 100, 100);
+                getTopRound().getFlop()[2].setSize(super.getWidth()/10, super.getHeight()/6);
+                getTopRound().getFlop()[2].setPosition(4*super.getWidth()/8, super.getHeight() / 2, Align.center);
                 getTopRound().getFlop()[2].draw(batch, parentAlpha);
             }
 
             if (getTopRound().getTurn() != null) {
-                getTopRound().getTurn().setBounds(5 * super.getWidth() / 7, super.getHeight() / 2, 100, 100);
+                getTopRound().getTurn().setSize(super.getWidth()/10, super.getHeight()/6);
+                getTopRound().getTurn().setPosition(5*super.getWidth()/8, super.getHeight() / 2, Align.center);
                 getTopRound().getTurn().draw(batch, parentAlpha);
             }
 
             if (getTopRound().getRiver() != null) {
-                getTopRound().getRiver().setBounds(6 * super.getWidth() / 7, super.getHeight() / 2, 100, 100);
+                getTopRound().getRiver().setSize(super.getWidth()/10, super.getHeight()/6);
+                getTopRound().getRiver().setPosition(6*super.getWidth()/8, super.getHeight() / 2, Align.center);
                 getTopRound().getRiver().draw(batch, parentAlpha);
             }
 
-            TexturesLoad.font.draw(batch, getTopRound().getPot() + "", super.getWidth() / 2, super.getHeight() / 2);
         }
 
     }
