@@ -1,7 +1,7 @@
 package com.izipoker.game;
 
 /**
- * Created by Telmo on 26/04/2016.
+ * Represents a non human controlled player in poker (NOT USED)
  */
 public class Bot extends Player {
     /**

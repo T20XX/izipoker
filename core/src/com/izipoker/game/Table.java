@@ -168,7 +168,7 @@ public class Table extends Actor implements ServerInterface {
 
         batch.setColor(1, 1, 1, 1);
 
-        batch.draw(TexturesLoad.tableTex, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+        batch.draw(TexturesLoad.tableTex, super.getX() + super.getWidth()/ 24, super.getY()+ super.getHeight()/16, 22*super.getWidth()/ 24, 14*super.getHeight()/16);
         for (int i = 0; i < seats.size(); i++) {
             //if (seats.get(i) != null) {
                 if (seats.get(i).isActive()) {
@@ -206,10 +206,9 @@ public class Table extends Actor implements ServerInterface {
                        }
                         if (seats.get(i) == getTopRound().getCurrentPlayers().peek()) {
                             batch.end();
-                            ShapeRenderer shape = new ShapeRenderer();
-                            shape.begin(ShapeRenderer.ShapeType.Line);
-                            shape.rect(seats.get(i).getX(), seats.get(i).getY(), seats.get(i).getWidth(), seats.get(i).getHeight());
-                            shape.end();
+                            TexturesLoad.selectRectangle.begin(ShapeRenderer.ShapeType.Line);
+                            TexturesLoad.selectRectangle.rect(seats.get(i).getX(), seats.get(i).getY(), seats.get(i).getWidth(), seats.get(i).getHeight());
+                            TexturesLoad.selectRectangle.end();
                             batch.begin();
                         }
                     }

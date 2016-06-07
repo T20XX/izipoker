@@ -3,30 +3,67 @@ package com.izipoker.game;
 import com.izipoker.cardGame.Card;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import javafx.util.Pair;
 
-
+/**
+ * Represents a hand in a poker game (2 cards)
+ */
 public class Hand implements Serializable {
 
+    /**
+     * Represents the possible ranks of a hand in the final of a round
+     */
     public enum handRank {
+        /**
+         * Highest card
+         */
         HIGH_CARD,
+        /**
+         * Two cards of the same rank
+         */
         PAIR,
+        /**
+         * Two Pairs
+         */
         TWO_PAIR,
+        /**
+         * Three cards of the same rank
+         */
         THREE_OF_A_KIND,
+        /**
+         * Five cards of sequential rank and different suit
+         */
         STRAIGHT,
+        /**
+         * Five cards of the same suit
+         */
         FLUSH,
+        /**
+         * Three of a kind plus a a pair
+         */
         FULL_HOUSE,
+        /**
+         * Four cards of the same rank
+         */
         FOUR_OF_A_KIND,
+        /**
+         * Straight of the same suit
+         */
         STRAIGHT_FLUSH,
+        /**
+         * Straight of the same suit with A, K, J, Q, 10
+         */
         ROYAL_FLUSH
         }
 
+    /**
+     * Number of cards in a hand
+     */
     public final static int HAND_SIZE = 2;
+
     // need to indicate the this on both sides (server and client) to make sure objects are compatible.
     private static final long serialVersionUID = 1L;
     private Card cards[];
@@ -56,6 +93,11 @@ public class Hand implements Serializable {
         }
     }
 
+    /**
+     * Checks handRank given the 5 cards on the table
+     * @param cardsOnTable 5 Cards from the flop, turn and river
+     * @return A pair containing the handRank and the highest card related to the handRank
+     */
     public Pair<handRank, Card.rankType> checkHandRank(Card[] cardsOnTable) {
         /*List<Card> list = new ArrayList<Card>(Arrays.asList(cards));
         list.addAll(Arrays.asList(cardsOnTable));
@@ -266,6 +308,10 @@ public class Hand implements Serializable {
         return counterMap;
     }
 
+    /**
+     * Get the two cards of an hand
+     * @return An array of size 2 containing the cards
+     */
     public Card[] getCards() {
         return cards;
     }
