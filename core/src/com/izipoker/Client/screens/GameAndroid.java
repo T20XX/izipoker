@@ -75,7 +75,7 @@ public class GameAndroid implements Screen {
 
 
         avatarImg = new Image(TexturesLoad.avatarTex[0][listener.getAvatarID()]);
-        avatarImg.setSize(stage.getWidth() / 3, stage.getHeight() / 6);
+        avatarImg.setSize(stage.getWidth() / 3, stage.getWidth() / 3);
         avatarImg.setPosition(0, stage.getHeight(), Align.topLeft);
         stage.addActor(avatarImg);
 
@@ -332,7 +332,9 @@ public class GameAndroid implements Screen {
         allIn.setVisible(listener.getPossibleActions()[3]);
 
         //Amount update
-        amountLbl.setText(Integer.toString(listener.getMoney()));
+        if(listener.getMoney() > 0){
+            amountLbl.setText(Integer.toString(listener.getMoney()))
+        }
         listener.setChanged(false);
     }
 }
