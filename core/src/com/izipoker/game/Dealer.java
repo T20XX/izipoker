@@ -155,12 +155,12 @@ public class Dealer implements Runnable {
             ArrayList<Player> winners = new ArrayList<Player>(){};
             Player tempwinner = r.getCurrentPlayers().get(0);
             winners.add(tempwinner);
+            Card[] cardsOnTable = new Card[5];
+            System.arraycopy(r.getFlop(), 0, cardsOnTable, 0, 3);
+            cardsOnTable[3] = r.getTurn();
+            cardsOnTable[4] = r.getRiver();
+            Pair<Hand.handRank, Card.rankType> winnerHandRank = tempwinner.getHand().checkHandRank(cardsOnTable);
             if(r.getCurrentPlayers().size() > 1) {
-                Card[] cardsOnTable = new Card[5];
-                System.arraycopy(r.getFlop(), 0, cardsOnTable, 0, 3);
-                cardsOnTable[3] = r.getTurn();
-                cardsOnTable[4] = r.getRiver();
-                Pair<Hand.handRank, Card.rankType> winnerHandRank = tempwinner.getHand().checkHandRank(cardsOnTable);
                 for(int i = 1; i < r.getCurrentPlayers().size(); i++){
                     System.out.println("tou aqui stucked");
                     Pair<Hand.handRank, Card.rankType> tempHandRank = r.getCurrentPlayers().get(1).getHand().checkHandRank(cardsOnTable);
@@ -184,7 +184,7 @@ public class Dealer implements Runnable {
             }
             for(int i = 0; i < winners.size();i++) {
                 winners.get(i).setMoney(winners.get(i).getMoney() + (r.getPot() / winners.size()));
-                table.tell("Dealer", winners.get(i).getName()+ " won this round.");
+                table.tell("Dealer", winners.get(i).getName()+ " won "+ (r.getPot() / winners.size()) + " with a " + winnerHandRank.toString());
             }
             for(Player p: r.getCurrentPlayers()){
                 p.getHand().getCards()[0].setFlipped(true);
