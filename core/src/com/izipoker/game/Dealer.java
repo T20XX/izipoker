@@ -155,15 +155,15 @@ public class Dealer implements Runnable {
             ArrayList<Player> winners = new ArrayList<Player>(){};
             Player tempwinner = r.getCurrentPlayers().get(0);
             winners.add(tempwinner);
-            Card[] cardsOnTable = new Card[5];
-            System.arraycopy(r.getFlop(), 0, cardsOnTable, 0, 3);
-            cardsOnTable[3] = r.getTurn();
-            cardsOnTable[4] = r.getRiver();
-            Pair<Hand.handRank, Card.rankType> winnerHandRank = tempwinner.getHand().checkHandRank(cardsOnTable);
+            Pair<Hand.handRank, Card.rankType> winnerHandRank = null;
             if(r.getCurrentPlayers().size() > 1) {
+                Card[] cardsOnTable = new Card[5];
+                System.arraycopy(r.getFlop(), 0, cardsOnTable, 0, 3);
+                cardsOnTable[3] = r.getTurn();
+                cardsOnTable[4] = r.getRiver();
+                winnerHandRank = tempwinner.getHand().checkHandRank(cardsOnTable);
                 for(int i = 1; i < r.getCurrentPlayers().size(); i++){
-                    System.out.println("tou aqui stucked");
-                    Pair<Hand.handRank, Card.rankType> tempHandRank = r.getCurrentPlayers().get(1).getHand().checkHandRank(cardsOnTable);
+                    Pair<Hand.handRank, Card.rankType> tempHandRank = r.getCurrentPlayers().get(i).getHand().checkHandRank(cardsOnTable);
                     if (Hand.handRank.valueOf(tempHandRank.getKey().toString()).ordinal() > Hand.handRank.valueOf(winnerHandRank.getKey().toString()).ordinal()) {
                         winners.clear();
                         tempwinner = r.getCurrentPlayers().get(i);
@@ -184,7 +184,11 @@ public class Dealer implements Runnable {
             }
             for(int i = 0; i < winners.size();i++) {
                 winners.get(i).setMoney(winners.get(i).getMoney() + (r.getPot() / winners.size()));
-                table.tell("Dealer", winners.get(i).getName()+ " won "+ (r.getPot() / winners.size()) + " with a " + winnerHandRank.toString());
+                if(r.getCurrentPlayers().size() > 1) {
+                    table.tell("Dealer", winners.get(i).getName() + " won " + (r.getPot() / winners.size()) + " with a " + winnerHandRank.toString());
+                } else {
+                    table.tell("Dealer", winners.get(i).getName() + " won " + (r.getPot()));
+                }
             }
             for(Player p: r.getCurrentPlayers()){
                 p.getHand().getCards()[0].setFlipped(true);
@@ -220,7 +224,8 @@ public class Dealer implements Runnable {
             if(p.getMoney()> 0) {
                 table.sendHighestBet(p.getName());
                 table.sendPossibleActions(p.getName(), checkPossibleActions(p));
-                Thread t = new Thread(new CheckPlayerAction(p));
+                CheckPlayerAction checker = new CheckPlayerAction(p);
+                Thread t = new Thread(checker);
                 t.start();
                 try {
                     t.join(table.getPlayingTime() * 1000);
@@ -229,7 +234,7 @@ public class Dealer implements Runnable {
                 }
                 if (t.isAlive()) {
                     table.sendPossibleActions(p.getName(), new boolean[]{false, false, false, false});
-                    t.stop();
+                    checker.kill();
                 }
                 handlePlayerAction(p);
             }
