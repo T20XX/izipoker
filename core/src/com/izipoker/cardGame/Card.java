@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * Represents a card with a value and a suit from any card game
  */
-public class Card extends Actor implements Serializable {
+public class Card extends Actor implements Serializable, Comparable {
 
     /**
      * Rank of cards
@@ -185,6 +185,26 @@ public class Card extends Actor implements Serializable {
     @Override
     public String toString() {
         return this.rank.toString() + " of " + this.suit.toString();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Card c = (Card) (o);
+        if (suitType.valueOf(this.suit.toString()).ordinal() < suitType.valueOf(c.getSuit().toString()).ordinal()) {//c.getSuit()) {
+            return -1;
+        } else if (suitType.valueOf(this.suit.toString()).ordinal() > suitType.valueOf(c.getSuit().toString()).ordinal()) {
+            return 1;
+        } else {
+            // suit is identical: compare number
+            if (this.getValue() < c.getValue()) {
+                return -1;
+            } else if (this.getValue() > c.getValue()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+
     }
 
     /**

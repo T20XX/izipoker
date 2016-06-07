@@ -41,4 +41,22 @@ public class TableTest {
         t.nextJoker();
         assertEquals(t.getJoker(),p1);
     }
+
+    @Test
+    public void testActivePlayers(){
+        Table t = new Table("teste", 8);
+        Player p1 = new Human(0, "Teste", 1000);
+        t.addPlayer(p1);
+        Player p2 = new Human(0, "Teste", 1000);
+        t.addPlayer(p2);
+
+        assertEquals(t.getActivePlayers().length, 2);
+        p1.setActive(false);
+        assertEquals(t.getActivePlayers().length, 1);
+        p2.setActive(false);
+        assertEquals(t.getActivePlayers().length, 0);
+        p1.setActive(true);
+        assertEquals(t.getActivePlayers().length, 1);
+
+    }
 }
