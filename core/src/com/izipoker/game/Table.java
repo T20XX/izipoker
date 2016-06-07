@@ -195,7 +195,7 @@ public class Table extends Actor implements ServerInterface {
 
     @Override
     public void sendHighestBet(String name) {
-        (clients.get(name)).receiveHighestBet(getTopRound().getHighestBet());
+        (clients.get(name)).receiveHighestBet(getTopRound().getHighestBet() - getTopRound().getBets().get(players.get(name)));
     }
 
     @Override

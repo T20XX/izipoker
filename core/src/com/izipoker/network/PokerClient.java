@@ -13,7 +13,8 @@ public class PokerClient implements ClientCallbackInterface {
     private int money;
     private boolean changed = true;
     private boolean possibleActions[] = {false, false, false, false};
-    private int highestBet;
+    private int highestBet = 0;
+    private int lastBet = 0;
 
     /**
      * Client constructor

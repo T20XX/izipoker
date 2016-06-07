@@ -71,8 +71,8 @@ public class Round {
             if (bets.containsKey(p)) {
                 bets.put(p, bets.get(p) + amount);
             }
-            if (amount > highestBet) {
-                highestBet = amount;
+            if (bets.get(p) > highestBet) {
+                highestBet = bets.get(p);
                 highestPlayer = p;
             }
             Player player = currentPlayers.removeFirst();
