@@ -5,6 +5,8 @@ import com.izipoker.cardGame.Deck;
 
 import java.util.ArrayList;
 
+import javafx.util.Pair;
+
 /**
  * Represents the dealer of a poker game, person who deal cards, add bets from the players to the pot and check winner
  */
@@ -148,9 +150,34 @@ public class Dealer implements Runnable {
                     }
                 }
             }
+            Card[] cardsOnTable = new Card[5];
+            System.arraycopy(r.getFlop(), 0, cardsOnTable, 0, 3);
+            cardsOnTable[3] = r.getTurn();
+            cardsOnTable[4] = r.getRiver();
             Player winner = r.getCurrentPlayers().get(0);
+            Pair<Hand.handRank, Card.rankType> winnerHandRank = winner.getHand().checkHandRank(cardsOnTable);
+            for (int i = 1; i < r.getCurrentPlayers().size(); i++) {
+                Pair<Hand.handRank, Card.rankType> tempHandRank = r.getCurrentPlayers().get(i).getHand().checkHandRank(cardsOnTable);
+                if (Hand.handRank.valueOf(tempHandRank.getKey().toString()).ordinal() > Hand.handRank.valueOf(winnerHandRank.getKey().toString()).ordinal()) {
+                    r.foldPlayer(winner);
+                    winner = r.getCurrentPlayers().get(i);
+                    winnerHandRank = tempHandRank;
+                } else if (Hand.handRank.valueOf(tempHandRank.getKey().toString()).ordinal() == Hand.handRank.valueOf(winnerHandRank.getKey().toString()).ordinal()) {
+                    //same handrank will test high card of rank
+                    if (Card.rankType.valueOf(tempHandRank.getValue().toString()).ordinal() > Card.rankType.valueOf(winnerHandRank.getValue().toString()).ordinal()) {
+                        r.foldPlayer(winner);
+                        winner = r.getCurrentPlayers().get(i);
+                        winnerHandRank = tempHandRank;
+                    } else {
+                        r.foldPlayer(r.getCurrentPlayers().get(i));
+                    }
+                } else {
+                    r.foldPlayer(r.getCurrentPlayers().get(i));
+                }
+                i--;
+            }
             winner.setMoney(winner.getMoney() + r.getPot());
-            removeLoserPlayer();
+            removeLoserPlayers();
             setNewJoker();
 
         }
@@ -235,16 +262,17 @@ public class Dealer implements Runnable {
             possibleActions[3] = true;
         } else if (p.getMoney() == r.getHighestBet()) {
             possibleActions[2] = true;
-        } else if(p.getMoney() < r.getHighestBet()){
+        } else if (p.getMoney() < r.getHighestBet()) {
             possibleActions[3] = true;
         }
 
         return possibleActions;
     }
-    public void removeLoserPlayer(){
 
-        for(int i = 0; i < table.getSeats().length;i++){
-            if(table.getSeats()[i].getMoney() <= 0)
+    public void removeLoserPlayers() {
+
+        for (int i = 0; i < table.getSeats().length; i++) {
+            if (table.getSeats()[i].getMoney() <= 0)
                 table.removePlayer(table.getSeats()[i]);
         }
     }

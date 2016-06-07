@@ -197,9 +197,9 @@ public class Card extends Actor implements Serializable, Comparable {
         } else {
             // suit is identical: compare number
             if (this.getValue() < c.getValue()) {
-                return -1;
-            } else if (this.getValue() > c.getValue()) {
                 return 1;
+            } else if (this.getValue() > c.getValue()) {
+                return -1;
             } else {
                 return 0;
             }

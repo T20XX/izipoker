@@ -6,9 +6,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Telmo on 10/05/2016.
- */
 public class CardTest {
 
     @Test

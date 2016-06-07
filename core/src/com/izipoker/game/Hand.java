@@ -14,17 +14,17 @@ import javafx.util.Pair;
 public class Hand implements Serializable {
 
     public enum handRank {
-        ROYAL_FLUSH,
-        STRAIGHT_FLUSH,
-        FOUR_OF_A_KIND,
-        FULL_HOUSE,
-        FLUSH,
-        STRAIGHT,
-        THREE_OF_A_KIND,
-        TWO_PAIR,
+        HIGH_CARD,
         PAIR,
-        HIGH_CARD
-    }
+        TWO_PAIR,
+        THREE_OF_A_KIND,
+        STRAIGHT,
+        FLUSH,
+        FULL_HOUSE,
+        FOUR_OF_A_KIND,
+        STRAIGHT_FLUSH,
+        ROYAL_FLUSH
+        }
 
     public final static int HAND_SIZE = 2;
     // need to indicate the this on both sides (server and client) to make sure objects are compatible.
@@ -57,9 +57,14 @@ public class Hand implements Serializable {
     }
 
     public Pair<handRank, Card.rankType> checkHandRank(Card[] cardsOnTable) {
-        List<Card> list = new ArrayList<Card>(Arrays.asList(cards));
+        /*List<Card> list = new ArrayList<Card>(Arrays.asList(cards));
         list.addAll(Arrays.asList(cardsOnTable));
-        Card[] totalCards = (Card[]) list.toArray();
+        Object[] totalCards =  list.toArray();
+        */
+        Card[] totalCards = new Card[cards.length + cardsOnTable.length];
+        System.arraycopy(cards, 0, totalCards, 0, cards.length);
+        System.arraycopy(cardsOnTable, 0, totalCards, cards.length, cardsOnTable.length);
+
         Card.rankType rank;
 
 
@@ -89,7 +94,7 @@ public class Hand implements Serializable {
     private boolean containsRoyalFlush(Card[] cards) {
         boolean contains = false;
         Arrays.sort(cards);
-        for (int i = 0; i < cards.length - 5; i++) {
+        for (int i = 0; i < cards.length - 4; i++) {
             if (cards[i].getRank() == Card.rankType.ACE) {
                 if (cards[i + 4].getSuit() == cards[i].getSuit() && cards[i + 4].getRank() == Card.rankType.TEN) {
                     contains = true;
@@ -104,7 +109,7 @@ public class Hand implements Serializable {
         boolean contains = false;
         int i;
         Arrays.sort(cards);
-        for (i = 0; i < cards.length - 5; i++) {
+        for (i = 0; i < cards.length - 4; i++) {
             if (cards[i + 4].getSuit() == cards[i].getSuit() && cards[i + 4].getValue() == cards[i].getValue() - 4) {
                 contains = true;
                 break;
@@ -133,25 +138,26 @@ public class Hand implements Serializable {
     }
 
     private Card.rankType containsFullHouse(Card[] cards) {
+        Card.rankType highRank = null;
         HashMap<Card.rankType, Integer> counterMap = countEqualsCards(cards);
 
         if (counterMap.containsValue(3) && counterMap.containsValue(2)) {
             for (Card.rankType rank : Card.rankType.values()) {
-                if (counterMap.get(rank) == 3) {
-                    return rank;
+                if (counterMap.containsKey(rank)) {
+                    if (counterMap.get(rank) == 3) {
+                        highRank = rank;
+                    }
                 }
             }
-            return null;
-        } else {
-            return null;
         }
+        return highRank;
     }
 
     private Card.rankType containsFlush(Card[] cards) {
         boolean contains = false;
         int i;
         Arrays.sort(cards);
-        for (i = 0; i < cards.length - 5; i++) {
+        for (i = 0; i < cards.length - 4; i++) {
             if (cards[i + 4].getSuit() == cards[i].getSuit()) {
                 contains = true;
                 break;
@@ -169,12 +175,14 @@ public class Hand implements Serializable {
 
         Card.rankType highRank = null;
         for (Card.rankType rank : Card.rankType.values()) {
-            if (counterMap.containsKey(Card.rankType.values()[Card.rankType.valueOf(rank.toString()).ordinal()]) &&
-                    counterMap.containsKey(Card.rankType.values()[Card.rankType.valueOf(rank.toString()).ordinal() + 1]) &&
-                    counterMap.containsKey(Card.rankType.values()[Card.rankType.valueOf(rank.toString()).ordinal() + 2]) &&
-                    counterMap.containsKey(Card.rankType.values()[Card.rankType.valueOf(rank.toString()).ordinal() + 3]) &&
-                    counterMap.containsKey(Card.rankType.values()[Card.rankType.valueOf(rank.toString()).ordinal() + 4])) {
-                highRank = rank;
+            if (rank != Card.rankType.JACK && rank != Card.rankType.QUEEN && rank != Card.rankType.KING && rank != Card.rankType.ACE) {
+                if (counterMap.containsKey(Card.rankType.values()[Card.rankType.valueOf(rank.toString()).ordinal()]) &&
+                        counterMap.containsKey(Card.rankType.values()[Card.rankType.valueOf(rank.toString()).ordinal() + 1]) &&
+                        counterMap.containsKey(Card.rankType.values()[Card.rankType.valueOf(rank.toString()).ordinal() + 2]) &&
+                        counterMap.containsKey(Card.rankType.values()[Card.rankType.valueOf(rank.toString()).ordinal() + 3]) &&
+                        counterMap.containsKey(Card.rankType.values()[Card.rankType.valueOf(rank.toString()).ordinal() + 4])) {
+                    highRank = Card.rankType.values()[Card.rankType.valueOf(rank.toString()).ordinal() + 4];
+                }
             }
         }
         return highRank;
@@ -182,18 +190,19 @@ public class Hand implements Serializable {
 
 
     private Card.rankType containsThreeOfAKind(Card[] cards) {
+        Card.rankType highRank = null;
         HashMap<Card.rankType, Integer> counterMap = countEqualsCards(cards);
 
         if (counterMap.containsValue(3)) {
             for (Card.rankType rank : Card.rankType.values()) {
-                if (counterMap.get(rank) == 3) {
-                    return rank;
+                if (counterMap.containsKey(rank)) {
+                    if (counterMap.get(rank) == 3) {
+                        highRank = rank;
+                    }
                 }
             }
-            return null;
-        } else {
-            return null;
         }
+        return highRank;
     }
 
     private Card.rankType containsTwoPair(Card[] cards) {
@@ -202,10 +211,12 @@ public class Hand implements Serializable {
         if (counterMap.containsValue(2)) {
             int pairCounter = 0;
             for (Card.rankType rank : Card.rankType.values()) {
-                if (counterMap.get(rank) == 2) {
-                    pairCounter++;
-                    if (pairCounter == 2) {
-                        return rank;
+                if (counterMap.containsKey(rank)) {
+                    if (counterMap.get(rank) == 2) {
+                        pairCounter++;
+                        if (pairCounter == 2) {
+                            return rank;
+                        }
                     }
                 }
             }
@@ -216,18 +227,19 @@ public class Hand implements Serializable {
     }
 
     private Card.rankType containsPair(Card[] cards) {
+        Card.rankType highRank = null;
         HashMap<Card.rankType, Integer> counterMap = countEqualsCards(cards);
 
         if (counterMap.containsValue(2)) {
             for (Card.rankType rank : Card.rankType.values()) {
-                if (counterMap.get(rank) == 2) {
-                    return rank;
+                if (counterMap.containsKey(rank)) {
+                    if (counterMap.get(rank) == 2) {
+                        highRank = rank;
+                    }
                 }
             }
-            return null;
-        } else {
-            return null;
         }
+        return highRank;
     }
 
     private Card.rankType getHighCard(Card[] cards) {
