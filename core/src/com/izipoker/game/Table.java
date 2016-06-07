@@ -16,7 +16,9 @@ import java.util.HashMap;
 
 
 public class Table extends Actor implements ServerInterface {
-
+    /**
+     * Represents the multiples states in a poker table
+     */
     public enum tableState {
         LOBBY,
         PLAYING,
@@ -72,10 +74,19 @@ public class Table extends Actor implements ServerInterface {
         return false;
     }
 
+    /**
+     *
+     * @param p Player to be removed from table
+     * @return True if the player is removed successfully or false if the player p does not not exists.
+     */
     public boolean removePlayer(Player p) {
         return seats.remove(p);
     }
 
+    /**
+     *
+     * @return next joker on table
+     */
     public Player nextJoker() {
         int i;
         for (i = 0; i < seats.size(); i++) {
@@ -91,11 +102,18 @@ public class Table extends Actor implements ServerInterface {
         return joker;
     }
 
+    /**
+     *
+     * @param r Round to add on table
+     */
     public void addRounds(Round r) {
         rounds.add(r);
     }
 
-    @Override
+    /**
+    *{@inheritDoc}
+    */
+     @Override
     public boolean join(String name, int avatarID, ClientCallbackInterface client) {
         if (clients.containsKey(name))
             return false;
@@ -112,6 +130,10 @@ public class Table extends Actor implements ServerInterface {
         return false;
     }
 
+
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void tell(String name, String message) {
         System.out.println(name + ": " + message);
@@ -120,6 +142,10 @@ public class Table extends Actor implements ServerInterface {
                 message);
     }
 
+
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void leave(String name, boolean win) {
         clients.get(name).setEndState(win);
@@ -127,42 +153,69 @@ public class Table extends Actor implements ServerInterface {
         players.remove(name);
     }
 
+
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void sendHand(String name) {
         (clients.get(name)).receiveHand(players.get(name).getHand());
     }
 
+
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void sendCard(String name) {
         (clients.get(name)).receiveCard(new Card(10, Card.suitType.CLUBS));
     }
 
+
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void sendPossibleActions(String name, boolean[] possibleActions) {
         (clients.get(name)).receivePossibleActions(possibleActions);
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void sendMoney(String name) {
         (clients.get(name)).receiveMoney(players.get(name).getMoney());
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void sendPokerAction(String name, PokerAction action) {
         players.get(name).setLastAction(action);
         players.get(name).setActed(true);
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void sendHighestBet(String name) {
         (clients.get(name)).receiveHighestBet(getTopRound().getHighestBet() - getTopRound().getBets().get(players.get(name)));
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public boolean isLobbyState() {
         return (state == tableState.LOBBY);
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
@@ -248,15 +301,26 @@ public class Table extends Actor implements ServerInterface {
 
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name new name of the table
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return Array of Players that are playing
+     */
     public Player[] getActivePlayers() {
         ArrayList<Player> activePlayers = new ArrayList<Player>();
         for (int i = 0; i < seats.size(); i++) {
@@ -268,48 +332,83 @@ public class Table extends Actor implements ServerInterface {
         return activePlayers.toArray(new Player[activePlayers.size()]);
     }
 
+    /**
+     *
+     * @return big bling, two times the small blind
+     */
     public int getBigBlind() {
         return 2 * SMALL_BLIND;
 
     }
 
+    /**
+     *
+     * @return ArrayList of String with chat history
+     */
     public ArrayList<String> getChatHistory() {
         return chatHistory;
     }
 
+    /**
+     *
+     * @return Dealer of the table
+     */
     public Dealer getDealer() {
         return dealer;
     }
 
-
-    /*public String getName() {
-        return name;
-    }*/
-
+    /**
+     *
+     * @return actual joker of the table
+     */
     public Player getJoker() {
         return joker;
     }
 
+    /**
+     *
+     * @return Playing Time of each player on the table
+     */
     public int getPlayingTime() {
         return playingTime;
     }
 
+    /**
+     *
+     * @return ArrayLisy of rounds on the table
+     */
     public ArrayList<Round> getRounds() {
         return rounds;
     }
 
+    /**
+     *
+     * @return Array of Player with the seats of the table
+     */
     public Player[] getSeats() {
         return seats.toArray(new Player[seats.size()]);
     }
 
+    /**
+     *
+     * @return small blind on the table
+     */
     public int getSmallBlind() {
         return SMALL_BLIND;
     }
 
+    /**
+     *
+     * @return most recent round of the table
+     */
     public Round getTopRound() {
         return rounds.get(rounds.size() - 1);
     }
 
+    /**
+     *
+     * @param state new state of the table
+     */
     public void setState(tableState state) {
         this.state = state;
     }
