@@ -139,15 +139,15 @@ public class GameAndroid implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 int money = listener.getMoney();
-                if(betSlider.getMinValue() <= money && betSlider.getMaxValue() >= money)
+                if (betSlider.getMinValue() <= money && betSlider.getMaxValue() >= money)
                     betSlider.setValue(money);
             }
         });
         thirdMoney.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                int money = listener.getMoney()/3;
-                if(betSlider.getMinValue() <= money && betSlider.getMaxValue() >= money)
+                int money = listener.getMoney() / 3;
+                if (betSlider.getMinValue() <= money && betSlider.getMaxValue() >= money)
                     betSlider.setValue(money);
 
             }
@@ -155,8 +155,8 @@ public class GameAndroid implements Screen {
         halfMoney.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                int money = listener.getMoney()/2;
-                if(betSlider.getMinValue() <= money && betSlider.getMaxValue() >= money)
+                int money = listener.getMoney() / 2;
+                if (betSlider.getMinValue() <= money && betSlider.getMaxValue() >= money)
                     betSlider.setValue(money);
 
             }
@@ -183,7 +183,7 @@ public class GameAndroid implements Screen {
         raiseBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.RAISE, (int)betSlider.getValue()));
+                proxyTable.sendPokerAction(name, new PokerAction(PokerAction.actionType.RAISE, (int) betSlider.getValue()));
                 disableActionButtons();
                 listener.resetPossibleActions();
 
@@ -287,10 +287,10 @@ public class GameAndroid implements Screen {
     public void updateChanges() {
 
         if (listener.getHand() != null) {
-            if(listener.getState() != PokerClient.clientState.PLAYING) {
+            if (listener.getState() != PokerClient.clientState.PLAYING) {
                 Dialog resultDialog = new Dialog("End", TexturesLoad.skin);
                 resultDialog.text(listener.getState().toString());
-                resultDialog.button(new TextButton("Close",TexturesLoad.skin)).addListener(new ChangeListener() {
+                resultDialog.button(new TextButton("Close", TexturesLoad.skin)).addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         Gdx.app.exit();
@@ -322,15 +322,15 @@ public class GameAndroid implements Screen {
         raiseBtn.setVisible(listener.getPossibleActions()[3]);
         betTF.setVisible(listener.getPossibleActions()[3]);
         betSlider.setVisible(listener.getPossibleActions()[3]);
-        if(listener.getHighestBet() < listener.getMoney())
-        betSlider.setRange(listener.getHighestBet(), listener.getMoney());
+        if (listener.getHighestBet() < listener.getMoney())
+            betSlider.setRange(listener.getHighestBet(), listener.getMoney());
         else betSlider.setRange(listener.getMoney(), listener.getMoney());
         thirdMoney.setVisible(listener.getPossibleActions()[3]);
         halfMoney.setVisible(listener.getPossibleActions()[3]);
         allIn.setVisible(listener.getPossibleActions()[3]);
 
         //Amount update
-        if(listener.getMoney() > 0){
+        if (listener.getMoney() > 0) {
             amountLbl.setText(Integer.toString(listener.getMoney()));
         }
         listener.setChanged(false);

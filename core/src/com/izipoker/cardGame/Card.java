@@ -91,17 +91,37 @@ public class Card extends Actor implements Serializable, Comparable {
         SPADES
     }
 
-    // need to indicate the this on both sides (server and client) to make sure objects are compatible.
-    private static final long serialVersionUID = 1L;
     /**
-     * Rank of the card
+     * @return Rank of the card
      */
-    private rankType rank;
+    public rankType getRank() {
+        return rank;
+    }
+
     /**
-     * Suit of the card
+     * Sets the rank of the card
+     *
+     * @param rank New rank to set
      */
-    private suitType suit;
-    private boolean flipped = false;
+    public void setRank(rankType rank) {
+        this.rank = rank;
+    }
+
+    /**
+     * @return Suit of the card
+     */
+    public suitType getSuit() {
+        return suit;
+    }
+
+    /**
+     * Sets the suit of the card
+     *
+     * @param suit New suit to set
+     */
+    public void setSuit(suitType suit) {
+        this.suit = suit;
+    }
 
     /*private static final Map<rankType, Integer> valueMap;
     static
@@ -121,6 +141,51 @@ public class Card extends Actor implements Serializable, Comparable {
         valueMap.put(rankType.KING, 12);
         valueMap.put(rankType.ACE, 13);
     }*/
+
+    /**
+     * @return Value of the card from 1 to 13
+     * @see rankType To check rank and value match
+     */
+    public int getValue() {
+        return rankType.valueOf(rank.toString()).ordinal() + 1;
+    }
+
+    /**
+     * Gets the flipped state of the card
+     *
+     * @return True if the card is facing up, false otherwise
+     */
+    public boolean isFlipped() {
+        return flipped;
+    }
+
+    /*private void getFrontTexFromCards() {
+        frontTex = new TextureRegion(cardsTex,
+                cardsTex.getWidth()/13 * (rankType.valueOf(this.rank.toString()).ordinal()),
+                cardsTex.getHeight()/4 * suitType.valueOf(this.suit.toString()).ordinal(),
+                cardsTex.getWidth()/13,
+                cardsTex.getHeight()/4);
+    }*/
+
+    /**
+     * Sets the orientation of the card
+     *
+     * @param flipped True to face up and false to face down
+     */
+    public void setFlipped(boolean flipped) {
+        this.flipped = flipped;
+    }
+    // need to indicate the this on both sides (server and client) to make sure objects are compatible.
+    private static final long serialVersionUID = 1L;
+    /**
+     * Rank of the card
+     */
+    private rankType rank;
+    /**
+     * Suit of the card
+     */
+    private suitType suit;
+    private boolean flipped = false;
 
     /**
      * Creates a card by giving a rank and a suit
@@ -146,14 +211,6 @@ public class Card extends Actor implements Serializable, Comparable {
         rank = rankType.values()[value - 1];
         //getFrontTexFromCards();
     }
-
-    /*private void getFrontTexFromCards() {
-        frontTex = new TextureRegion(cardsTex,
-                cardsTex.getWidth()/13 * (rankType.valueOf(this.rank.toString()).ordinal()),
-                cardsTex.getHeight()/4 * suitType.valueOf(this.suit.toString()).ordinal(),
-                cardsTex.getWidth()/13,
-                cardsTex.getHeight()/4);
-    }*/
 
     /**
      * Flip the card
@@ -205,64 +262,6 @@ public class Card extends Actor implements Serializable, Comparable {
             }
         }
 
-    }
-
-    /**
-     * @return Rank of the card
-     */
-    public rankType getRank() {
-        return rank;
-    }
-
-    /**
-     * Sets the rank of the card
-     *
-     * @param rank New rank to set
-     */
-    public void setRank(rankType rank) {
-        this.rank = rank;
-    }
-
-    /**
-     * @return Suit of the card
-     */
-    public suitType getSuit() {
-        return suit;
-    }
-
-    /**
-     * Sets the suit of the card
-     *
-     * @param suit New suit to set
-     */
-    public void setSuit(suitType suit) {
-        this.suit = suit;
-    }
-
-    /**
-     * @return Value of the card from 1 to 13
-     * @see rankType To check rank and value match
-     */
-    public int getValue() {
-        return rankType.valueOf(rank.toString()).ordinal() + 1;
-    }
-
-    /**
-     * Gets the flipped state of the card
-     *
-     * @return True if the card is facing up, false otherwise
-     */
-    public boolean isFlipped() {
-        return flipped;
-    }
-
-    /**
-     * Sets the orientation of the card
-     *
-     * @param flipped True to face up and false to face down
-     */
-    public void setFlipped(boolean flipped) {
-        this.flipped = flipped;
     }
 
     /*public static Texture getCardsTex() {

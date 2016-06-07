@@ -57,13 +57,20 @@ public class Hand implements Serializable {
          * Straight of the same suit with A, K, J, Q, 10
          */
         ROYAL_FLUSH
-        }
+    }
 
+    /**
+     * Get the two cards of an hand
+     *
+     * @return An array of size 2 containing the cards
+     */
+    public Card[] getCards() {
+        return cards;
+    }
     /**
      * Number of cards in a hand
      */
     public final static int HAND_SIZE = 2;
-
     // need to indicate the this on both sides (server and client) to make sure objects are compatible.
     private static final long serialVersionUID = 1L;
     private Card cards[];
@@ -95,6 +102,7 @@ public class Hand implements Serializable {
 
     /**
      * Checks handRank given the 5 cards on the table
+     *
      * @param cardsOnTable 5 Cards from the flop, turn and river
      * @return A pair containing the handRank and the highest card related to the handRank
      */
@@ -230,7 +238,6 @@ public class Hand implements Serializable {
         return highRank;
     }
 
-
     private Card.rankType containsThreeOfAKind(Card[] cards) {
         Card.rankType highRank = null;
         HashMap<Card.rankType, Integer> counterMap = countEqualsCards(cards);
@@ -307,13 +314,5 @@ public class Hand implements Serializable {
             }
         }
         return counterMap;
-    }
-
-    /**
-     * Get the two cards of an hand
-     * @return An array of size 2 containing the cards
-     */
-    public Card[] getCards() {
-        return cards;
     }
 }

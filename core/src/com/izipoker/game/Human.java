@@ -1,22 +1,20 @@
 package com.izipoker.game;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 /**
- * Created by Telmo on 26/04/2016.
+ * Represents a human controlled poker player
  */
 public class Human extends Player {
 
     /**
-     * Human constructor (sets difficulty to MEDIUM(default))
-     *
-     * @param id   Human ID
-     * @param name Human Name
+     * {@inheritDoc}
      */
     public Human(int id, String name, int money) {
         super(id, name, money);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Human(int id, String name, int money, int avatarID) {
         super(id, name, money, avatarID);
     }

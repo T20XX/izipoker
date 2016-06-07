@@ -15,16 +15,16 @@ public class TableTest {
         Table t = new Table("teste", 8, 10, 1000);
         Player p = new Human(0, "Teste", 1000);
 
-        assertEquals(t.getSeats().length,0);
+        assertEquals(t.getSeats().length, 0);
         t.addPlayer(p);
         assertEquals(p, t.getSeats()[0]);
         Player p1 = new Human(0, "Teste", 1000);
         t.addPlayer(p1);
-        assertEquals(t.getSeats().length,2);
+        assertEquals(t.getSeats().length, 2);
         t.removePlayer(p);
-        assertEquals(t.getSeats().length,1);
+        assertEquals(t.getSeats().length, 1);
         t.removePlayer(p1);
-        assertEquals(t.getSeats().length,0);
+        assertEquals(t.getSeats().length, 0);
     }
 
     @Test
@@ -35,15 +35,15 @@ public class TableTest {
         Player p2 = new Human(0, "Teste", 1000);
         t.addPlayer(p2);
 
-        assertEquals(t.getJoker(),p1);
+        assertEquals(t.getJoker(), p1);
         t.nextJoker();
-        assertEquals(t.getJoker(),p2);
+        assertEquals(t.getJoker(), p2);
         t.nextJoker();
-        assertEquals(t.getJoker(),p1);
+        assertEquals(t.getJoker(), p1);
     }
 
     @Test
-    public void testActivePlayers(){
+    public void testActivePlayers() {
         Table t = new Table("teste", 8, 10, 1000);
         Player p1 = new Human(0, "Teste", 1000);
         t.addPlayer(p1);

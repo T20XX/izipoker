@@ -116,7 +116,6 @@ public class Dealer implements Runnable {
             System.out.println("PRE-FLOP");
             handleTableActions();
             System.out.println(r.getPot());
-            System.out.println("SAIMOS PRE-FLOP");
 
             if (r.getCurrentPlayers().size() != 1) {
                 System.out.println("FLOP");
@@ -124,7 +123,6 @@ public class Dealer implements Runnable {
                 showFlop();
                 handleTableActions();
                 System.out.println(r.getPot());
-                System.out.println("SAIMOS FLOP");
 
                 if (r.getCurrentPlayers().size() != 1) {
                     System.out.println("TURN");
@@ -132,7 +130,6 @@ public class Dealer implements Runnable {
                     showTurn();
                     handleTableActions();
                     System.out.println(r.getPot());
-                    System.out.println("SAIMOS TURN");
 
                     if (r.getCurrentPlayers().size() != 1) {
                         System.out.println("RIVER");
@@ -140,27 +137,26 @@ public class Dealer implements Runnable {
                         showRiver();
                         handleTableActions();
                         System.out.println(r.getPot());
-                        System.out.println("SAIMOS RIVER");
                         if (r.getCurrentPlayers().size() != 1) {
                             r.updateState();
-                            //check hands!
                         }
                     }
                 }
             }
 
 
-            ArrayList<Player> winners = new ArrayList<Player>(){};
+            ArrayList<Player> winners = new ArrayList<Player>() {
+            };
             Player tempwinner = r.getCurrentPlayers().get(0);
             winners.add(tempwinner);
             Pair<Hand.handRank, Card.rankType> winnerHandRank = null;
-            if(r.getCurrentPlayers().size() > 1) {
+            if (r.getCurrentPlayers().size() > 1) {
                 Card[] cardsOnTable = new Card[5];
                 System.arraycopy(r.getFlop(), 0, cardsOnTable, 0, 3);
                 cardsOnTable[3] = r.getTurn();
                 cardsOnTable[4] = r.getRiver();
                 winnerHandRank = tempwinner.getHand().checkHandRank(cardsOnTable);
-                for(int i = 1; i < r.getCurrentPlayers().size(); i++){
+                for (int i = 1; i < r.getCurrentPlayers().size(); i++) {
                     Pair<Hand.handRank, Card.rankType> tempHandRank = r.getCurrentPlayers().get(i).getHand().checkHandRank(cardsOnTable);
                     if (Hand.handRank.valueOf(tempHandRank.getKey().toString()).ordinal() > Hand.handRank.valueOf(winnerHandRank.getKey().toString()).ordinal()) {
                         winners.clear();
@@ -174,25 +170,25 @@ public class Dealer implements Runnable {
                             tempwinner = r.getCurrentPlayers().get(i);
                             winnerHandRank = tempHandRank;
                             winners.add(tempwinner);
-                        } else if (Card.rankType.valueOf(tempHandRank.getValue().toString()).ordinal() == Card.rankType.valueOf(winnerHandRank.getValue().toString()).ordinal()){
+                        } else if (Card.rankType.valueOf(tempHandRank.getValue().toString()).ordinal() == Card.rankType.valueOf(winnerHandRank.getValue().toString()).ordinal()) {
                             winners.add(r.getCurrentPlayers().get(i));
                         }
                     }
                 }
             }
-            for(int i = 0; i < winners.size();i++) {
+            for (int i = 0; i < winners.size(); i++) {
                 winners.get(i).setMoney(winners.get(i).getMoney() + (r.getPot() / winners.size()));
-                if(r.getCurrentPlayers().size() > 1) {
+                if (r.getCurrentPlayers().size() > 1) {
                     table.tell("Dealer", winners.get(i).getName() + " won " + (r.getPot() / winners.size()) + " with a " + winnerHandRank.toString());
                 } else {
                     table.tell("Dealer", winners.get(i).getName() + " won " + (r.getPot()));
                 }
             }
-            for(Player p: r.getCurrentPlayers()){
+            for (Player p : r.getCurrentPlayers()) {
                 p.getHand().getCards()[0].setFlipped(true);
                 p.getHand().getCards()[1].setFlipped(true);
             }
-            
+
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
@@ -220,7 +216,7 @@ public class Dealer implements Runnable {
         while ((r.getCurrentPlayers().peek() != r.getHighestPlayer() || !atLeastOnePlayed) && r.getCurrentPlayers().size() > 1) {
             p = r.getCurrentPlayers().peek();
             System.out.println(p.getName() + " Turn");
-            if(p.getMoney()> 0) {
+            if (p.getMoney() > 0) {
                 table.sendHighestBet(p.getName());
                 table.sendPossibleActions(p.getName(), checkPossibleActions(p));
                 CheckPlayerAction checker = new CheckPlayerAction(p);
@@ -269,7 +265,7 @@ public class Dealer implements Runnable {
                 case RAISE:
                     r.addBet(p, p.getLastAction().getAmount());
                     table.sendMoney(p.getName());
-                    table.tell("Dealer",p.getName() + " bet " + p.getLastAction().getAmount());
+                    table.tell("Dealer", p.getName() + " bet " + p.getLastAction().getAmount());
                     break;
             }
             p.setActed(false);
@@ -295,7 +291,7 @@ public class Dealer implements Runnable {
         return possibleActions;
     }
 
-    public void removeLoserPlayers() {
+    private void removeLoserPlayers() {
 
         for (int i = 0; i < table.getSeats().length; i++) {
             if (table.getSeats()[i].getMoney() <= 0) {

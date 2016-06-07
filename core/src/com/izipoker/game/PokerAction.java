@@ -33,6 +33,23 @@ public class PokerAction implements Serializable {
         RAISE
     }
 
+    /**
+     * Gets the bet amount in a raise
+     *
+     * @return Bet amount
+     */
+    public int getAmount() {
+        return amount;
+    }
+
+    /**
+     * Gets the type of the action
+     *
+     * @return Type of the action
+     */
+    public actionType getType() {
+        return type;
+    }
     // need to indicate the this on both sides (server and client) to make sure objects are compatible.
     private static final long serialVersionUID = 1L;
     /**
@@ -75,24 +92,6 @@ public class PokerAction implements Serializable {
         } else {
             throw new IllegalArgumentException("Fold, check and call actions don't require bet amount");
         }
-    }
-
-    /**
-     * Gets the bet amount in a raise
-     *
-     * @return Bet amount
-     */
-    public int getAmount() {
-        return amount;
-    }
-
-    /**
-     * Gets the type of the action
-     *
-     * @return Type of the action
-     */
-    public actionType getType() {
-        return type;
     }
 
 }

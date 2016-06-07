@@ -22,7 +22,7 @@ public class HandRankTest {
                 new Card(Card.rankType.JACK, Card.suitType.HEARTS),
         };
 
-        assertEquals(new Pair(Hand.handRank.ROYAL_FLUSH,Card.rankType.ACE), h.checkHandRank(cardsOnTable));
+        assertEquals(new Pair(Hand.handRank.ROYAL_FLUSH, Card.rankType.ACE), h.checkHandRank(cardsOnTable));
 
     }
 
@@ -36,7 +36,7 @@ public class HandRankTest {
                 new Card(Card.rankType.SIX, Card.suitType.SPADES),
         };
 
-        assertEquals(new Pair(Hand.handRank.STRAIGHT_FLUSH,Card.rankType.SIX), h.checkHandRank(cardsOnTable));
+        assertEquals(new Pair(Hand.handRank.STRAIGHT_FLUSH, Card.rankType.SIX), h.checkHandRank(cardsOnTable));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class HandRankTest {
                 new Card(Card.rankType.TEN, Card.suitType.HEARTS),
                 new Card(Card.rankType.ACE, Card.suitType.CLUBS),
         };
-        assertEquals(new Pair(Hand.handRank.FULL_HOUSE,Card.rankType.ACE), h.checkHandRank(cardsOnTable));
+        assertEquals(new Pair(Hand.handRank.FULL_HOUSE, Card.rankType.ACE), h.checkHandRank(cardsOnTable));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class HandRankTest {
                 new Card(Card.rankType.TEN, Card.suitType.HEARTS),
                 new Card(Card.rankType.SIX, Card.suitType.SPADES),
         };
-        assertEquals(new Pair(Hand.handRank.FLUSH,Card.rankType.ACE), h.checkHandRank(cardsOnTable));
+        assertEquals(new Pair(Hand.handRank.FLUSH, Card.rankType.ACE), h.checkHandRank(cardsOnTable));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class HandRankTest {
                 new Card(Card.rankType.TEN, Card.suitType.HEARTS),
                 new Card(Card.rankType.SIX, Card.suitType.SPADES),
         };
-        assertEquals(new Pair(Hand.handRank.STRAIGHT,Card.rankType.TEN), h.checkHandRank(cardsOnTable));
+        assertEquals(new Pair(Hand.handRank.STRAIGHT, Card.rankType.TEN), h.checkHandRank(cardsOnTable));
     }
 
 
@@ -85,7 +85,7 @@ public class HandRankTest {
                 new Card(Card.rankType.TEN, Card.suitType.HEARTS),
                 new Card(Card.rankType.ACE, Card.suitType.CLUBS),
         };
-        assertEquals(new Pair(Hand.handRank.THREE_OF_A_KIND,Card.rankType.TEN), h.checkHandRank(cardsOnTable));
+        assertEquals(new Pair(Hand.handRank.THREE_OF_A_KIND, Card.rankType.TEN), h.checkHandRank(cardsOnTable));
     }
 
     @Test
@@ -97,7 +97,7 @@ public class HandRankTest {
                 new Card(Card.rankType.THREE, Card.suitType.HEARTS),
                 new Card(Card.rankType.ACE, Card.suitType.CLUBS),
         };
-        assertEquals(new Pair(Hand.handRank.TWO_PAIR,Card.rankType.TEN), h.checkHandRank(cardsOnTable));
+        assertEquals(new Pair(Hand.handRank.TWO_PAIR, Card.rankType.TEN), h.checkHandRank(cardsOnTable));
     }
 
     @Test
@@ -109,7 +109,7 @@ public class HandRankTest {
                 new Card(Card.rankType.THREE, Card.suitType.HEARTS),
                 new Card(Card.rankType.ACE, Card.suitType.CLUBS),
         };
-        assertEquals(new Pair(Hand.handRank.PAIR,Card.rankType.THREE), h.checkHandRank(cardsOnTable));
+        assertEquals(new Pair(Hand.handRank.PAIR, Card.rankType.THREE), h.checkHandRank(cardsOnTable));
     }
 
     @Test
@@ -121,8 +121,9 @@ public class HandRankTest {
                 new Card(Card.rankType.THREE, Card.suitType.HEARTS),
                 new Card(Card.rankType.ACE, Card.suitType.CLUBS),
         };
-        assertEquals(new Pair(Hand.handRank.HIGH_CARD,Card.rankType.ACE), h.checkHandRank(cardsOnTable));
+        assertEquals(new Pair(Hand.handRank.HIGH_CARD, Card.rankType.ACE), h.checkHandRank(cardsOnTable));
     }
+
     @Test
     public void testTwo3Pair() {
         Hand h = new Hand(new Card(Card.rankType.THREE, Card.suitType.SPADES), new Card(Card.rankType.TEN, Card.suitType.HEARTS));
@@ -132,6 +133,6 @@ public class HandRankTest {
                 new Card(Card.rankType.THREE, Card.suitType.HEARTS),
                 new Card(Card.rankType.ACE, Card.suitType.CLUBS),
         };
-        assertEquals(new Pair(Hand.handRank.TWO_PAIR,Card.rankType.ACE), h.checkHandRank(cardsOnTable));
+        assertEquals(new Pair(Hand.handRank.TWO_PAIR, Card.rankType.ACE), h.checkHandRank(cardsOnTable));
     }
 }

@@ -8,6 +8,9 @@ import com.izipoker.client.screens.MainMenuAndroid;
  */
 public class IZIPokerClient extends Game {
 
+    public static IZIPokerClient getInstance() {
+        return instance;
+    }
     private static IZIPokerClient instance = new IZIPokerClient();
 
     private IZIPokerClient() {
@@ -16,9 +19,5 @@ public class IZIPokerClient extends Game {
     @Override
     public void create() {
         this.screen = new MainMenuAndroid();
-    }
-
-    public static IZIPokerClient getInstance() {
-        return instance;
     }
 }

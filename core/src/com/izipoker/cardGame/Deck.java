@@ -8,6 +8,26 @@ import java.util.Random;
 public class Deck {
 
     /**
+     * @return Vector of the 52 cards that compose a deck
+     */
+    public Card[] getCards() {
+        return cards;
+    }
+
+    /**
+     * Get the card on the top of the deck
+     *
+     * @return Card on top of the deck
+     */
+    public Card getTopCard() {
+        if (index < this.cards.length) {
+            index++;
+            return this.cards[index - 1];
+        } else {
+            return null;
+        }
+    }
+    /**
      * Cards from the deck
      */
     private Card cards[] = new Card[52];
@@ -63,26 +83,5 @@ public class Deck {
             tmp += cards[i] + "\n";
         }
         return tmp;
-    }
-
-    /**
-     * @return Vector of the 52 cards that compose a deck
-     */
-    public Card[] getCards() {
-        return cards;
-    }
-
-    /**
-     * Get the card on the top of the deck
-     *
-     * @return Card on top of the deck
-     */
-    public Card getTopCard() {
-        if (index < this.cards.length) {
-            index++;
-            return this.cards[index - 1];
-        } else {
-            return null;
-        }
     }
 }

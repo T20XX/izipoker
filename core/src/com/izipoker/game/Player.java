@@ -5,89 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.izipoker.graphics.TexturesLoad;
 
 public abstract class Player extends Actor {
-    private int id;
-    private String name;
-    private int money;
-    private int avatarID;
-    private boolean active;
-    private boolean playing;
-
-    private Hand hand;
-    private PokerAction lastAction;
-
-    private boolean acted = false;
-
-    /**
-     * Player constructor
-     *
-     * @param id    Player ID
-     * @param name  Player Name
-     * @param money Player Money
-     */
-    Player(int id, String name, int money) {
-        this.id = id;
-        this.name = name;
-        this.money = money;
-        hand = null;
-        active = true;
-        playing = false;
-        this.avatarID = 0;
-    }
-
-    /**
-     * Player constructor (sets difficulty to MEDIUM(default))
-     *
-     * @param id       Player ID
-     * @param name     Player Name
-     * @param money    Player Money
-     * @param avatarID Player Avatar ID
-     */
-    Player(int id, String name, int money, int avatarID) {
-        this.id = id;
-        this.name = name;
-        this.money = money;
-        hand = null;
-        active = true;
-        playing = false;
-        this.avatarID = avatarID;
-    }
-
-    /**
-     * {@inheritDoc}
-     * Draws the player according to its orientation
-     */
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        if (this.isActive()) {
-
-            TexturesLoad.font.draw(batch, name, super.getX(), super.getY()+20);
-            TexturesLoad.font.draw(batch, money + "", super.getX(), super.getY()+10);
-            batch.draw(TexturesLoad.avatarTex[0][avatarID], super.getX(), super.getY()+20, super.getWidth(), super.getHeight()-20);
-        }
-
-    }
-
-    /**
-     * @return Player name
-     */
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * @param name new name of player
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return True if player has acted
-     */
-    public boolean hasActed() {
-        return acted;
-    }
-
     /**
      * @return hand of player
      */
@@ -170,6 +87,86 @@ public abstract class Player extends Actor {
      */
     public void setPlaying(boolean playing) {
         this.playing = playing;
+    }
+    private int id;
+    private String name;
+    private int money;
+    private int avatarID;
+    private boolean active;
+    private boolean playing;
+    private Hand hand;
+    private PokerAction lastAction;
+    private boolean acted = false;
+
+    /**
+     * Player constructor
+     *
+     * @param id    Player ID
+     * @param name  Player Name
+     * @param money Player Money
+     */
+    Player(int id, String name, int money) {
+        this.id = id;
+        this.name = name;
+        this.money = money;
+        hand = null;
+        active = true;
+        playing = false;
+        this.avatarID = 0;
+    }
+
+    /**
+     * Player constructor (sets difficulty to MEDIUM(default))
+     *
+     * @param id       Player ID
+     * @param name     Player Name
+     * @param money    Player Money
+     * @param avatarID Player Avatar ID
+     */
+    Player(int id, String name, int money, int avatarID) {
+        this.id = id;
+        this.name = name;
+        this.money = money;
+        hand = null;
+        active = true;
+        playing = false;
+        this.avatarID = avatarID;
+    }
+
+    /**
+     * {@inheritDoc}
+     * Draws the player according to its orientation
+     */
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        if (this.isActive()) {
+
+            TexturesLoad.font.draw(batch, name, super.getX(), super.getY() + 20);
+            TexturesLoad.font.draw(batch, money + "", super.getX(), super.getY() + 10);
+            batch.draw(TexturesLoad.avatarTex[0][avatarID], super.getX(), super.getY() + 20, super.getWidth(), super.getHeight() - 20);
+        }
+
+    }
+
+    /**
+     * @return Player name
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * @param name new name of player
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return True if player has acted
+     */
+    public boolean hasActed() {
+        return acted;
     }
 
     /**

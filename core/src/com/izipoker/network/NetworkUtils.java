@@ -16,38 +16,7 @@ import java.util.Enumeration;
 public class NetworkUtils {
 
     /**
-     * Function from report example project available in moodle webpage
-     * <p/>
-     * Parses the IP address in the URL of the client's host.
-     *
-     * @param url The URL of the client's host.
-     * @return Returns a textual representation of the server's IP address.
-     */
-    public static String parseHostName(String url) {
-        StringReader sReader = new StringReader(url);
-        StringBuilder sBuilder = new StringBuilder();
-        boolean foundNumeric = false;
-        char next;
-        try {
-            while ((next = (char) sReader.read()) != -1) {
-                if (foundNumeric) {
-                    if (next == ':')
-                        return sBuilder.toString();
-                    else sBuilder.append(next);
-                } else if (Character.isDigit(next)) {
-                    foundNumeric = true;
-                    sBuilder.append(next);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    /**
-     * Function from report example project available in moodle webpage
+     * Method from report example project available in moodle webpage
      * <p/>
      * Returns the network address of a valid network interface.
      *
@@ -80,6 +49,37 @@ public class NetworkUtils {
 
                 return address;
             }
+        }
+
+        return null;
+    }
+
+    /**
+     * Method from report example project available in moodle webpage
+     * <p/>
+     * Parses the IP address in the URL of the client's host.
+     *
+     * @param url The URL of the client's host.
+     * @return Returns a textual representation of the server's IP address.
+     */
+    public static String parseHostName(String url) {
+        StringReader sReader = new StringReader(url);
+        StringBuilder sBuilder = new StringBuilder();
+        boolean foundNumeric = false;
+        char next;
+        try {
+            while ((next = (char) sReader.read()) != -1) {
+                if (foundNumeric) {
+                    if (next == ':')
+                        return sBuilder.toString();
+                    else sBuilder.append(next);
+                } else if (Character.isDigit(next)) {
+                    foundNumeric = true;
+                    sBuilder.append(next);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return null;

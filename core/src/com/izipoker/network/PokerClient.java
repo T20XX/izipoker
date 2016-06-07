@@ -9,80 +9,10 @@ import com.izipoker.game.Hand;
 public class PokerClient implements ClientCallbackInterface {
 
 
-    public enum clientState{
+    public enum clientState {
         PLAYING,
         LOSE,
         WIN
-    }
-
-    private String name = "";
-    private int avatarID = 0;
-    private Hand hand = null;
-    private int money;
-    private boolean changed = true;
-    private boolean possibleActions[] = {false, false, false, false};
-    private int highestBet = 0;
-    private clientState state = clientState.PLAYING;
-
-    /**
-     * Client constructor
-     *
-     * @param name     Name of the client
-     * @param avatarID Number of the avatar
-     */
-    public PokerClient(String name, int avatarID) {
-        this.name = name;
-        this.avatarID = avatarID;
-    }
-
-    @Override
-    public void notify(String message) {
-        System.out.println(message);
-    }
-
-    @Override
-    public void receiveHand(Hand hand) {
-        this.hand = hand;
-        hand.getCards()[0].setFlipped(true);
-        hand.getCards()[1].setFlipped(true);
-        this.changed = true;
-    }
-
-    @Override
-    public void receiveCard(Card card) {
-        System.out.println(card);
-    }
-
-    @Override
-    public void receivePossibleActions(boolean[] possibleActions) {
-        this.possibleActions = possibleActions;
-        this.changed = true;
-    }
-
-    @Override
-    public void receiveMoney(int money) {
-        this.money = money;
-        this.changed = true;
-    }
-
-    @Override
-    public void receiveHighestBet(int highestbet) {
-        this.highestBet = highestbet;
-        this.changed = true;
-    }
-
-    @Override
-    public void setEndState(boolean win) {
-        if(win){
-            state = clientState.WIN;
-        } else {
-            state = clientState.LOSE;
-        }
-        changed = true;
-    }
-
-    public void resetPossibleActions() {
-        this.possibleActions = new boolean[]{false, false, false, false};
     }
 
     public int getAvatarID() {
@@ -141,6 +71,10 @@ public class PokerClient implements ClientCallbackInterface {
         this.possibleActions = possibleActions;
     }
 
+    public clientState getState() {
+        return state;
+    }
+
     /**
      * Gets changed state
      *
@@ -158,9 +92,73 @@ public class PokerClient implements ClientCallbackInterface {
     public void setChanged(boolean changed) {
         this.changed = changed;
     }
+    private String name = "";
+    private int avatarID = 0;
+    private Hand hand = null;
+    private int money;
+    private boolean changed = true;
+    private boolean possibleActions[] = {false, false, false, false};
+    private int highestBet = 0;
+    private clientState state = clientState.PLAYING;
 
+    /**
+     * Client constructor
+     *
+     * @param name     Name of the client
+     * @param avatarID Number of the avatar
+     */
+    public PokerClient(String name, int avatarID) {
+        this.name = name;
+        this.avatarID = avatarID;
+    }
 
-    public clientState getState() {
-        return state;
+    @Override
+    public void notify(String message) {
+        System.out.println(message);
+    }
+
+    @Override
+    public void receiveHand(Hand hand) {
+        this.hand = hand;
+        hand.getCards()[0].setFlipped(true);
+        hand.getCards()[1].setFlipped(true);
+        this.changed = true;
+    }
+
+    @Override
+    public void receiveCard(Card card) {
+        System.out.println(card);
+    }
+
+    @Override
+    public void receivePossibleActions(boolean[] possibleActions) {
+        this.possibleActions = possibleActions;
+        this.changed = true;
+    }
+
+    @Override
+    public void receiveMoney(int money) {
+        this.money = money;
+        this.changed = true;
+    }
+
+    @Override
+    public void receiveHighestBet(int highestbet) {
+        this.highestBet = highestbet;
+        this.changed = true;
+    }
+
+    @Override
+    public void setEndState(boolean win) {
+        if (win) {
+            state = clientState.WIN;
+        } else {
+            state = clientState.LOSE;
+        }
+        changed = true;
+    }
+
+    public void resetPossibleActions() {
+        this.possibleActions = new boolean[]{false, false, false, false};
     }
 }

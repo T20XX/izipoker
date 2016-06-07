@@ -37,6 +37,158 @@ public class Round {
         SHOWDOWN,
     }
 
+    /**
+     * get bets from players
+     *
+     * @return Map of Player and Integer, corresponding to the current Players and their bet
+     */
+    public Map<Player, Integer> getBets() {
+        return bets;
+    }
+
+    /**
+     * get player which is the big blinder
+     *
+     * @return Player that is the big blinder
+     */
+    public Player getBigBlinder() {
+        return bigBlinder;
+    }
+
+    /**
+     * get Current Players from the round
+     *
+     * @return current Players on the round
+     */
+    public LinkedList<Player> getCurrentPlayers() {
+        return currentPlayers;
+    }
+
+    /**
+     * Get First Player from the round
+     *
+     * @return First player of the round
+     */
+    public Player getFirstPlayer() {
+        return currentPlayers.peek();
+    }
+
+    /**
+     * Get Flop
+     *
+     * @return Array of card of the flop
+     */
+    public Card[] getFlop() {
+        return flop;
+    }
+
+    /**
+     * set new flop
+     *
+     * @param flop set new Array of Card of flop
+     */
+    public void setFlop(Card[] flop) {
+        this.flop = flop;
+    }
+
+    /**
+     * get highest bet
+     *
+     * @return highest bet on the round
+     */
+    public int getHighestBet() {
+        return highestBet;
+    }
+
+    /**
+     * get player that has the highest bet
+     *
+     * @return player that has the highest bet
+     */
+    public Player getHighestPlayer() {
+        return highestPlayer;
+    }
+
+    /**
+     * get joker
+     *
+     * @return actual joker of the round
+     */
+    public Player getJoker() {
+        return joker;
+    }
+
+    /**
+     * get total pot
+     *
+     * @return total pot of the round
+     */
+    public int getPot() {
+        return pot;
+    }
+
+    /**
+     * get river
+     *
+     * @return Card river
+     */
+    public Card getRiver() {
+        return river;
+    }
+
+    /**
+     * set new river
+     *
+     * @param river new Card of river
+     */
+    public void setRiver(Card river) {
+        this.river = river;
+    }
+
+    /**
+     * get player which is the small blinder
+     *
+     * @return Player that is the small blinder
+     */
+    public Player getSmallBlinder() {
+        return smallBlinder;
+    }
+
+    /**
+     * get actual round state
+     *
+     * @return roundState with the state of the round
+     */
+    public roundState getState() {
+        return state;
+    }
+
+    /**
+     * set new round state
+     *
+     * @param state new roundState of the round
+     */
+    public void setState(roundState state) {
+        this.state = state;
+    }
+
+    /**
+     * get turn Card
+     *
+     * @return new Card of turn
+     */
+    public Card getTurn() {
+        return turn;
+    }
+
+    /**
+     * set new turn
+     *
+     * @param turn set new Card of turn
+     */
+    public void setTurn(Card turn) {
+        this.turn = turn;
+    }
     private Map<Player, Integer> bets;
     private Card[] flop;
     private Card turn;
@@ -52,8 +204,9 @@ public class Round {
 
     /**
      * Round Constructor
+     *
      * @param players players on the round
-     * @param p small Blinder on the round
+     * @param p       small Blinder on the round
      */
     public Round(Player[] players, Player p) {
         this.pot = 0;
@@ -84,6 +237,7 @@ public class Round {
 
     /**
      * add Call bet
+     *
      * @param p Player to add the call
      * @return True if the player can call
      */
@@ -93,7 +247,8 @@ public class Round {
 
     /**
      * add bet
-     * @param p Player to add the bet
+     *
+     * @param p      Player to add the bet
      * @param amount int of the bet
      * @return True if the player can make the bet
      */
@@ -115,7 +270,6 @@ public class Round {
         return false;
     }
 
-
     /**
      * Updates round state to the next state
      */
@@ -134,6 +288,7 @@ public class Round {
 
     /**
      * Remove player from current Players
+     *
      * @param p Player to fold the round
      * @return True if the player exists and it is his time to play
      */
@@ -147,141 +302,5 @@ public class Round {
             return true;
         }
         return false;
-    }
-
-    /**
-     * get Current Players from the round
-     * @return current Players on the round
-     */
-    public LinkedList<Player> getCurrentPlayers() {
-        return currentPlayers;
-    }
-
-    /**
-     * Get First Player from the round
-     * @return First player of the round
-     */
-    public Player getFirstPlayer() {
-        return currentPlayers.peek();
-    }
-
-    /**
-     * Get Flop
-     * @return Array of card of the flop
-     */
-    public Card[] getFlop() {
-        return flop;
-    }
-
-    /**
-     * set new flop
-     * @param flop set new Array of Card of flop
-     */
-    public void setFlop(Card[] flop) {
-        this.flop = flop;
-    }
-
-    /**
-     * get highest bet
-     * @return highest bet on the round
-     */
-    public int getHighestBet() {
-        return highestBet;
-    }
-
-    /**
-     * get player that has the highest bet
-     * @return player that has the highest bet
-     */
-    public Player getHighestPlayer() {
-        return highestPlayer;
-    }
-
-    /**
-     * get joker
-     * @return actual joker of the round
-     */
-    public Player getJoker() {
-        return joker;
-    }
-
-    /**
-     * get total pot
-     * @return total pot of the round
-     */
-    public int getPot() {
-        return pot;
-    }
-
-    /**
-     * get river
-     * @return Card river
-     */
-    public Card getRiver() {
-        return river;
-    }
-
-    /**
-     * set new river
-     * @param river new Card of river
-     */
-    public void setRiver(Card river) {
-        this.river = river;
-    }
-
-    /**
-     * get actual round state
-     * @return roundState with the state of the round
-     */
-    public roundState getState() {
-        return state;
-    }
-
-    /**
-     * set new round state
-     * @param state new roundState of the round
-     */
-    public void setState(roundState state) {
-        this.state = state;
-    }
-
-    /**
-     * get turn Card
-     * @return new Card of turn
-     */
-    public Card getTurn() {
-        return turn;
-    }
-
-    /**
-     * set new turn
-     * @param turn set new Card of turn
-     */
-    public void setTurn(Card turn) {
-        this.turn = turn;
-    }
-
-    /**
-     * get bets from players
-     * @return Map of Player and Integer, corresponding to the current Players and their bet
-     */
-    public Map<Player,Integer> getBets() {
-        return bets;
-    }
-
-    /**
-     * get player which is the small blinder
-     * @return Player that is the small blinder
-     */
-    public Player getSmallBlinder(){
-        return smallBlinder;
-    }
-
-    /**
-     * get player which is the big blinder
-     * @return Player that is the big blinder
-     */
-    public Player getBigBlinder(){
-        return bigBlinder;
     }
 }

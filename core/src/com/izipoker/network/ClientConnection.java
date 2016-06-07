@@ -14,10 +14,27 @@ import lipermi.handler.CallHandler;
 import lipermi.net.Client;
 
 /**
- * Created by Telmo on 03/06/2016.
+ * Represents the methods associated with the connection of the remote clients to a proxy table
  */
 public class ClientConnection {
 
+    /**
+     * Gets callHandler found
+     *
+     * @return Call Handler
+     */
+    public CallHandler getCallHandler() {
+        return callHandler;
+    }
+
+    /**
+     * Gets proxy table binded (table)
+     *
+     * @return Table in proxy
+     */
+    public ServerInterface getProxyTable() {
+        return proxyTable;
+    }
     private String hostname;
     private int port;
     private CallHandler callHandler;
@@ -25,7 +42,6 @@ public class ClientConnection {
     private ServerInterface proxyTable;
     private ServiceListener serviceListener;
     private JmDNS mdnsService;
-
 
     /**
      * Performs the connection to the server's IP address, given hostname and port.
@@ -60,56 +76,11 @@ public class ClientConnection {
 
             proxyTable = (ServerInterface) client.getGlobal(ServerInterface.class);
 
-            // Creates client handler.
-            /*clientHandler = new ClientHandler(this);
-
-            try {
-                callHandler.exportObject(AbstractClientHandler.class, clientHandler);
-            } catch (LipeRMIException e1) {
-                e1.printStackTrace();
-                Gdx.app.exit();
-            }
-
-            // Attempts to be assigned for a game.
-            try {
-                if (serverEventHandler != null)
-                    firstPlayer = serverEventHandler.getAssigned(clientHandler);
-                else Gdx.app.exit();
-            } catch (RuntimeException e) {
-                Gdx.app.exit();
-            }
-        }
-        else Gdx.app.exit();*/
-
-            //implementar noutra função!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        /*Client client = new Client(remoteHost, portWasBinded, callHandler);
-
-        // create and expose remote listener
-        PokerClient listener = new PokerClient();
-        callHandler.exportObject(ClientCallbackInterface.class, listener);
-
-        // now do conversation
-        if(proxyTable.isLobbyState()) {
-            if (!proxyTable.join(nameTF.getText(), listener)) {
-                System.out.println("Sorry, nickname is already in use.");
-                return;
-            } else {
-                IZIPokerAndroid.getInstance().setScreen(new GameAndroid(nameTF.getText(), proxyTable, listener));
-            }
-        }else {
-            Dialog resultDialog = new Dialog("Error", skin);
-            resultDialog.text("Game has already started");
-            resultDialog.button("BACK");
-            resultDialog.show(stage);
-        }
-    } catch (Exception e) {
-        System.err.println("Client exception: " + e.toString());
-        e.printStackTrace();
-    }*/
         }
     }
 
     /**
+     * Method based from report example project available in moodle webpage
      * Finds an mDNS service which corresponds to the server's IP address.
      */
     @SuppressWarnings("deprecation")
@@ -171,13 +142,5 @@ public class ClientConnection {
         System.out.println(hostname);
         System.out.println(port);
 
-    }
-
-    public CallHandler getCallHandler() {
-        return callHandler;
-    }
-
-    public ServerInterface getProxyTable() {
-        return proxyTable;
     }
 }
