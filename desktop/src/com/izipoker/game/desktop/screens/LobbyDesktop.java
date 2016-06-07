@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.izipoker.game.Player;
 import com.izipoker.game.Table;
 import com.izipoker.game.desktop.IZIPokerDesktop;
 import com.izipoker.graphics.TexturesLoad;
@@ -26,7 +25,6 @@ public class LobbyDesktop implements Screen{
 
     private TextButton startBtn;
     private Label ipLbl;
-    private Player seats[];
 
     //Game variables
     private Table table;
@@ -35,17 +33,10 @@ public class LobbyDesktop implements Screen{
     public LobbyDesktop(Table table) {
         //Game variables initialization
         this.table = table;
-        this.seats = table.getSeats();
-        //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
 
 
         buildStage();
-
-        /*Deck d = new Deck();
-        System.out.println(d);
-        d.shuffle(3);
-        System.out.println(d);*/
     }
 
     public void buildStage(){
@@ -71,8 +62,6 @@ public class LobbyDesktop implements Screen{
         startBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //Thread t = new Thread(table.getDealer());
-                //t.start();
                 Game g = IZIPokerDesktop.getInstance();
                 g.setScreen(new GameDesktop(table));
             }
@@ -92,7 +81,7 @@ public class LobbyDesktop implements Screen{
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0.5f, 0.5f, 1);
+        Gdx.gl.glClearColor(1f, 0.89f, 0.8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act(delta);

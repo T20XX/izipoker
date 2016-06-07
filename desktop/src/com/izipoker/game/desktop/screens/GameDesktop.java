@@ -12,9 +12,6 @@ import com.izipoker.game.Dealer;
 import com.izipoker.game.Table;
 import com.izipoker.graphics.TexturesLoad;
 
-/**
- * Created by Telmo on 03/05/2016.
- */
 public class GameDesktop implements Screen{
     //GUI Variables
     private Stage stage;
@@ -68,7 +65,7 @@ public class GameDesktop implements Screen{
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0.5f, 0.5f, 1);
+        Gdx.gl.glClearColor(0.235f, 0.47f, 0.941f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(lastChatSize != table.getChatHistory().size()){

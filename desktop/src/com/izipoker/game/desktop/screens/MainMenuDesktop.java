@@ -15,9 +15,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.izipoker.game.desktop.IZIPokerDesktop;
 import com.izipoker.graphics.TexturesLoad;
 
-/**
- * Created by Telmo on 03/05/2016.
- */
 public class MainMenuDesktop implements Screen{
     private Stage stage;
     private Label title;
@@ -69,7 +66,6 @@ public class MainMenuDesktop implements Screen{
 
     public void create() {
        stage = new Stage(new ScreenViewport());
-        //stage = new Stage( new StretchViewport(400.0f, 300.0f, new OrthographicCamera()));
         Gdx.input.setInputProcessor(stage);
     }
 
