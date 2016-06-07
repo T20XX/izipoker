@@ -4,13 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -19,22 +18,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.izipoker.game.Hand;
-import com.izipoker.game.Player;
 import com.izipoker.game.PokerAction;
 import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.network.PokerClient;
 import com.izipoker.network.ServerInterface;
 
-/**
- * Created by Telmo on 03/05/2016.
- */
+
 public class GameAndroid implements Screen {
     private Stage stage;
 
     private TextButton foldBtn, callBtn, raiseBtn, checkBtn;
-    private Skin skin;
     private Slider betSlider;
-    private Player player;
+
     private Hand hand;
     private TextButton thirdMoney, halfMoney, allIn, sendBtn;
     private Label amountLbl, nameLbl;
@@ -46,32 +41,23 @@ public class GameAndroid implements Screen {
     private String name;
 
     public GameAndroid(String name, ServerInterface proxyTable, PokerClient listener) {
-        //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
-        create();
-        //backgroundText = new Texture
 
-        skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
+        create();
+
         this.name = name;
         this.proxyTable = proxyTable;
         this.listener = listener;
-        // player = p;
-        //p.setHand(new Hand(new Card(Card.rankType.ACE, Card.suitType.CLUBS), new Card(Card.rankType.TWO, Card.suitType.SPADES)));
-
-        //  startTexUp = new Texture("startBtnUp.png");
-        // startTexDown = new Texture("startBtnDown.png");
-        //exitTexUp = new Texture("exitBtnUp.png");
-        //exitTexDown = new Texture("exitBtnDown.png");
 
         buildStage();
 
-        /*Deck d = new Deck();
-        System.out.println(d);
-        d.shuffle(3);
-        System.out.println(d);*/
     }
 
     public void buildStage() {
         //Actors
+        Image tmp1 = new Image(TexturesLoad.backgroundTex);
+        tmp1.setSize(stage.getWidth() * 2, stage.getHeight());
+        tmp1.setPosition(0, 0);
+        stage.addActor(tmp1);
 
 
         avatarImg = new Image(TexturesLoad.avatarTex[0][listener.getAvatarID()]);
@@ -79,72 +65,72 @@ public class GameAndroid implements Screen {
         avatarImg.setPosition(0, stage.getHeight(), Align.topLeft);
         stage.addActor(avatarImg);
 
-        amountLbl = new Label(Integer.toString(listener.getMoney()), skin);
+        amountLbl = new Label(Integer.toString(listener.getMoney()), TexturesLoad.skin);
         amountLbl.setWidth(stage.getWidth() / 2);
         amountLbl.setPosition(stage.getWidth(), stage.getHeight() - amountLbl.getHeight(), Align.center);
         stage.addActor(amountLbl);
 
-        nameLbl = new Label(listener.getName(), skin);
+        nameLbl = new Label(listener.getName(), TexturesLoad.skin);
         nameLbl.setWidth(stage.getWidth() / 2);
         nameLbl.setPosition(stage.getWidth() / 2 + nameLbl.getHeight(), stage.getHeight() - nameLbl.getHeight(), Align.center);
         stage.addActor(nameLbl);
 
-        chatTF = new TextField("", skin);
+        chatTF = new TextField("", TexturesLoad.skin);
         chatTF.setMessageText("Chat ...");
         chatTF.setWidth(3 * stage.getWidth() / 4);
         chatTF.setPosition(0, stage.getHeight() / 2, Align.left);
         stage.addActor(chatTF);
 
-        sendBtn = new TextButton("SEND", skin);
+        sendBtn = new TextButton("SEND", TexturesLoad.skin);
         sendBtn.setWidth(stage.getWidth() / 4);
         sendBtn.setHeight(chatTF.getHeight());
         sendBtn.setPosition(stage.getWidth(), stage.getHeight() / 2, Align.right);
         stage.addActor(sendBtn);
 
-        betSlider = new Slider(listener.getHighestBet(), listener.getMoney(), 10, true, skin);
+        betSlider = new Slider(listener.getHighestBet(), listener.getMoney(), 10, true, TexturesLoad.skin);
         betSlider.setWidth(stage.getWidth() / 6);
         betSlider.setHeight(stage.getHeight() / 3);
         betSlider.setPosition(stage.getWidth() - betSlider.getWidth() / 2, stage.getHeight() / 6, Align.center);
         stage.addActor(betSlider);
 
-        foldBtn = new TextButton("FOLD", skin);
+        foldBtn = new TextButton("FOLD", TexturesLoad.skin);
         foldBtn.setWidth(stage.getWidth() / 3);
         foldBtn.setPosition(stage.getWidth() / 4, stage.getHeight() / 4 - 2 * foldBtn.getHeight(), Align.center);
         stage.addActor(foldBtn);
 
-        callBtn = new TextButton("CALL", skin);
+        callBtn = new TextButton("CALL", TexturesLoad.skin);
         callBtn.setWidth(stage.getWidth() / 3);
         callBtn.setPosition(stage.getWidth() / 4, stage.getHeight() / 4 + (2) * callBtn.getHeight(), Align.center);
         stage.addActor(callBtn);
 
-        checkBtn = new TextButton("CHECK", skin);
+        checkBtn = new TextButton("CHECK", TexturesLoad.skin);
         checkBtn.setWidth(stage.getWidth() / 3);
         checkBtn.setPosition(stage.getWidth() / 4, stage.getHeight() / 4, Align.center);
         stage.addActor(checkBtn);
 
 
-        raiseBtn = new TextButton("RAISE", skin);
+        raiseBtn = new TextButton("RAISE", TexturesLoad.skin);
         raiseBtn.setWidth(stage.getWidth() / 3);
         raiseBtn.setPosition(3 * stage.getWidth() / 5, stage.getHeight() / 4 + 2 * raiseBtn.getHeight(), Align.center);
         stage.addActor(raiseBtn);
 
-        betTF = new TextField("69", skin);
+        betTF = new TextField(betSlider.getMinValue() + "", TexturesLoad.skin);
         betTF.setWidth(stage.getWidth() / 6);
         betTF.setPosition(7 * stage.getWidth() / 8, stage.getHeight() / 4 + 2 * raiseBtn.getHeight(), Align.center);
         stage.addActor(betTF);
 
 
-        thirdMoney = new TextButton("1/3", skin);
+        thirdMoney = new TextButton("1/3", TexturesLoad.skin);
         thirdMoney.setWidth(stage.getWidth() / 6);
         thirdMoney.setPosition(7 * stage.getWidth() / 10, stage.getHeight() / 4 + thirdMoney.getHeight() / 2, Align.center);
         stage.addActor(thirdMoney);
 
-        halfMoney = new TextButton("1/2", skin);
+        halfMoney = new TextButton("1/2", TexturesLoad.skin);
         halfMoney.setWidth(stage.getWidth() / 6);
         halfMoney.setPosition(7 * stage.getWidth() / 10, thirdMoney.getY() - thirdMoney.getHeight(), Align.center);
         stage.addActor(halfMoney);
 
-        allIn = new TextButton("MAX", skin);
+        allIn = new TextButton("MAX", TexturesLoad.skin);
         allIn.setWidth(stage.getWidth() / 6);
         allIn.setPosition(7 * stage.getWidth() / 10, halfMoney.getY() - halfMoney.getHeight(), Align.center);
         stage.addActor(allIn);
@@ -301,6 +287,18 @@ public class GameAndroid implements Screen {
     public void updateChanges() {
 
         if (listener.getHand() != null) {
+            if(listener.getState() != PokerClient.clientState.PLAYING) {
+                Dialog resultDialog = new Dialog("End", TexturesLoad.skin);
+                resultDialog.text(listener.getState().toString());
+                resultDialog.button(new TextButton("Close",TexturesLoad.skin)).addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        Gdx.app.exit();
+                    }
+                });
+                resultDialog.show(stage);
+            }
+
             if (hand != listener.getHand()) {
                 if (hand != null) {
                     hand.getCards()[0].remove();

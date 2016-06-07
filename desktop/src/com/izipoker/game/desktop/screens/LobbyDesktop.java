@@ -4,11 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -16,17 +14,15 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.izipoker.game.Player;
 import com.izipoker.game.Table;
 import com.izipoker.game.desktop.IZIPokerDesktop;
+import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.network.NetworkUtils;
 
 import java.io.IOException;
 
-/**
- * Created by Telmo on 03/05/2016.
- */
+
 public class LobbyDesktop implements Screen{
     //GUI Variables
     private Stage stage;
-    private Skin skin;
 
     private TextButton startBtn;
     private Label ipLbl;
@@ -34,7 +30,6 @@ public class LobbyDesktop implements Screen{
 
     //Game variables
     private Table table;
-    //private int lastPlayersSize = 0;
 
 
     public LobbyDesktop(Table table) {
@@ -43,7 +38,6 @@ public class LobbyDesktop implements Screen{
         this.seats = table.getSeats();
         //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
-        skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
 
 
         buildStage();
@@ -60,15 +54,15 @@ public class LobbyDesktop implements Screen{
         table.setBounds(0,0,stage.getWidth(), stage.getHeight());
         stage.addActor(table);
 
-        startBtn = new TextButton("START GAME",skin);
+        startBtn = new TextButton("START GAME", TexturesLoad.skin);
         startBtn.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
         stage.addActor(startBtn);
 
         try {
-            ipLbl = new Label(NetworkUtils.getNetworkAddress().toString(),skin);
+            ipLbl = new Label(NetworkUtils.getNetworkAddress().toString(), TexturesLoad.skin);
         } catch (IOException e) {
             e.printStackTrace();
-            ipLbl = new Label("IP not found!", skin);
+            ipLbl = new Label("IP not found!", TexturesLoad.skin);
         }
         ipLbl.setPosition(stage.getWidth()/2,stage.getHeight()/2+startBtn.getHeight(), Align.center);
         stage.addActor(ipLbl);
@@ -100,18 +94,6 @@ public class LobbyDesktop implements Screen{
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0.5f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        /*if(table.getActivePlayers().length != lastPlayersSize){
-            System.out.println(lastPlayersSize);
-            lastPlayersSize = table.getActivePlayers().length;
-            for(Player p : table.getActivePlayers()){
-                if(!stage.getActors().contains(p,true)){
-                    System.out.println(lastPlayersSize);
-                    p.setBounds(100,100,100,100);
-                    stage.addActor(p);
-                }
-            }
-        }*/
 
         stage.act(delta);
         stage.draw();

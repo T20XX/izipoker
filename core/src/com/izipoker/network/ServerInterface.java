@@ -7,7 +7,7 @@ public interface ServerInterface {
 
     void tell(String name, String message);
 
-    void leave(ClientCallbackInterface c);
+    void leave(String name, boolean win);
 
     void sendHand(String name);
 

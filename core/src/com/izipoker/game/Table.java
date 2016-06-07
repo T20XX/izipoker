@@ -28,7 +28,6 @@ public class Table extends Actor implements ServerInterface {
     private final int playingTime; //MUDAR PARA CONSTRUCTOR
     private ArrayList<Player> seats;
     private String name;
-    //private Card[] cardsOnTable;
     private ArrayList<Round> rounds;
     private Dealer dealer;
     private Player joker;
@@ -36,6 +35,7 @@ public class Table extends Actor implements ServerInterface {
     private tableState state = tableState.LOBBY;
     private ArrayList<String> chatHistory = new ArrayList<String>();
     private Point[] position;
+
     //clients map to players
     private HashMap<String, ClientCallbackInterface> clients = new HashMap<String, ClientCallbackInterface>();
     private HashMap<String, Player> players = new HashMap<String, Player>();
@@ -54,8 +54,6 @@ public class Table extends Actor implements ServerInterface {
         initMoney = startMoney;
         playingTime = timeAFK;
         SMALL_BLIND = startMoney*3/100;
-        //position[0].setLocation(100,100);
-
     }
 
     /**
@@ -65,15 +63,6 @@ public class Table extends Actor implements ServerInterface {
      * @return True if the player is added successfully or false if the table is full
      */
     public boolean addPlayer(Player p) {
-       /* for (int i = 0; i < seats.length; i++) {
-            if (seats[i] == null) {
-               seats[i] = p;
-                if (joker == null)
-                    joker = p;
-                return true;
-            }
-        }
-        return false;*/
         if (seats.size() < MAX_PLAYER) {
             seats.add(p);
             if (joker == null)
@@ -84,36 +73,10 @@ public class Table extends Actor implements ServerInterface {
     }
 
     public boolean removePlayer(Player p) {
-       /* for (int i = 0; i < seats.length; i++) {
-            if (seats[i] == p) {
-                seats[i] = null;
-                return true;
-            }
-        }
-        return false;*/
         return seats.remove(p);
     }
 
     public Player nextJoker() {
-        /*int j, k = 0;
-        for (int i = 0; i < seats.length; i++) {
-            if (seats[i] == joker) {
-                if (i == seats.length - 1)
-                    j = 0;
-                else j = i + 1;
-                while (k != seats.length) {
-                    if (i == seats.length - 1)
-                        j = 0;
-                    if (seats[j].isActive()) {
-                        joker = seats[j];
-                        return joker;
-                    }
-                    k++;
-                    j++;
-                }
-            }
-        }
-        return null;*/
         int i;
         for (i = 0; i < seats.size(); i++) {
             if (seats.get(i) == joker) {
@@ -151,7 +114,6 @@ public class Table extends Actor implements ServerInterface {
 
     @Override
     public void tell(String name, String message) {
-        //notifyOthers((Player)client, ((Player) client).getName() + ": " + message);
         System.out.println(name + ": " + message);
         chatHistory.add("(" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ") " +
                 name + ": " +
@@ -159,8 +121,10 @@ public class Table extends Actor implements ServerInterface {
     }
 
     @Override
-    public void leave(ClientCallbackInterface client) {
-        removePlayer((Player) client);
+    public void leave(String name, boolean win) {
+        clients.get(name).setEndState(win);
+        clients.remove(name);
+        players.remove(name);
     }
 
     @Override
@@ -188,11 +152,6 @@ public class Table extends Actor implements ServerInterface {
         players.get(name).setLastAction(action);
         players.get(name).setActed(true);
     }
-
-
-    /*public String getName() {
-        return name;
-    }*/
 
     @Override
     public void sendHighestBet(String name) {
@@ -236,12 +195,14 @@ public class Table extends Actor implements ServerInterface {
                     seats.get(i).draw(batch, parentAlpha);
                    if(!rounds.isEmpty()) {
                        if(getTopRound().getCurrentPlayers().contains(seats.get(i))){
-                           seats.get(i).getHand().getCards()[0].setSize(super.getWidth()/16, super.getHeight()/12);
-                           seats.get(i).getHand().getCards()[1].setSize(super.getWidth()/16, super.getHeight()/12);
-                           seats.get(i).getHand().getCards()[0].setPosition(seats.get(i).getX() + seats.get(i).getWidth(), seats.get(i).getY(), Align.bottomLeft);
-                           seats.get(i).getHand().getCards()[1].setPosition(seats.get(i).getX() + seats.get(i).getWidth() , seats.get(i).getY()+seats.get(i).getHand().getCards()[0].getHeight(), Align.bottomLeft);
-                           seats.get(i).getHand().getCards()[0].draw(batch, parentAlpha);
-                           seats.get(i).getHand().getCards()[1].draw(batch, parentAlpha);
+                           if (seats.get(i).getHand() != null) {
+                               seats.get(i).getHand().getCards()[0].setSize(super.getWidth() / 16, super.getHeight() / 12);
+                               seats.get(i).getHand().getCards()[1].setSize(super.getWidth() / 16, super.getHeight() / 12);
+                               seats.get(i).getHand().getCards()[0].setPosition(seats.get(i).getX() + seats.get(i).getWidth(), seats.get(i).getY(), Align.bottomLeft);
+                               seats.get(i).getHand().getCards()[1].setPosition(seats.get(i).getX() + seats.get(i).getWidth(), seats.get(i).getY() + seats.get(i).getHand().getCards()[0].getHeight(), Align.bottomLeft);
+                               seats.get(i).getHand().getCards()[0].draw(batch, parentAlpha);
+                               seats.get(i).getHand().getCards()[1].draw(batch, parentAlpha);
+                           }
                        }
                         if (seats.get(i) == getTopRound().getCurrentPlayers().peek()) {
                             batch.end();

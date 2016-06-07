@@ -3,15 +3,14 @@ package com.izipoker.game.desktop.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.izipoker.game.Dealer;
 import com.izipoker.game.Table;
+import com.izipoker.graphics.TexturesLoad;
 
 /**
  * Created by Telmo on 03/05/2016.
@@ -19,7 +18,6 @@ import com.izipoker.game.Table;
 public class GameDesktop implements Screen{
     //GUI Variables
     private Stage stage;
-    private Skin skin;
     private TextArea chat;
     private ScrollPane chatSP;
     private int lastChatSize = 0;
@@ -34,19 +32,11 @@ public class GameDesktop implements Screen{
         this.table = table;
         this.dealer = table.getDealer();
         Thread game = new Thread(dealer);
-        //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         create();
-        skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
-
 
         buildStage();
 
         game.start();
-
-        /*Deck d = new Deck();
-        System.out.println(d);
-        d.shuffle(3);
-        System.out.println(d);*/
     }
 
     public void buildStage() {
@@ -54,14 +44,13 @@ public class GameDesktop implements Screen{
         table.setBounds(0, 0, stage.getWidth(), stage.getHeight());
         stage.addActor(table);
 
-        chat = new TextArea("CHAT\n", skin);
+        chat = new TextArea("CHAT\n", TexturesLoad.skin);
         chatSP = new ScrollPane(chat);
         chat.setPrefRows(chat.getLines());
         chatSP.setSize(stage.getWidth() / 4, stage.getHeight() / 3);
         chatSP.setPosition(0, 0, Align.bottomLeft);
         chatSP.layout();
         stage.addActor(chatSP);
-
 
 
         //Listeners
@@ -87,7 +76,9 @@ public class GameDesktop implements Screen{
                 chat.appendText(table.getChatHistory().get(i) + "\n");
             }
             lastChatSize = table.getChatHistory().size();
+            System.out.println(chat.getLines());
             chat.setPrefRows(chat.getLines());
+            chat.moveCursorLine(chat.getLines());
             chatSP.layout();
         }
 

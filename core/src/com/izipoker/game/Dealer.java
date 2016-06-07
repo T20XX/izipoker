@@ -106,8 +106,6 @@ public class Dealer implements Runnable {
             giveHands();
 
             for (Player p : table.getActivePlayers()) {
-                // System.out.println(p.getHand().getCards()[0]);
-                // System.out.println(p.getHand().getCards()[1]);
                 table.sendHand(p.getName());
                 table.sendMoney(p.getName());
             }
@@ -205,6 +203,7 @@ public class Dealer implements Runnable {
             setNewJoker();
 
         }
+        table.leave(table.getTopRound().getCurrentPlayers().get(0).getName(), true);
         table.setState(Table.tableState.CLOSED);
     }
 
@@ -251,7 +250,7 @@ public class Dealer implements Runnable {
         Round r = table.getTopRound();
         if (!p.hasActed()) {
             r.foldPlayer(p);
-            table.tell("Dealer", p.getName() + " Folded by timeout");
+            table.tell("Dealer", p.getName() + " folded by timeout");
         } else {
             switch (p.getLastAction().getType()) {
                 case FOLD:
@@ -265,12 +264,12 @@ public class Dealer implements Runnable {
                 case CALL:
                     r.addCall(p);
                     table.sendMoney(p.getName());
-                    table.tell("Dealer", p.getName() + " ralled");
+                    table.tell("Dealer", p.getName() + " called");
                     break;
                 case RAISE:
                     r.addBet(p, p.getLastAction().getAmount());
                     table.sendMoney(p.getName());
-                    table.tell("Dealer",p.getName() + " raised " + p.getLastAction().getAmount());
+                    table.tell("Dealer",p.getName() + " bet " + p.getLastAction().getAmount());
                     break;
             }
             p.setActed(false);
@@ -300,6 +299,7 @@ public class Dealer implements Runnable {
 
         for (int i = 0; i < table.getSeats().length; i++) {
             if (table.getSeats()[i].getMoney() <= 0) {
+                table.leave(table.getSeats()[i].getName(), false);
                 table.removePlayer(table.getSeats()[i]);
                 i--;
             }

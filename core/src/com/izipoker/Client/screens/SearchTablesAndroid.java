@@ -22,9 +22,7 @@ import com.izipoker.network.ServerInterface;
 
 import lipermi.handler.CallHandler;
 
-/**
- * Created by Telmo on 03/05/2016.
- */
+
 public class SearchTablesAndroid implements Screen {
     private Stage stage;
     private Skin skin;
@@ -88,7 +86,6 @@ public class SearchTablesAndroid implements Screen {
 
         //Dialog
         continueDialogBtn = new TextButton("CONTINUE", skin);
-        //cancelDialogBtn = new TextButton("CANCEL", skin);
 
 
         //Listeners
@@ -96,31 +93,6 @@ public class SearchTablesAndroid implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.input.setOnscreenKeyboardVisible(false);
-                /*try {
-                    // get proxy for remote chat server
-                    callHandler = new CallHandler();
-                    String remoteHost = ipTF.getText();
-                    int portWasBinded = 4455;
-                    Client client = new Client(remoteHost, portWasBinded, callHandler);
-                    proxyTable = (ServerInterface)client.getGlobal(ServerInterface.class);
-
-                    //System.out.println("Mesa " + proxyTable.getName() + "\n");
-                        resultDialog = new Dialog("Table Found", skin);
-                        resultDialog.setWidth(7 * stage.getWidth() / 8);
-                        resultDialog.text(proxyTable.getName());
-                        resultDialog.button(continueDialogBtn);
-                        resultDialog.button("CANCEL");
-                        resultDialog.show(stage);
-
-                } catch (Exception e) {
-                    resultDialog = new Dialog("Error", skin);
-                    resultDialog.text("Connection failed");
-                    resultDialog.button("BACK");
-                    resultDialog.show(stage);
-                    System.out.println("Client exception: " + e.toString());
-                    e.printStackTrace();
-                }*/
-
 
                 ClientConnection connection = new ClientConnection();
                 //to emulator works

@@ -7,6 +7,14 @@ import com.izipoker.game.Hand;
  * Represents a poker client with all local variables to store server info
  */
 public class PokerClient implements ClientCallbackInterface {
+
+
+    public enum clientState{
+        PLAYING,
+        LOSE,
+        WIN
+    }
+
     private String name = "";
     private int avatarID = 0;
     private Hand hand = null;
@@ -14,7 +22,7 @@ public class PokerClient implements ClientCallbackInterface {
     private boolean changed = true;
     private boolean possibleActions[] = {false, false, false, false};
     private int highestBet = 0;
-    private int lastBet = 0;
+    private clientState state = clientState.PLAYING;
 
     /**
      * Client constructor
@@ -34,8 +42,6 @@ public class PokerClient implements ClientCallbackInterface {
 
     @Override
     public void receiveHand(Hand hand) {
-        //System.out.println(hand.getCards()[0]);
-        //System.out.println(hand.getCards()[1]);
         this.hand = hand;
         hand.getCards()[0].setFlipped(true);
         hand.getCards()[1].setFlipped(true);
@@ -63,6 +69,16 @@ public class PokerClient implements ClientCallbackInterface {
     public void receiveHighestBet(int highestbet) {
         this.highestBet = highestbet;
         this.changed = true;
+    }
+
+    @Override
+    public void setEndState(boolean win) {
+        if(win){
+            state = clientState.WIN;
+        } else {
+            state = clientState.LOSE;
+        }
+        changed = true;
     }
 
     public void resetPossibleActions() {
@@ -141,5 +157,10 @@ public class PokerClient implements ClientCallbackInterface {
      */
     public void setChanged(boolean changed) {
         this.changed = changed;
+    }
+
+
+    public clientState getState() {
+        return state;
     }
 }

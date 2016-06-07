@@ -16,4 +16,6 @@ public interface ClientCallbackInterface {
 
     void receiveHighestBet(int highestbet);
 
+    void setEndState(boolean win);
+
 }

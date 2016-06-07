@@ -31,9 +31,7 @@ import javax.jmdns.ServiceInfo;
 import lipermi.handler.CallHandler;
 import lipermi.net.Server;
 
-/**
- * Created by Telmo on 03/05/2016.
- */
+
 public class CreateTableDesktop implements Screen{
     private Stage stage;
     private Label tableNameLbl, startMoneyLbl;

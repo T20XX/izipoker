@@ -113,6 +113,7 @@ public class Round {
             currentPlayers.remove(0);
             if (p == joker) {
                 joker = currentPlayers.peek();
+                highestPlayer = currentPlayers.peek();
             }
             return true;
         }

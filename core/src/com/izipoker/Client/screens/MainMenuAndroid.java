@@ -42,11 +42,6 @@ public class MainMenuAndroid implements Screen {
         backgroundTex = new Texture("background.png");
 
         buildStage();
-
-        /*Deck d = new Deck();
-        System.out.println(d);
-        d.shuffle(3);
-        System.out.println(d);*/
     }
 
     public void buildStage() {
