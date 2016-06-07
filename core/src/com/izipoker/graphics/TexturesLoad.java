@@ -1,8 +1,12 @@
 package com.izipoker.graphics;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
 
 /**
  * Singleton class used to store textures and graphics related variables
@@ -38,6 +42,10 @@ public class TexturesLoad {
         font = new BitmapFont();
         font.setColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
+    public static Skin skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
+
+
+    public static Texture backgroundTex = new Texture("background.png");
 
     private TexturesLoad() {
     }

@@ -184,7 +184,19 @@ public class Dealer implements Runnable {
             }
             for(int i = 0; i < winners.size();i++) {
                 winners.get(i).setMoney(winners.get(i).getMoney() + (r.getPot() / winners.size()));
+                table.tell("Dealer", winners.get(i).getName()+ " won this round.");
             }
+            for(Player p: r.getCurrentPlayers()){
+                p.getHand().getCards()[0].setFlipped(true);
+                p.getHand().getCards()[1].setFlipped(true);
+            }
+            
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             removeLoserPlayers();
             setNewJoker();
 
@@ -205,20 +217,22 @@ public class Dealer implements Runnable {
         while ((r.getCurrentPlayers().peek() != r.getHighestPlayer() || !atLeastOnePlayed) && r.getCurrentPlayers().size() > 1) {
             p = r.getCurrentPlayers().peek();
             System.out.println(p.getName() + " Turn");
-            table.sendHighestBet(p.getName());
-            table.sendPossibleActions(p.getName(), checkPossibleActions(p));
-            Thread t = new Thread(new CheckPlayerAction(p));
-            t.start();
-            try {
-                t.join(table.getPlayingTime() * 1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if(p.getMoney()> 0) {
+                table.sendHighestBet(p.getName());
+                table.sendPossibleActions(p.getName(), checkPossibleActions(p));
+                Thread t = new Thread(new CheckPlayerAction(p));
+                t.start();
+                try {
+                    t.join(table.getPlayingTime() * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (t.isAlive()) {
+                    table.sendPossibleActions(p.getName(), new boolean[]{false, false, false, false});
+                    t.stop();
+                }
+                handlePlayerAction(p);
             }
-            if (t.isAlive()) {
-                table.sendPossibleActions(p.getName(), new boolean[]{false, false, false, false});
-                t.stop();
-            }
-            handlePlayerAction(p);
             atLeastOnePlayed = true;
         }
     }
@@ -232,26 +246,26 @@ public class Dealer implements Runnable {
         Round r = table.getTopRound();
         if (!p.hasActed()) {
             r.foldPlayer(p);
-            System.out.println(p.getName() + " Folded by timeout");
+            table.tell("Dealer", p.getName() + " Folded by timeout");
         } else {
             switch (p.getLastAction().getType()) {
                 case FOLD:
                     r.foldPlayer(p);
-                    System.out.println(p.getName() + " Folded");
+                    table.tell("Dealer", p.getName() + " folded");
                     break;
                 case CHECK:
                     r.addBet(p, 0);
-                    System.out.println(p.getName() + " Checked");
+                    table.tell("Dealer", p.getName() + " checked");
                     break;
                 case CALL:
                     r.addCall(p);
                     table.sendMoney(p.getName());
-                    System.out.println(p.getName() + " Called");
+                    table.tell("Dealer", p.getName() + " ralled");
                     break;
                 case RAISE:
                     r.addBet(p, p.getLastAction().getAmount());
                     table.sendMoney(p.getName());
-                    System.out.println(p.getName() + " Raised");
+                    table.tell("Dealer",p.getName() + " raised " + p.getLastAction().getAmount());
                     break;
             }
             p.setActed(false);
@@ -280,8 +294,10 @@ public class Dealer implements Runnable {
     public void removeLoserPlayers() {
 
         for (int i = 0; i < table.getSeats().length; i++) {
-            if (table.getSeats()[i].getMoney() <= 0)
+            if (table.getSeats()[i].getMoney() <= 0) {
                 table.removePlayer(table.getSeats()[i]);
+                i--;
+            }
         }
     }
 }

@@ -75,9 +75,10 @@ public class GameAndroid implements Screen {
 
 
         avatarImg = new Image(TexturesLoad.avatarTex[0][listener.getAvatarID()]);
-        avatarImg.setSize(stage.getWidth() / 3, stage.getHeight() / 4);
+        avatarImg.setSize(stage.getWidth() / 3, stage.getHeight() / 6);
         avatarImg.setPosition(0, stage.getHeight(), Align.topLeft);
         stage.addActor(avatarImg);
+
         amountLbl = new Label(Integer.toString(listener.getMoney()), skin);
         amountLbl.setWidth(stage.getWidth() / 2);
         amountLbl.setPosition(stage.getWidth(), stage.getHeight() - amountLbl.getHeight(), Align.center);
@@ -148,26 +149,6 @@ public class GameAndroid implements Screen {
         allIn.setPosition(7 * stage.getWidth() / 10, halfMoney.getY() - halfMoney.getHeight(), Align.center);
         stage.addActor(allIn);
 
-       /* c_1 = player.getHand().getCards()[0];
-        c_2 = player.getHand().getCards()[1];
-        c_1.setBounds(stage.getWidth()/4,stage.getHeight()-stage.getHeight()/3,stage.getWidth()/4,stage.getHeight()/5);
-        stage.addActor(c_1);
-        c_2.setBounds(stage.getWidth()/2,stage.getHeight()-stage.getHeight()/3,stage.getWidth()/4,stage.getHeight()/5);
-        stage.addActor(c_2);
-
-        //Listeners
-        c_1.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                c_1.flip();
-            };
-        });
-        c_2.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                c_2.flip();
-            };
-        });*/
         allIn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -261,7 +242,6 @@ public class GameAndroid implements Screen {
     }
 
     public void create() {
-        //stage = new Stage(new ScreenViewport());
         stage = new Stage(new StretchViewport(200.0f, 400.0f, new OrthographicCamera()));
         Gdx.input.setInputProcessor(stage);
     }

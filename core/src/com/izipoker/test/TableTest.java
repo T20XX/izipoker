@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class TableTest {
     @Test
     public void testAddandRemovePlayer() {
-        Table t = new Table("teste", 8);
+        Table t = new Table("teste", 8, 10, 1000);
         Player p = new Human(0, "Teste", 1000);
 
         assertEquals(t.getSeats().length,0);
@@ -29,7 +29,7 @@ public class TableTest {
 
     @Test
     public void testNextJoker() {
-        Table t = new Table("teste", 8);
+        Table t = new Table("teste", 8, 10, 1000);
         Player p1 = new Human(0, "Teste", 1000);
         t.addPlayer(p1);
         Player p2 = new Human(0, "Teste", 1000);
@@ -44,7 +44,7 @@ public class TableTest {
 
     @Test
     public void testActivePlayers(){
-        Table t = new Table("teste", 8);
+        Table t = new Table("teste", 8, 10, 1000);
         Player p1 = new Human(0, "Teste", 1000);
         t.addPlayer(p1);
         Player p2 = new Human(0, "Teste", 1000);

@@ -4,12 +4,11 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -19,84 +18,102 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.izipoker.game.Table;
 import com.izipoker.game.desktop.IZIPokerDesktop;
+import com.izipoker.graphics.TexturesLoad;
 import com.izipoker.network.NetworkUtils;
 import com.izipoker.network.ServerInterface;
 
 import java.io.IOException;
 import java.net.InetAddress;
 
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceInfo;
+
 import lipermi.handler.CallHandler;
 import lipermi.net.Server;
-import javax.jmdns.*;
 
 /**
  * Created by Telmo on 03/05/2016.
  */
 public class CreateTableDesktop implements Screen{
     private Stage stage;
-    private Skin skin;
-
-    private Label tableNameLbl;
+    private Label tableNameLbl, startMoneyLbl;
     private TextField tableNameTF;
-
-    private Label tableSizeLbl;
-    private Label seatsValueLbl;
+    private Label tableSizeLbl, AFKValueLbl;
+    private Label seatsValueLbl, AFKTimeLbl;
     private Slider tableSizeSlider;
-
     private TextButton createTableBtn;
     private TextButton cancelBtn;
+    private Slider AFKTimeSlider;
+    private TextField startMoneyTF;
 
 
     public CreateTableDesktop() {
-        //super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
+
         create();
-        //backgroundText = new Texture
-        skin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
 
         buildStage();
 
-        /*Deck d = new Deck();
-        System.out.println(d);
-        d.shuffle(3);
-        System.out.println(d);*/
     }
 
     public void buildStage() {
         //Actors
-        //Image tmp1 = new Image(backgroundTex);
-        //stage.addActor(tmp1);
+        Image tmp1 = new Image(TexturesLoad.backgroundTex);
+        stage.addActor(tmp1);
 
-        tableNameTF = new TextField("",skin);
-        tableNameTF.setPosition( stage.getWidth() / 2, 7 * stage.getHeight() / 8, Align.center);
+        AFKTimeSlider = new Slider(10f, 60f, 5,false,TexturesLoad.skin);
+        AFKTimeSlider.setWidth(stage.getWidth() / 3);
+        AFKTimeSlider.setHeight(20f);
+        AFKTimeSlider.setPosition( stage.getWidth() / 2, 5 * stage.getHeight() / 10, Align.center);
+        stage.addActor(AFKTimeSlider);
+
+        AFKTimeLbl = new Label("TIME AFK", TexturesLoad.skin);
+        AFKTimeLbl.setPosition( stage.getWidth() / 2, 5 * stage.getHeight() / 10 + AFKTimeSlider.getHeight(), Align.center);
+        stage.addActor(AFKTimeLbl);
+
+        AFKValueLbl = new Label(String.valueOf((int)AFKTimeSlider.getValue()), TexturesLoad.skin);
+        AFKValueLbl.setPosition( stage.getWidth() / 2, 5 * stage.getHeight() / 10 - AFKTimeSlider.getHeight(), Align.center);
+        stage.addActor(AFKValueLbl);
+
+
+        startMoneyTF = new TextField("1000",TexturesLoad.skin);
+        startMoneyTF.setPosition( stage.getWidth() / 2, 3 * stage.getHeight() / 10, Align.center);
+        stage.addActor(startMoneyTF);
+
+        startMoneyLbl = new Label("START AMMOUNT", TexturesLoad.skin);
+        startMoneyLbl.setPosition( stage.getWidth() / 2, 3 * stage.getHeight() / 10 + startMoneyTF.getHeight(), Align.center);
+        stage.addActor(startMoneyLbl);
+
+        tableNameTF = new TextField("",TexturesLoad.skin);
+        tableNameTF.setPosition( stage.getWidth() / 2, 9 * stage.getHeight() / 10, Align.center);
         stage.addActor(tableNameTF);
 
-        tableNameLbl = new Label("TABLE NAME", skin);
-        tableNameLbl.setPosition( stage.getWidth() / 2, 7 * stage.getHeight() / 8 + tableNameTF.getHeight(), Align.center);
+        tableNameLbl = new Label("TABLE NAME", TexturesLoad.skin);
+        tableNameLbl.setPosition( stage.getWidth() / 2, 9 * stage.getHeight() / 10 + tableNameTF.getHeight(), Align.center);
         stage.addActor(tableNameLbl);
 
-        tableSizeSlider = new Slider(2f,8f,1,false,skin);
+        tableSizeSlider = new Slider(2f,8f,1,false,TexturesLoad.skin);
         tableSizeSlider.setWidth(stage.getWidth() / 3);
         tableSizeSlider.setHeight(20f);
-        tableSizeSlider.setPosition( stage.getWidth() / 2, 4 * stage.getHeight() / 8, Align.center);
+        tableSizeSlider.setPosition( stage.getWidth() / 2, 7 * stage.getHeight() / 10, Align.center);
         stage.addActor(tableSizeSlider);
 
-        tableSizeLbl = new Label("NUMBER OF SEATS", skin);
-        tableSizeLbl.setPosition( stage.getWidth() / 2, 4 * stage.getHeight() / 8 + tableSizeSlider.getHeight(), Align.center);
+        tableSizeLbl = new Label("NUMBER OF SEATS", TexturesLoad.skin);
+        tableSizeLbl.setPosition( stage.getWidth() / 2, 7 * stage.getHeight() / 10 + tableSizeSlider.getHeight(), Align.center);
         stage.addActor(tableSizeLbl);
 
-        seatsValueLbl = new Label(String.valueOf((int)tableSizeSlider.getValue()), skin);
-        seatsValueLbl.setPosition( stage.getWidth() / 2, 4 * stage.getHeight() / 8 - tableSizeSlider.getHeight(), Align.center);
+        seatsValueLbl = new Label(String.valueOf((int)tableSizeSlider.getValue()), TexturesLoad.skin);
+        seatsValueLbl.setPosition( stage.getWidth() / 2, 7 * stage.getHeight() / 10 - tableSizeSlider.getHeight(), Align.center);
         stage.addActor(seatsValueLbl);
 
 
-        createTableBtn = new TextButton("CREATE TABLE", skin);
+        createTableBtn = new TextButton("CREATE TABLE",TexturesLoad. skin);
         createTableBtn.setWidth(stage.getWidth() / 5);
-        createTableBtn.setPosition((stage.getWidth() / 4), stage.getHeight() / 8, Align.center);
+        createTableBtn.setPosition((stage.getWidth() / 4), stage.getHeight() / 10, Align.center);
         stage.addActor(createTableBtn);
 
-        cancelBtn = new TextButton("CANCEL", skin);
+        cancelBtn = new TextButton("CANCEL", TexturesLoad.skin);
         cancelBtn.setWidth(stage.getWidth() / 5);
-        cancelBtn.setPosition( 3 * (stage.getWidth() / 4), stage.getHeight() / 8, Align.center);
+        cancelBtn.setPosition( 3 * (stage.getWidth() / 4), stage.getHeight() / 10, Align.center);
         stage.addActor(cancelBtn);
 
 
@@ -106,7 +123,7 @@ public class CreateTableDesktop implements Screen{
             public void clicked(InputEvent event, float x, float y) {
 
                 try {
-                    Table table = new Table(tableNameTF.getText(), (int)tableSizeSlider.getValue());
+                    Table table = new Table(tableNameTF.getText(), (int)tableSizeSlider.getValue(), (int)AFKTimeSlider.getValue(),Integer.valueOf(startMoneyTF.getText()));
                     CallHandler callHandler = new CallHandler();
                     callHandler.registerGlobal(ServerInterface.class, table);
                     Server server = new Server();
@@ -155,6 +172,13 @@ public class CreateTableDesktop implements Screen{
                 seatsValueLbl.setText(String.valueOf((int)tableSizeSlider.getValue()));
             }
         });
+        AFKTimeSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                AFKValueLbl.setText(String.valueOf((int) AFKTimeSlider.getValue()));
+            }
+        });
+
 
     }
 

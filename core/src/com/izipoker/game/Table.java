@@ -1,8 +1,7 @@
 package com.izipoker.game;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Align;
 import com.izipoker.cardGame.Card;
@@ -11,7 +10,6 @@ import com.izipoker.network.ClientCallbackInterface;
 import com.izipoker.network.ServerInterface;
 
 import java.awt.Point;
-import java.awt.image.AreaAveragingScaleFilter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,15 +24,15 @@ public class Table extends Actor implements ServerInterface {
     }
 
     private final int MAX_PLAYER;
-    private final int initMoney = 1000; //MUDAR PARA CONSTRUCTOR
-    private final int playingTime = 30; //MUDAR PARA CONSTRUCTOR
+    private final int initMoney; //MUDAR PARA CONSTRUCTOR
+    private final int playingTime; //MUDAR PARA CONSTRUCTOR
     private ArrayList<Player> seats;
     private String name;
     //private Card[] cardsOnTable;
     private ArrayList<Round> rounds;
     private Dealer dealer;
     private Player joker;
-    private int SMALL_BLIND = 30;
+    private int SMALL_BLIND;
     private tableState state = tableState.LOBBY;
     private ArrayList<String> chatHistory = new ArrayList<String>();
     private Point[] position;
@@ -47,12 +45,15 @@ public class Table extends Actor implements ServerInterface {
      *
      * @param maxPlayers Maximum number of players
      */
-    public Table(String name, int maxPlayers) {
+    public Table(String name, int maxPlayers, int timeAFK, int startMoney) {
         MAX_PLAYER = maxPlayers;
         seats = new ArrayList<Player>();
         dealer = new Dealer(this);
         rounds = new ArrayList<Round>();
         this.name = name;
+        initMoney = startMoney;
+        playingTime = timeAFK;
+        SMALL_BLIND = startMoney*3/100;
         //position[0].setLocation(100,100);
 
     }
@@ -225,7 +226,7 @@ public class Table extends Actor implements ServerInterface {
                     } else if (i >= 4) {
                         seats.get(i).setPosition(super.getWidth() - ((i % 4)+1) *   super.getWidth() / 5, 0, Align.bottom);
                         if(!rounds.isEmpty()) {
-                            TexturesLoad.font.draw(batch, getTopRound().getBets().get(seats.get(i)) + "", super.getWidth() - ((i % 4)+1) *   super.getWidth() / 5, 5 * super.getHeight() / 16);
+                            TexturesLoad.font.draw(batch, getTopRound().getBets().get(seats.get(i)) + "", super.getWidth() - ((i % 4)+1) *   super.getWidth() / 5, 3 * super.getHeight() / 16);
                             if(seats.get(i) == getTopRound().getSmallBlinder())
                                 TexturesLoad.font.draw(batch, "SB", super.getWidth() - ((i % 4)+1) *   super.getWidth() / 5, 2 * super.getHeight() / 8);
                             if(seats.get(i) == getTopRound().getBigBlinder())
@@ -233,20 +234,40 @@ public class Table extends Actor implements ServerInterface {
                         }
                     }
                     seats.get(i).draw(batch, parentAlpha);
+                   if(!rounds.isEmpty()) {
+                       if(getTopRound().getCurrentPlayers().contains(seats.get(i))){
+                           seats.get(i).getHand().getCards()[0].setSize(super.getWidth()/16, super.getHeight()/12);
+                           seats.get(i).getHand().getCards()[1].setSize(super.getWidth()/16, super.getHeight()/12);
+                           seats.get(i).getHand().getCards()[0].setPosition(seats.get(i).getX() + seats.get(i).getWidth(), seats.get(i).getY(), Align.bottomLeft);
+                           seats.get(i).getHand().getCards()[1].setPosition(seats.get(i).getX() + seats.get(i).getWidth() , seats.get(i).getY()+seats.get(i).getHand().getCards()[0].getHeight(), Align.bottomLeft);
+                           seats.get(i).getHand().getCards()[0].draw(batch, parentAlpha);
+                           seats.get(i).getHand().getCards()[1].draw(batch, parentAlpha);
+                       }
+                        if (seats.get(i) == getTopRound().getCurrentPlayers().peek()) {
+                            batch.end();
+                            ShapeRenderer shape = new ShapeRenderer();
+                            shape.begin(ShapeRenderer.ShapeType.Line);
+                            shape.rect(seats.get(i).getX(), seats.get(i).getY(), seats.get(i).getWidth(), seats.get(i).getHeight());
+                            shape.end();
+                            batch.begin();
+                        }
+                    }
+
+
                 }
             //}
         }
 
         if (!rounds.isEmpty()) {
-            if (getTopRound().getFlop() != null) {
+            if (getTopRound().getFlop() != null)  {
                 getTopRound().getFlop()[0].setSize(super.getWidth()/10, super.getHeight()/6);
                 getTopRound().getFlop()[0].setPosition(2*super.getWidth()/8, super.getHeight() / 2, Align.center);
                 getTopRound().getFlop()[0].draw(batch, parentAlpha);
                 getTopRound().getFlop()[1].setSize(super.getWidth()/10, super.getHeight()/6);
                 getTopRound().getFlop()[1].setPosition(3*super.getWidth()/8, super.getHeight() / 2, Align.center);
                 getTopRound().getFlop()[1].draw(batch, parentAlpha);
-                getTopRound().getFlop()[2].setSize(super.getWidth()/10, super.getHeight()/6);
-                getTopRound().getFlop()[2].setPosition(4*super.getWidth()/8, super.getHeight() / 2, Align.center);
+                getTopRound().getFlop()[2].setSize(super.getWidth() / 10, super.getHeight() / 6);
+                getTopRound().getFlop()[2].setPosition(4 * super.getWidth() / 8, super.getHeight() / 2, Align.center);
                 getTopRound().getFlop()[2].draw(batch, parentAlpha);
             }
 
@@ -257,10 +278,11 @@ public class Table extends Actor implements ServerInterface {
             }
 
             if (getTopRound().getRiver() != null) {
-                getTopRound().getRiver().setSize(super.getWidth()/10, super.getHeight()/6);
-                getTopRound().getRiver().setPosition(6*super.getWidth()/8, super.getHeight() / 2, Align.center);
+                getTopRound().getRiver().setSize(super.getWidth() / 10, super.getHeight() / 6);
+                getTopRound().getRiver().setPosition(6 * super.getWidth() / 8, super.getHeight() / 2, Align.center);
                 getTopRound().getRiver().draw(batch, parentAlpha);
             }
+            TexturesLoad.font.draw(batch, getTopRound().getPot()+"", super.getWidth()/2, super.getHeight()/3);
 
         }
 
