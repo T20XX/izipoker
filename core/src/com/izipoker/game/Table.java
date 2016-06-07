@@ -20,8 +20,17 @@ public class Table extends Actor implements ServerInterface {
      * Represents the multiples states in a poker table
      */
     public enum tableState {
+        /**
+         * Accept Players to join the table
+         */
         LOBBY,
+        /**
+         * Poker Game is going
+         */
         PLAYING,
+        /**
+         * Poker Game has ended
+         */
         CLOSED
     }
 
@@ -44,7 +53,6 @@ public class Table extends Actor implements ServerInterface {
 
     /**
      * Creates a table given number of players
-     *
      * @param maxPlayers Maximum number of players
      */
     public Table(String name, int maxPlayers, int timeAFK, int startMoney) {
@@ -60,7 +68,6 @@ public class Table extends Actor implements ServerInterface {
 
     /**
      * Adds a player to the table if there is an empty seat
-     *
      * @param p Player to be added to table
      * @return True if the player is added successfully or false if the table is full
      */
@@ -75,7 +82,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * remove player from the table
      * @param p Player to be removed from table
      * @return True if the player is removed successfully or false if the player p does not not exists.
      */
@@ -84,7 +91,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     *  get next joker
      * @return next joker on table
      */
     public Player nextJoker() {
@@ -103,7 +110,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * add new round to the table
      * @param r Round to add on table
      */
     public void addRounds(Round r) {
@@ -310,7 +317,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * set new name to the table
      * @param name new name of the table
      */
     public void setName(String name) {
@@ -318,7 +325,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * get active players
      * @return Array of Players that are playing
      */
     public Player[] getActivePlayers() {
@@ -333,7 +340,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * get big blind amount
      * @return big bling, two times the small blind
      */
     public int getBigBlind() {
@@ -342,7 +349,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * get chat history of the table
      * @return ArrayList of String with chat history
      */
     public ArrayList<String> getChatHistory() {
@@ -350,7 +357,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * get dealer
      * @return Dealer of the table
      */
     public Dealer getDealer() {
@@ -358,7 +365,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * get joker
      * @return actual joker of the table
      */
     public Player getJoker() {
@@ -366,7 +373,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * get playing time of players
      * @return Playing Time of each player on the table
      */
     public int getPlayingTime() {
@@ -374,7 +381,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * get rounds from the table
      * @return ArrayLisy of rounds on the table
      */
     public ArrayList<Round> getRounds() {
@@ -382,7 +389,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * get seats on the table
      * @return Array of Player with the seats of the table
      */
     public Player[] getSeats() {
@@ -390,7 +397,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * get small blind
      * @return small blind on the table
      */
     public int getSmallBlind() {
@@ -398,7 +405,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * get top round
      * @return most recent round of the table
      */
     public Round getTopRound() {
@@ -406,7 +413,7 @@ public class Table extends Actor implements ServerInterface {
     }
 
     /**
-     *
+     * set new state
      * @param state new state of the table
      */
     public void setState(tableState state) {

@@ -15,10 +15,25 @@ public class Round {
      * Represents the multiples states in a poker round
      */
     public enum roundState {
+        /**
+         * Bet before any cards show
+         */
         PREFLOP,
+        /**
+         * show three cards and allows bet after
+         */
         FLOP,
+        /**
+         * show one and allows to bet after
+         */
         TURN,
+        /**
+         * show one and allows to bet after
+         */
         RIVER,
+        /**
+         * all cards are shown, players make the last bet
+         */
         SHOWDOWN,
     }
 
@@ -36,7 +51,7 @@ public class Round {
     private Player bigBlinder;
 
     /**
-     *
+     * Round Constructor
      * @param players players on the round
      * @param p small Blinder on the round
      */
@@ -68,7 +83,7 @@ public class Round {
     }
 
     /**
-     *
+     * add Call bet
      * @param p Player to add the call
      * @return True if the player can call
      */
@@ -77,7 +92,7 @@ public class Round {
     }
 
     /**
-     *
+     * add bet
      * @param p Player to add the bet
      * @param amount int of the bet
      * @return True if the player can make the bet
@@ -118,7 +133,7 @@ public class Round {
     }
 
     /**
-     *
+     * Remove player from current Players
      * @param p Player to fold the round
      * @return True if the player exists and it is his time to play
      */
@@ -135,7 +150,7 @@ public class Round {
     }
 
     /**
-     *
+     * get Current Players from the round
      * @return current Players on the round
      */
     public LinkedList<Player> getCurrentPlayers() {
@@ -143,7 +158,7 @@ public class Round {
     }
 
     /**
-     *
+     * Get First Player from the round
      * @return First player of the round
      */
     public Player getFirstPlayer() {
@@ -151,7 +166,7 @@ public class Round {
     }
 
     /**
-     *
+     * Get Flop
      * @return Array of card of the flop
      */
     public Card[] getFlop() {
@@ -159,7 +174,7 @@ public class Round {
     }
 
     /**
-     *
+     * set new flop
      * @param flop set new Array of Card of flop
      */
     public void setFlop(Card[] flop) {
@@ -167,7 +182,7 @@ public class Round {
     }
 
     /**
-     *
+     * get highest bet
      * @return highest bet on the round
      */
     public int getHighestBet() {
@@ -175,7 +190,7 @@ public class Round {
     }
 
     /**
-     *
+     * get player that has the highest bet
      * @return player that has the highest bet
      */
     public Player getHighestPlayer() {
@@ -183,7 +198,7 @@ public class Round {
     }
 
     /**
-     *
+     * get joker
      * @return actual joker of the round
      */
     public Player getJoker() {
@@ -191,7 +206,7 @@ public class Round {
     }
 
     /**
-     *
+     * get total pot
      * @return total pot of the round
      */
     public int getPot() {
@@ -199,7 +214,7 @@ public class Round {
     }
 
     /**
-     *
+     * get river
      * @return Card river
      */
     public Card getRiver() {
@@ -207,7 +222,7 @@ public class Round {
     }
 
     /**
-     *
+     * set new river
      * @param river new Card of river
      */
     public void setRiver(Card river) {
@@ -215,7 +230,7 @@ public class Round {
     }
 
     /**
-     *
+     * get actual round state
      * @return roundState with the state of the round
      */
     public roundState getState() {
@@ -223,7 +238,7 @@ public class Round {
     }
 
     /**
-     *
+     * set new round state
      * @param state new roundState of the round
      */
     public void setState(roundState state) {
@@ -231,7 +246,7 @@ public class Round {
     }
 
     /**
-     *
+     * get turn Card
      * @return new Card of turn
      */
     public Card getTurn() {
@@ -239,7 +254,7 @@ public class Round {
     }
 
     /**
-     *
+     * set new turn
      * @param turn set new Card of turn
      */
     public void setTurn(Card turn) {
@@ -247,7 +262,7 @@ public class Round {
     }
 
     /**
-     *
+     * get bets from players
      * @return Map of Player and Integer, corresponding to the current Players and their bet
      */
     public Map<Player,Integer> getBets() {
@@ -255,7 +270,7 @@ public class Round {
     }
 
     /**
-     *
+     * get player which is the small blinder
      * @return Player that is the small blinder
      */
     public Player getSmallBlinder(){
@@ -263,7 +278,7 @@ public class Round {
     }
 
     /**
-     *
+     * get player which is the big blinder
      * @return Player that is the big blinder
      */
     public Player getBigBlinder(){

@@ -4,6 +4,7 @@ import com.izipoker.cardGame.Card;
 import com.izipoker.game.Hand;
 
 import org.junit.Test;
+import org.junit.runner.notification.RunListener;
 
 import javafx.util.Pair;
 
@@ -122,5 +123,15 @@ public class HandRankTest {
         };
         assertEquals(new Pair(Hand.handRank.HIGH_CARD,Card.rankType.ACE), h.checkHandRank(cardsOnTable));
     }
-
+    @Test
+    public void testTwo3Pair() {
+        Hand h = new Hand(new Card(Card.rankType.THREE, Card.suitType.SPADES), new Card(Card.rankType.TEN, Card.suitType.HEARTS));
+        Card[] cardsOnTable = new Card[]{new Card(Card.rankType.SEVEN, Card.suitType.HEARTS),
+                new Card(Card.rankType.TEN, Card.suitType.SPADES),
+                new Card(Card.rankType.ACE, Card.suitType.SPADES),
+                new Card(Card.rankType.THREE, Card.suitType.HEARTS),
+                new Card(Card.rankType.ACE, Card.suitType.CLUBS),
+        };
+        assertEquals(new Pair(Hand.handRank.TWO_PAIR,Card.rankType.ACE), h.checkHandRank(cardsOnTable));
+    }
 }

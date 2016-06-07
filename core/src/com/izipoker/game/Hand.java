@@ -249,6 +249,7 @@ public class Hand implements Serializable {
 
     private Card.rankType containsTwoPair(Card[] cards) {
         HashMap<Card.rankType, Integer> counterMap = countEqualsCards(cards);
+        Card.rankType tempRank = null;
 
         if (counterMap.containsValue(2)) {
             int pairCounter = 0;
@@ -256,13 +257,13 @@ public class Hand implements Serializable {
                 if (counterMap.containsKey(rank)) {
                     if (counterMap.get(rank) == 2) {
                         pairCounter++;
-                        if (pairCounter == 2) {
-                            return rank;
+                        if (pairCounter >= 2) {
+                            tempRank = rank;
                         }
                     }
                 }
             }
-            return null;
+            return tempRank;
         } else {
             return null;
         }
