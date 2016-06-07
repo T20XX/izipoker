@@ -331,7 +331,7 @@ public class GameAndroid implements Screen {
 
         //Amount update
         if(listener.getMoney() > 0){
-            amountLbl.setText(Integer.toString(listener.getMoney()))
+            amountLbl.setText(Integer.toString(listener.getMoney()));
         }
         listener.setChanged(false);
     }
